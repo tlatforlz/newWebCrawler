@@ -34,7 +34,7 @@ function createUrl(request) {
 function getAllUrl() {
   return Url.find().exec()
     .then(function (urls) {
-      if (urls === null) {
+      if (urls.length === 0) {
         return Promise.reject({
           message: failMessage.url.notFound
         });

@@ -14,12 +14,14 @@ var mongoose = require('mongoose');
 var environment = process.env.NODE_ENV;
 
 app.use(favicon(__dirname + '/favicon.ico'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
 app.use(config.BASE_URL + '/url', require('./routes/url.routes')());
-
+app.use(config.BASE_URL + '/spider', require('./routes/spider.routes')());
 
 console.log('About to crank up node');
 console.log('PORT=' + port);

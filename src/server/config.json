@@ -1,8 +1,8 @@
 {
-    "PORT": 8001,
-    "BASE_URL": "/api",
-    "mongodb": {
-        "host": "localhost:27017",
-        "database": "news"
-    }
+  "PORT": 8001,
+  "BASE_URL": "/api",
+  "mongodb": {
+    "host": "tranthe:123123@ds151752.mlab.com:51752",
+    "database": "tlatforlz_news"
+  }
 }
