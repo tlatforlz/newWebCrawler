@@ -93,7 +93,6 @@ function updateSpider(request) {
       spider.crawlingName = request.crawlingName;
     }
     spider.updateDate = Date.now();
-    console.log(spider);
     return Spider.findOne({
         _id: {
           $ne: request.id

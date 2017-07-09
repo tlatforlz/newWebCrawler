@@ -22,6 +22,7 @@ app.use(logger('dev'));
 
 app.use(config.BASE_URL + '/url', require('./routes/url.routes')());
 app.use(config.BASE_URL + '/spider', require('./routes/spider.routes')());
+app.use(config.BASE_URL + '/category', require('./routes/category.routes')());
 
 console.log('About to crank up node');
 console.log('PORT=' + port);
