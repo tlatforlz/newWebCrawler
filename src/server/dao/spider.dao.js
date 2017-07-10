@@ -1,13 +1,16 @@
 ﻿var Spider = require('./../model/spider.model');
+var NewsDao = require('./news.dao.js');
 var successMessage = require('./../services/successMessage');
 var failMessage = require('./../services/failMessage');
+var ListSpider = require('./../services/spider');
 
 module.exports = {
   createSpider: createSpider,
   getAllSpider: getAllSpider,
   getSpiderById: getSpiderById,
   updateSpider: updateSpider,
-  deleteSpider: deleteSpider
+  deleteSpider: deleteSpider,
+  callSpider: callSpider
 };
 
 function createSpider(request) {
@@ -136,3 +139,29 @@ function deleteSpider(request) {
     });
   });
 }
+
+function callSpider(request) {
+  return Spider.findOne({
+      crawlingName: request.crawlingName
+    })
+      .populate('urlId')
+    .exec()
+    .then(function (spider) {
+      if (spider === null) {
+        return Promise.reject({
+          message: failMessage.spider.notFound
+        });
+        }
+        
+      switch (request.crawlingName) {
+          case "spiderTinNongNghiep":
+              ListSpider.spiderTinNongNghiep(spider.urlId);
+              break;
+      }
+      return Promise.resolve({
+          messsage: successMessage.spider.callSpider,
+          spider: spider
+      });
+    });
+}
+

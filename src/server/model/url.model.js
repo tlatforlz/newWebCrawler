@@ -10,11 +10,7 @@ var urlSchema = new Schema({
     type: String,
     require: true
   },
-  path: [{
-    pathName: {
-      type: String
-    }
-  }]
+  path: [String]
 });
 
 var url = mongoose.model('url', urlSchema);

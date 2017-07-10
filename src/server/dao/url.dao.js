@@ -1,4 +1,4 @@
-var Url = require('./../model/url.model');
+﻿var Url = require('./../model/url.model');
 var successMessage = require('./../services/successMessage');
 var failMessage = require('./../services/failMessage');
 
@@ -13,7 +13,8 @@ module.exports = {
 function createUrl(request) {
   var newUrl = new Url({
     title: request.title,
-    hostname: request.hostname
+    hostname: request.hostname,
+    path: request.path
   });
   return Url.findOne({
       hostname: request.hostname
@@ -78,6 +79,9 @@ function updateUrl(request) {
     }
     if (request.hostname !== undefined && request.hostname !== '') {
       url.hostname = request.hostname;
+    }
+    if (request.path !== undefined && request.path.length !== 0) {
+        url.path = request.path;
     }
     return Url.findOne({
       _id: {

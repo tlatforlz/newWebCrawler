@@ -1,9 +1,9 @@
-var url = {
+﻿var url = {
   create: 'CREATE_SUCCESS',
   getAll: 'GET_ALL_SUCCESS',
   update: 'UPDATE_SUCCESS',
   get: 'GET_SUCCESS',
-  delete: 'DELETE_SUCCESS',
+  delete: 'DELETE_SUCCESS'
 }
 
 var spider = {
@@ -12,6 +12,7 @@ var spider = {
   update: 'UPDATE_SUCCESS',
   get: 'GET_SUCCESS',
   delete: 'DELETE_SUCCESS',
+  callSpider: 'CALL_SUCCESS'
 }
 
 var category = {
@@ -19,7 +20,7 @@ var category = {
   getAll: 'GET_ALL_SUCCESS',
   update: 'UPDATE_SUCCESS',
   get: 'GET_SUCCESS',
-  delete: 'DELETE_SUCCESS',
+  delete: 'DELETE_SUCCESS'
 }
 
 var news = {
@@ -27,7 +28,7 @@ var news = {
   getAll: 'GET_ALL_SUCCESS',
   update: 'UPDATE_SUCCESS',
   get: 'GET_SUCCESS',
-  delete: 'DELETE_SUCCESS',
+  delete: 'DELETE_SUCCESS'
 }
 
 module.exports = {

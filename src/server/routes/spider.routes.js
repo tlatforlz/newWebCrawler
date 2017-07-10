@@ -1,4 +1,4 @@
-var router = require('express').Router();
+﻿var router = require('express').Router();
 var spiderDao = require('./../dao/spider.dao');
 
 module.exports = function () {
@@ -7,6 +7,7 @@ module.exports = function () {
   router.get('/:id', getSpiderById);
   router.put('/:id', updateSpider);
   router.delete('/:id', deleteSpider);
+  router.post('/:crawlingName', callSpider);
 
   function createSpider(req, res, next) {
     var request = {
@@ -52,7 +53,8 @@ module.exports = function () {
       isSourceUpdated: req.body.isSourceUpdated,
       isActive: req.body.isActive,
       updateDate: Date.now(),
-      crawlingName: req.body.crawlingName
+      crawlingName: req.body.crawlingName,
+      urlId: req.body.urlId
     }
     spiderDao.updateSpider(request)
       .then(function (spider) {
@@ -76,5 +78,16 @@ module.exports = function () {
       });
   }
 
+  function callSpider(req, res, next) {
+      var request = {
+          crawlingName: req.params.crawlingName
+      }
+      spiderDao.callSpider(request)
+          .then(function (spider) {
+              res.status(200).send(spider).end();
+          }).catch(function (err) {
+              res.status(400).send(err).end();
+          });
+  }
   return router;
 }

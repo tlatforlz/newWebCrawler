@@ -11,7 +11,8 @@ module.exports = function () {
   function createUrl(req, res, next) {
     var request = {
       title: req.body.title,
-      hostname: req.body.hostname
+      hostname: req.body.hostname,
+      path: req.body.path
     };
     urlDao.createUrl(request)
       .then(function (url) {
@@ -48,7 +49,8 @@ module.exports = function () {
     var request = {
       id: req.params.id,
       title: req.body.title,
-      hostname: req.body.hostname
+      hostname: req.body.hostname,
+      path: req.body.path
     }
     urlDao.updateUrl(request)
       .then(function (url) {
