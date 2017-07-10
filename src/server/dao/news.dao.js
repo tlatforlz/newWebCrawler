@@ -7,8 +7,34 @@ module.exports = {
   getAllNews: getAllNews,
   getNewsById: getNewsById,
   updateNews: updateNews,
-  deleteNews: deleteNews
+  deleteNews: deleteNews,
+  addNews: addNews
 };
+
+function addNews(request) {
+  var news = new News({
+    title: request.title,
+    description: request.description,
+    content: request.content,
+    image: request.image,
+    author: request.author,
+    originalLink: request.originaLink,
+    spiderId: request.spiderId,
+    categoryId: request.categoryId,
+    createDate: request.createDate,
+    updateDate: Date.now()
+  });
+  console.log(news.title + " jump to dao news");
+  News.findOne({
+    title: request.title
+  }).exec().then(function (New) {
+    if (New !== null) {
+      console.log('news log');
+      return;
+    }
+    news.save();
+  });
+}
 
 function createNews(request) {
   var news = new News({
@@ -72,7 +98,7 @@ function getNewsById(request) {
 
 function updateNews(request) {
   return News.findById({
-      _id: request.id
+    _id: request.id
   }).exec().then(function (news) {
     if (news === null) {
       return Promise.reject({
@@ -105,10 +131,10 @@ function updateNews(request) {
     }
     news.updateDate = Date.now();
     return News.findOne({
-        title: request.title,
-        _id: {
-            $ne: request.id
-        }
+      title: request.title,
+      _id: {
+        $ne: request.id
+      }
     }).exec().then(function (New) {
       if (New !== null) {
         return Promise.reject({

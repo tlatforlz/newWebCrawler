@@ -17,7 +17,7 @@ module.exports = function () {
       author: req.body.author,
       originalLink: req.body.originaLink,
       spiderId: req.body.spiderId,
-      categoryId: req.body.categoryId,
+      categoryId: req.body.categoryId
     }
     newsDao.createNews(request)
       .then(function (news) {
@@ -33,7 +33,7 @@ module.exports = function () {
       .then(function (news) {
         res.status(200).send(news).end();
       })
-      .catch(function (err) { 
+      .catch(function (err) {
         res.status(400).send(err).end();
       });
   }

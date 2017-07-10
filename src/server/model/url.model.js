@@ -10,7 +10,15 @@ var urlSchema = new Schema({
     type: String,
     require: true
   },
-  path: [String]
+  path: [{
+    namePath: {
+      type: String
+    },
+    catelogyId: {
+      type: Schema.Types.ObjectId,
+      ref: 'catelogy'
+    }
+  }]
 });
 
 var url = mongoose.model('url', urlSchema);

@@ -144,24 +144,23 @@ function callSpider(request) {
   return Spider.findOne({
       crawlingName: request.crawlingName
     })
-      .populate('urlId')
+    .populate('urlId')
     .exec()
     .then(function (spider) {
       if (spider === null) {
         return Promise.reject({
           message: failMessage.spider.notFound
         });
-        }
-        
+      }
+
       switch (request.crawlingName) {
-          case "spiderTinNongNghiep":
-              ListSpider.spiderTinNongNghiep(spider.urlId);
-              break;
+        case "spiderTinNongNghiep":
+          ListSpider.spiderTinNongNghiep(spider.urlId, spider._id);
+          break;
       }
       return Promise.resolve({
-          messsage: successMessage.spider.callSpider,
-          spider: spider
+        messsage: successMessage.spider.callSpider,
+        spider: spider
       });
     });
 }
-

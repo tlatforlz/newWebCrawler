@@ -8,7 +8,7 @@ module.exports = {
   getUrlById: getUrlById,
   updateUrl: updateUrl,
   deleteUrl: deleteUrl
-};  
+};
 
 function createUrl(request) {
   var newUrl = new Url({
@@ -81,7 +81,7 @@ function updateUrl(request) {
       url.hostname = request.hostname;
     }
     if (request.path !== undefined && request.path.length !== 0) {
-        url.path = request.path;
+      url.path = request.path;
     }
     return Url.findOne({
       _id: {
