@@ -1,13 +1,14 @@
 var Url = require('./../model/url.model');
 var successMessage = require('./../services/successMessage');
 var failMessage = require('./../services/failMessage');
+
 module.exports = {
   createUrl: createUrl,
   getAllUrl: getAllUrl,
   getUrlById: getUrlById,
   updateUrl: updateUrl,
   deleteUrl: deleteUrl
-};
+};  
 
 function createUrl(request) {
   var newUrl = new Url({

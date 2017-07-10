@@ -1,4 +1,4 @@
-var Spider = require('./../model/spider.model');
+﻿var Spider = require('./../model/spider.model');
 var successMessage = require('./../services/successMessage');
 var failMessage = require('./../services/failMessage');
 
@@ -24,7 +24,7 @@ function createSpider(request) {
       }]
     }).exec()
     .then(function (spider) {
-      if (spider != null) {
+      if (spider !== null) {
         return Promise.reject({
           message: failMessage.spider.dupplicate
         });

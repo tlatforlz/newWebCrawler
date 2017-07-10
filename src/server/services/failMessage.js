@@ -8,7 +8,19 @@ var spider = {
   notFound: 'NOT_FOUND_SPIDER'
 }
 
+
+var catelogy = {
+  dupplicate: 'DUPPLICATE_CATELOGY',
+  notFound: 'NOT_FOUND_CATELOGY'
+}
+
+var news = {
+  dupplicate: 'DUPPLICATE_NEWS',
+  notFound: 'NOT_FOUND_NEWS'
+}
 module.exports = {
   url: url,
-  spider: spider
+  spider: spider,
+  catelogy: catelogy,
+  news: news
 }

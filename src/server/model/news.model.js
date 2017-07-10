@@ -1,40 +1,33 @@
-// _id: ObjectId,
-// 			title: nông sản sạch,
-// 			content: ,
-// 			description: '',
-// 			image: [
-// 				{
-// 					_id:
-// 					url: 
-// 				}
-// 			],
-// 			author: "",
-// 			SpiderId: ---,
-// 			URLId: ----,
-// 			TypeId: ---,
-// 			URL: ---,
-// 			CreateDays: ---,
-// 			UpdateDays: ---,
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var spiderSchema = new Schema({
-  urlId: {
-    type: Schema.Types.ObjectId,
-    require: true,
-    ref: 'url'
-  },
-  name: {
+var newsSchema = new Schema({
+  title: {
     type: String,
     require: true
   },
-  isSourceUpdated: {
-    type: Number,
-    default: 0
+  description: {
+    type: String
   },
-  isActive: {
-    type: Number,
-    default: 1,
+  content: {
+    type: String
+  },
+  image:{
+      type:String
+  },
+   author: {
+    type: String
+  },
+  originalLink:{
+      type:String
+  },
+  spiderId:{
+      type: Schema.Types.ObjectId,
+      ref:'spider'
+  },
+  categoryId:{
+      type: Schema.Types.ObjectId,
+      ref:'category'
   },
   updateDate: {
     type: Date,
@@ -43,12 +36,8 @@ var spiderSchema = new Schema({
   createDate: {
     type: Date,
     default: Date.now()
-  },
-  crawlingName: {
-    type: String,
-    require: true
   }
 });
 
-var spider = mongoose.model('spider', spiderSchema);
+var spider = mongoose.model('news', newsSchema);
 module.exports = spider;
