@@ -3,8 +3,7 @@ var Schema = mongoose.Schema;
 
 var newsSchema = new Schema({
   title: {
-    type: String,
-    require: true
+    type: String
   },
   description: {
     type: String
@@ -12,22 +11,22 @@ var newsSchema = new Schema({
   content: {
     type: String
   },
-  image:{
-      type:String
-  },
-   author: {
+  image: {
     type: String
   },
-  originalLink:{
-      type:String
+  author: {
+    type: String
   },
-  spiderId:{
-      type: Schema.Types.ObjectId,
-      ref:'spider'
+  originalLink: {
+    type: String
   },
-  categoryId:{
-      type: Schema.Types.ObjectId,
-      ref:'category'
+  spiderId: {
+    type: Schema.Types.ObjectId,
+    ref: 'spider'
+  },
+  categoryId: {
+    type: Schema.Types.ObjectId,
+    ref: 'category'
   },
   updateDate: {
     type: Date,

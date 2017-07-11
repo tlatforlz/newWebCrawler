@@ -8,6 +8,7 @@ module.exports = function () {
   router.put('/:id', updateSpider);
   router.delete('/:id', deleteSpider);
   router.post('/:crawlingName', callSpider);
+  router.post('/:crawlingName/update', updateNewsSpider);
 
   function createSpider(req, res, next) {
     var request = {
@@ -79,15 +80,28 @@ module.exports = function () {
   }
 
   function callSpider(req, res, next) {
-      var request = {
-          crawlingName: req.params.crawlingName
-      }
-      spiderDao.callSpider(request)
-          .then(function (spider) {
-              res.status(200).send(spider).end();
-          }).catch(function (err) {
-              res.status(400).send(err).end();
-          });
+    var request = {
+      crawlingName: req.params.crawlingName
+    }
+    spiderDao.callSpider(request)
+      .then(function (spider) {
+        res.status(200).send(spider).end();
+      }).catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  //updateNewsSpider
+  function updateNewsSpider(req, res, next) {
+    var request = {
+      crawlingName: req.params.crawlingName
+    }
+    spiderDao.updateNewsSpider(request)
+      .then(function (spider) {
+        res.status(200).send(spider).end();
+      }).catch(function (err) {
+        res.status(400).send(err).end();
+      });
   }
   return router;
 }

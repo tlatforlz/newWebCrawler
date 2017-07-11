@@ -8,7 +8,7 @@ module.exports = {
   getNewsById: getNewsById,
   updateNews: updateNews,
   deleteNews: deleteNews,
-  addNews: addNews
+  addNews: addNews,
 };
 
 function addNews(request) {
@@ -25,14 +25,16 @@ function addNews(request) {
     updateDate: Date.now()
   });
   console.log(news.title + " jump to dao news");
-  News.findOne({
+  return News.findOne({
     title: request.title
   }).exec().then(function (New) {
     if (New !== null) {
-      console.log('news log');
       return;
     }
-    news.save();
+    news.save().then(function () {
+      console.log('save success');
+      return Promise.resolve();
+    })
   });
 }
 

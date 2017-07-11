@@ -10,7 +10,8 @@ module.exports = {
   getSpiderById: getSpiderById,
   updateSpider: updateSpider,
   deleteSpider: deleteSpider,
-  callSpider: callSpider
+  callSpider: callSpider,
+  updateNewsSpider: updateNewsSpider
 };
 
 function createSpider(request) {
@@ -156,6 +157,31 @@ function callSpider(request) {
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep(spider.urlId, spider._id);
+          ListSpider.updateContentSpiderTinNongNghiep();
+          break;
+      }
+      return Promise.resolve({
+        messsage: successMessage.spider.callSpider,
+        spider: spider
+      });
+    });
+}
+
+function updateNewsSpider(request) {
+  return Spider.findOne({
+      crawlingName: request.crawlingName
+    })
+    .exec()
+    .then(function (spider) {
+      if (spider === null) {
+        return Promise.reject({
+          message: failMessage.spider.notFound
+        });
+      }
+
+      switch (request.crawlingName) {
+        case "spiderTinNongNghiep":
+          ListSpider.updateContentSpiderTinNongNghiep();
           break;
       }
       return Promise.resolve({

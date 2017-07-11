@@ -16,7 +16,9 @@
     "mongoose": "^4.10.6",
     "morgan": "~1.1.1",
     "nodemon": "^1.11.0",
-    "serve-favicon": "~2.0.1"
+    "request-sync": "^1.0.0",
+    "serve-favicon": "~2.0.1",
+    "sync-request": "^4.1.0"
   },
   "devDependencies": {
     "browser-sync": "~2.12.2",
