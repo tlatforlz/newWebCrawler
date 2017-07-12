@@ -11,14 +11,13 @@
   },
   "dependencies": {
     "body-parser": "~1.8.2",
+    "bower": "^1.8.0",
     "cheerio": "^1.0.0-rc.2",
     "express": "~4.9.3",
     "mongoose": "^4.10.6",
     "morgan": "~1.1.1",
     "nodemon": "^1.11.0",
-    "request-sync": "^1.0.0",
-    "serve-favicon": "~2.0.1",
-    "sync-request": "^4.1.0"
+    "serve-favicon": "~2.0.1"
   },
   "devDependencies": {
     "browser-sync": "~2.12.2",

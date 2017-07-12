@@ -22,6 +22,47 @@ function spiderTinNongNghiep(urlId, spiderId) {
 }
 
 function updateContentSpiderTinNongNghiep() {
+  console.log('call me ? ');
+  News.find({}, function (err, news) {
+    Promise.all(news.map(function (url) {
+      request(url.originalLink, function (err, res, body) {
+        if (!err) {
+          var $ = cheerio.load(body);
+          let newsTemp = {
+            _id: url._id,
+            title: $('#main-content > div.content > article > div > h1 > span').text(),
+            content: $('#main-content > div.content > article > div > div.entry').html(),
+            author: $('#main-content > div.content > article > div > p > span:nth-child(1) > a').text(),
+            createDate: $('#main-content > div.content > article > div > p > span:nth-child(2)').text(),
+          };
+          //console.log(newsTemp);
+
+          return Promise.resolve(newsTemp);
+        } else {
+          return Promise.reject(err);
+        }
+      });
+    })).then(function (newsTemp) {
+      console.log(newsTemp.title);
+      News.findById({
+        _id: newTemp._id
+      }, function (err, upNews) {
+        upNews.title = newsTemp.title;
+        upNews.content = newsTemp.content;
+        upNews.author = newsTemp.author;
+        upNews.createDate = newsTemp.createDate;
+        upNews.updateDate = Date.now();
+        upNews.save();
+      })
+
+    }).catch(function () {
+
+    });
+  });
+
+} //end func
+
+function updateContentSpiderTinNongNghiep3() {
   News.find({}, function (err, news) {
     console.log(news.length);
     news.forEach(epnews => {
@@ -31,7 +72,6 @@ function updateContentSpiderTinNongNghiep() {
       }, function (err, upNews) {
         console.log(upNews.originalLink);
         request(upNews.originalLink, function (error, response, body) {
-          console.log('fuck bug');
 
           if (!error) {
             var $ = cheerio.load(body);
@@ -48,9 +88,11 @@ function updateContentSpiderTinNongNghiep() {
           upNews.author = newsTemp.author;
           upNews.createDate = newsTemp.createDate;
           upNews.updateDate = Date.now();
-          upNews.save();
-        });
 
+        });
+        upNews.save(function (err) {
+
+        });
       });
     })
   });
