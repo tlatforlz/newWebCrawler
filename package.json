@@ -10,11 +10,14 @@
     "test": "gulp test"
   },
   "dependencies": {
+    "async": "^2.5.0",
+    "async-waterfall": "^0.1.5",
     "asyncjs": "0.0.10",
     "body-parser": "~1.8.2",
     "bower": "^1.8.0",
     "cheerio": "^1.0.0-rc.2",
     "express": "~4.9.3",
+    "moment": "^2.18.1",
     "mongoose": "^4.10.6",
     "morgan": "~1.1.1",
     "nodemon": "^1.11.0",

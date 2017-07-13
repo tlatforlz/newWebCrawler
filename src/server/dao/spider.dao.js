@@ -157,7 +157,6 @@ function callSpider(request) {
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep(spider.urlId, spider._id);
-          ListSpider.updateContentSpiderTinNongNghiep();
           break;
       }
       return Promise.resolve({
@@ -166,6 +165,7 @@ function callSpider(request) {
       });
     });
 }
+
 
 function updateNewsSpider(request) {
   return Spider.findOne({
@@ -178,10 +178,9 @@ function updateNewsSpider(request) {
           message: failMessage.spider.notFound
         });
       }
-
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
-          ListSpider.insertPromise();
+          ListSpider.final();
           break;
       }
       return Promise.resolve({

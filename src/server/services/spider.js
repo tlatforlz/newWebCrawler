@@ -3,22 +3,24 @@ var cheerio = require("cheerio");
 var Spider = require('../dao/spider.dao');
 var newsDao = require('../dao/news.dao');
 var News = require('./../model/news.model');
-var async = require('asyncjs');
+var async = require('async');
 
 module.exports = {
   spiderTinNongNghiep: spiderTinNongNghiep,
   updateContentSpiderTinNongNghiep: updateContentSpiderTinNongNghiep,
-  insertPromise: insertPromise
+  insertPromise: insertPromise,
+  final: final
 }
-var promises = [];
+
 
 function spiderTinNongNghiep(urlId, spiderId) {
+  console.log('blabla');
   console.log(urlId);
   console.log(urlId.path);
 
   urlId.path.forEach(url => {
     var disUrl = urlId.hostname + url.namePath;
-    getPath_spiderTinNongNghiep(disUrl, spiderId, url.catelogyId, fullPath);
+    getPath_spiderTinNongNghiep(disUrl, spiderId, url.catelogyId);
   });
 
 }
@@ -33,23 +35,71 @@ function requestPromise(options) {
   });
 }
 
-function insertPromise() {
+function final() {
+  var allNews = [];
+  async.waterfall(
+    [
+      function (callback) {
+        News.find({}, function (err, news) {
+          callback(null, news);
+        });
+      },
+      function (news) {
+        news.forEach(function (upNews) {
+          request(upNews.originalLink, function (err, res, body) {
+            if (!err) {
+              var $ = cheerio.load(body);
+              async.waterfall(
+                [
+                  function (callback) {
+                    var date = new Date();
+                    var dateF = $('#main-content > div.content > article > div > p > span:nth-child(2)').text().split('/');
+                    date.setDate(dateF[0]);
+                    date.setMonth(dateF[1]);
+                    date.setFullYear(dateF[2]);
+                    upNews.createDate = date;
+                    upNews.updateDate = Date.now();
+                    upNews.title = $('#main-content > div.content > article > div > h1 > span').text();
+                    callback(null, upNews);
+                  },
+                  function (upNews, callback) {
+                    upNews.content = $('#main-content > div.content > article > div > div.entry').html();
+                    callback(null, upNews);
+                  },
+                  function (upNews, callback) {
+                    upNews.author = $('#main-content > div.content > article > div > p > span:nth-child(1) > a').text();
+                    callback(null, upNews);
+                  }
+                ],
+                function (err, upNews) {
+                  //   console.log(upNews);
+                  console.log(upNews.originalLink);
+                  upNews.save(function (err) {
+                    console.log(err);
+                  });
+                });
+            }
+          });
+        });
+      }
+    ],
+    function () {
+
+    });
+}
+
+function insertPromise(promises) {
   News.find({}, function (err, news) {
-    console.log(news.length);
     news.forEach(function (url) {
       promises.push(requestPromise({
         url: url.originalLink,
         id: url._id
       }));
     });
-  }, updateContentSpiderTinNongNghiep());
-
+  });
 }
 
-
-function updateContentSpiderTinNongNghiep() {
-
-  console.log('call me')
+function updateContentSpiderTinNongNghiep(promises) {
   console.log(promises.length);
   Promise.all(promises).then(function (data) {
     console.log(data.length);
@@ -92,7 +142,7 @@ function updateContentSpiderTinNongNghiep3() {
           if (!error) {
             var $ = cheerio.load(body);
           }
-          let newsTemp = {
+          var newsTemp = {
             title: $('#main-content > div.content > article > div > h1 > span').text(),
             content: $('#main-content > div.content > article > div > div.entry').html(),
             author: $('#main-content > div.content > article > div > p > span:nth-child(1) > a').text(),
@@ -114,7 +164,7 @@ function updateContentSpiderTinNongNghiep3() {
   });
 }
 
-function getPath_spiderTinNongNghiep(path, spiderId, catelogyId, fullPath) {
+function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
   if (path === undefined) {
     return;
   }
@@ -127,7 +177,7 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId, fullPath) {
       var news = new News({
         originalLink: url,
         spiderId: spiderId,
-        catelogyId: catelogyId
+        categoryId: catelogyId
       });
       News.findOne({
         originalLink: news.originalLink
@@ -141,7 +191,7 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId, fullPath) {
     if (gotoPage === undefined) {
       return;
     }
-    getPath_spiderTinNongNghiep(gotoPage, spiderId, catelogyId, fullPath);
+    getPath_spiderTinNongNghiep(gotoPage, spiderId, catelogyId);
   });
   return;
 }

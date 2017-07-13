@@ -29,12 +29,10 @@ var newsSchema = new Schema({
     ref: 'category'
   },
   updateDate: {
-    type: Date,
-    default: Date.now()
+    type: Date
   },
   createDate: {
-    type: Date,
-    default: Date.now()
+    type: Date
   }
 });
 

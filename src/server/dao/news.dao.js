@@ -48,7 +48,7 @@ function createNews(request) {
     originalLink: request.originaLink,
     spiderId: request.spiderId,
     categoryId: request.categoryId,
-    createDate: Date.now(),
+    createDate: request.createDate,
     updateDate: Date.now()
   });
   return News.findOne({
