@@ -181,7 +181,7 @@ function updateNewsSpider(request) {
 
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
-          ListSpider.updateContentSpiderTinNongNghiep();
+          ListSpider.insertPromise();
           break;
       }
       return Promise.resolve({

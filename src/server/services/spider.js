@@ -3,12 +3,14 @@ var cheerio = require("cheerio");
 var Spider = require('../dao/spider.dao');
 var newsDao = require('../dao/news.dao');
 var News = require('./../model/news.model');
+var async = require('asyncjs');
 
 module.exports = {
   spiderTinNongNghiep: spiderTinNongNghiep,
-  updateContentSpiderTinNongNghiep: updateContentSpiderTinNongNghiep
+  updateContentSpiderTinNongNghiep: updateContentSpiderTinNongNghiep,
+  insertPromise: insertPromise
 }
-var fullPath = [];
+var promises = [];
 
 function spiderTinNongNghiep(urlId, spiderId) {
   console.log(urlId);
@@ -21,45 +23,59 @@ function spiderTinNongNghiep(urlId, spiderId) {
 
 }
 
-function updateContentSpiderTinNongNghiep() {
-  console.log('call me ? ');
+function requestPromise(options) {
+  return new Promise(function (resolve, reject) {
+    console.log(options.url);
+    request(options.url, function (err, resp, body) {
+      if (err) return reject(err);
+      resolve(body);
+    });
+  });
+}
+
+function insertPromise() {
   News.find({}, function (err, news) {
-    Promise.all(news.map(function (url) {
-      request(url.originalLink, function (err, res, body) {
-        if (!err) {
-          var $ = cheerio.load(body);
+    console.log(news.length);
+    news.forEach(function (url) {
+      promises.push(requestPromise({
+        url: url.originalLink,
+        id: url._id
+      }));
+    });
+  }, updateContentSpiderTinNongNghiep());
+
+}
+
+
+function updateContentSpiderTinNongNghiep() {
+
+  console.log('call me')
+  console.log(promises.length);
+  Promise.all(promises).then(function (data) {
+    console.log(data.length);
+    for (var i = 0; i < data.length; i++) {
+      console.log(data[i].id);
+      if ($ = cheerio.load(data[i])) {
+        News.findById({
+          _id: data[i].id
+        }, function (err, upNews) {
           let newsTemp = {
-            _id: url._id,
             title: $('#main-content > div.content > article > div > h1 > span').text(),
             content: $('#main-content > div.content > article > div > div.entry').html(),
             author: $('#main-content > div.content > article > div > p > span:nth-child(1) > a').text(),
             createDate: $('#main-content > div.content > article > div > p > span:nth-child(2)').text(),
           };
-          //console.log(newsTemp);
 
-          return Promise.resolve(newsTemp);
-        } else {
-          return Promise.reject(err);
-        }
-      });
-    })).then(function (newsTemp) {
-      console.log(newsTemp.title);
-      News.findById({
-        _id: newTemp._id
-      }, function (err, upNews) {
-        upNews.title = newsTemp.title;
-        upNews.content = newsTemp.content;
-        upNews.author = newsTemp.author;
-        upNews.createDate = newsTemp.createDate;
-        upNews.updateDate = Date.now();
-        upNews.save();
-      })
-
-    }).catch(function () {
-
-    });
+          upNews.title = newsTemp.title;
+          upNews.content = newsTemp.content;
+          upNews.author = newsTemp.author;
+          upNews.createDate = newsTemp.createDate;
+          upNews.updateDate = Date.now();
+          upNews.save();
+        });
+      }
+    }
   });
-
 } //end func
 
 function updateContentSpiderTinNongNghiep3() {
