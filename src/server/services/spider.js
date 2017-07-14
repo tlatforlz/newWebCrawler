@@ -54,12 +54,10 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
   return;
 }
 
-function spiderTinNongNghiep_path(urlId, spiderId, categoryId) {
+function spiderTinNongNghiep_path(urlId, spiderId, catelogyId) {
+  console.log(urlId);
   urlId.path.forEach(url => {
-    console.log(url);
-    console.log(url.categoryId);
-    console.log(categoryId);
-    if (url.categoryId.equals(categoryId)) {
+    if (url.catelogyId.equals(catelogyId)) {
       var disUrl = urlId.hostname + url.namePath;
       getPath_spiderTinNongNghiep(disUrl, spiderId, url.catelogyId);
     }

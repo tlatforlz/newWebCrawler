@@ -192,7 +192,6 @@ function updateNewsSpider(request) {
 }
 
 function callSpiderPath(request) {
-  console.log(request.catelogyId);
   return Spider.findOne({
       crawlingName: request.crawlingName,
     })
@@ -204,8 +203,6 @@ function callSpiderPath(request) {
           message: failMessage.spider.notFound
         });
       }
-      console.log(request.catelogyId);
-      console.log(request.crawlingName);
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep_path(spider.urlId, spider._id, request.catelogyId);
