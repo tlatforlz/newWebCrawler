@@ -166,6 +166,30 @@ function callSpider(request) {
     });
 }
 
+function callSpiderPath(request) {
+  return Spider.findOne({
+      crawlingName: request.crawlingName
+    })
+    .populate('urlId')
+    .exec()
+    .then(function (spider) {
+      if (spider === null) {
+        return Promise.reject({
+          message: failMessage.spider.notFound
+        });
+      }
+
+      switch (request.crawlingName) {
+        case "spiderTinNongNghiep":
+          ListSpider.spiderTinNongNghiep(spider.urlId, spider._id, request.catelogyId);
+          break;
+      }
+      return Promise.resolve({
+        messsage: successMessage.spider.callSpider,
+        spider: spider
+      });
+    });
+}
 
 function updateNewsSpider(request) {
   return Spider.findOne({

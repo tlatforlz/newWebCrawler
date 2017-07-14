@@ -9,6 +9,8 @@ module.exports = function () {
   router.delete('/:id', deleteSpider);
   router.post('/:crawlingName', callSpider);
   router.post('/:crawlingName/update', updateNewsSpider);
+  router.post('/:crawlingName/:catelogyId', callSpiderPath);
+  router.post('/:crawlingName/:catelogyId/update', updateNewsSpiderUpdatePath)
 
   function createSpider(req, res, next) {
     var request = {
@@ -79,6 +81,7 @@ module.exports = function () {
       });
   }
 
+  //update all news in crawlingName
   function callSpider(req, res, next) {
     var request = {
       crawlingName: req.params.crawlingName
@@ -91,12 +94,42 @@ module.exports = function () {
       });
   }
 
-  //updateNewsSpider
+  //update all news in crawlingName
   function updateNewsSpider(req, res, next) {
     var request = {
-      crawlingName: req.params.crawlingName
+      crawlingName: req.params.crawlingName,
     }
     spiderDao.updateNewsSpider(request)
+      .then(function (spider) {
+        res.status(200).send(spider).end();
+      }).catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  //call get all news in crawlingNews with catelogyId
+  function callSpiderPath(req, res, next) {
+    var request = {
+      crawlingName: req.params.crawlingName,
+      catelogyId: req.params.catelogyId
+    }
+    spiderDao.callSpiderPath(request)
+      .then(function (spider) {
+        res.status(200).send(spider).end();
+      }).catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+
+
+  // update all news in crawlingName with catelogyId
+  function updateNewsSpiderUpdatePath(req, res, next) {
+    var request = {
+      crawlingName: req.params.crawlingName,
+      catelogyId: req.params.catelogyId
+    }
+    spiderDao.updateNewsSpiderUpdate(request)
       .then(function (spider) {
         res.status(200).send(spider).end();
       }).catch(function (err) {
