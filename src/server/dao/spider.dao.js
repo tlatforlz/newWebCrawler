@@ -180,7 +180,7 @@ function updateNewsSpider(request) {
       }
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
-          ListSpider.final();
+          ListSpider.updateContentSpiderTinNongNghiep();
           break;
       }
       return Promise.resolve({
