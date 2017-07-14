@@ -11,7 +11,9 @@ module.exports = {
   updateSpider: updateSpider,
   deleteSpider: deleteSpider,
   callSpider: callSpider,
-  updateNewsSpider: updateNewsSpider
+  updateNewsSpider: updateNewsSpider,
+  callSpiderPath: callSpiderPath,
+  updateNewsSpiderUpdate: updateNewsSpiderUpdate
 };
 
 function createSpider(request) {
@@ -166,31 +168,6 @@ function callSpider(request) {
     });
 }
 
-function callSpiderPath(request) {
-  return Spider.findOne({
-      crawlingName: request.crawlingName
-    })
-    .populate('urlId')
-    .exec()
-    .then(function (spider) {
-      if (spider === null) {
-        return Promise.reject({
-          message: failMessage.spider.notFound
-        });
-      }
-
-      switch (request.crawlingName) {
-        case "spiderTinNongNghiep":
-          ListSpider.spiderTinNongNghiep(spider.urlId, spider._id, request.catelogyId);
-          break;
-      }
-      return Promise.resolve({
-        messsage: successMessage.spider.callSpider,
-        spider: spider
-      });
-    });
-}
-
 function updateNewsSpider(request) {
   return Spider.findOne({
       crawlingName: request.crawlingName
@@ -204,7 +181,58 @@ function updateNewsSpider(request) {
       }
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
-          ListSpider.updateContentSpiderTinNongNghiep();
+          ListSpider.spiderTinNongNghiep_updateAll();
+          break;
+      }
+      return Promise.resolve({
+        messsage: successMessage.spider.callSpider,
+        spider: spider
+      });
+    });
+}
+
+function callSpiderPath(request) {
+  console.log(request.catelogyId);
+  return Spider.findOne({
+      crawlingName: request.crawlingName,
+    })
+    .populate('urlId')
+    .exec()
+    .then(function (spider) {
+      if (spider === null) {
+        return Promise.reject({
+          message: failMessage.spider.notFound
+        });
+      }
+      console.log(request.catelogyId);
+      console.log(request.crawlingName);
+      switch (request.crawlingName) {
+        case "spiderTinNongNghiep":
+          ListSpider.spiderTinNongNghiep_path(spider.urlId, spider._id, request.catelogyId);
+          break;
+      }
+      return Promise.resolve({
+        messsage: successMessage.spider.callSpider,
+        spider: spider
+      });
+    });
+}
+
+function updateNewsSpiderUpdate(request) {
+  return Spider.findOne({
+      crawlingName: request.crawlingName
+    })
+    .exec()
+    .then(function (spider) {
+      if (spider === null) {
+        return Promise.reject({
+          message: failMessage.spider.notFound
+        });
+      }
+      switch (request.crawlingName) {
+        case "spiderTinNongNghiep":
+          console.log(request);
+          ListSpider.spiderTinNongNghiep_updatePath(request.catelogyId);
           break;
       }
       return Promise.resolve({

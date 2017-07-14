@@ -7,7 +7,9 @@ var async = require('async');
 
 module.exports = {
   spiderTinNongNghiep: spiderTinNongNghiep,
-  spiderTinNongNghiep_updateAll: spiderTinNongNghiep_updateAll
+  spiderTinNongNghiep_updateAll: spiderTinNongNghiep_updateAll,
+  spiderTinNongNghiep_path: spiderTinNongNghiep_path,
+  spiderTinNongNghiep_updatePath: spiderTinNongNghiep_updatePath
 }
 
 function spiderTinNongNghiep(urlId, spiderId) {
@@ -54,6 +56,9 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
 
 function spiderTinNongNghiep_path(urlId, spiderId, categoryId) {
   urlId.path.forEach(url => {
+    console.log(url);
+    console.log(url.categoryId);
+    console.log(categoryId);
     if (url.categoryId.equals(categoryId)) {
       var disUrl = urlId.hostname + url.namePath;
       getPath_spiderTinNongNghiep(disUrl, spiderId, url.catelogyId);

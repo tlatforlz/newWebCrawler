@@ -112,7 +112,8 @@ module.exports = function () {
     var request = {
       crawlingName: req.params.crawlingName,
       catelogyId: req.params.catelogyId
-    }
+    };
+    console.log(request);
     spiderDao.callSpiderPath(request)
       .then(function (spider) {
         res.status(200).send(spider).end();
@@ -129,6 +130,7 @@ module.exports = function () {
       crawlingName: req.params.crawlingName,
       catelogyId: req.params.catelogyId
     }
+    console.log(request);
     spiderDao.updateNewsSpiderUpdate(request)
       .then(function (spider) {
         res.status(200).send(spider).end();
