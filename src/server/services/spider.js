@@ -10,7 +10,8 @@ module.exports = {
   spiderTinNongNghiep_updateAll: spiderTinNongNghiep_updateAll,
   spiderTinNongNghiep_path: spiderTinNongNghiep_path,
   spiderTinNongNghiep_updatePath: spiderTinNongNghiep_updatePath,
-  spiderTinNongNghiep_Url: spiderTinNongNghiep_Url
+  spiderTinNongNghiep_Url: spiderTinNongNghiep_Url,
+  spiderTinNongNghiep_updateUrl: spiderTinNongNghiep_updateUrl
 }
 
 function spiderTinNongNghiep(urlId, spiderId) {
@@ -68,11 +69,10 @@ function spiderTinNongNghiep_path(urlId, spiderId, catelogyId) {
 function spiderTinNongNghiep_Url(urlId, spiderId, url) {
   News.findOne({
     originalLink: url
-  }, function (err, News) {
-    if (News !== null) {
+  }, function (err, tNews) {
+    if (tNews !== null) {
       return false;
     }
-
     var upNews = new News({
       originalLink: url,
       spiderId: spiderId,
@@ -100,14 +100,13 @@ function spiderTinNongNghiep_updateAll() {
                     callback(null, news[page].title);
                   },
                   content: function (callback) {
-                    news[page].content = $('#main-content > div.content > article > div > div.entry').html();
-                    callback(null, news[page].content);
+                    let content = $('#main-content > div.content > article > div > div.entry').html();
+                    let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
+                    callback(null, content.split(remove).join(''));
                   },
                   author: function (callback) {
                     let author = $('#main-content > div.content > article > div > p > span:nth-child(1) > a').text();
-                    let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').text();
-                    news[page].author = author.split(remove).join('');
-
+                    news[page].author = author;
                     callback(null, news[page].author);
                   },
                   createDate: function (callback) {
@@ -169,8 +168,9 @@ function spiderTinNongNghiep_updatePath(categoryId) {
                     callback(null, news[page].title);
                   },
                   content: function (callback) {
-                    news[page].content = $('#main-content > div.content > article > div > div.entry').html();
-                    callback(null, news[page].content);
+                    let content = $('#main-content > div.content > article > div > div.entry').html();
+                    let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
+                    callback(null, content.split(remove).join(''));
                   },
                   author: function (callback) {
                     news[page].author = $('#main-content > div.content > article > div > p > span:nth-child(1) > a').text();
@@ -216,9 +216,10 @@ function spiderTinNongNghiep_updatePath(categoryId) {
 
 function spiderTinNongNghiep_updateUrl(url) {
   News.findById({
-    _id: request.url
+    _id: url
   }, function (err, upNews) {
     if (upNews !== null) {
+      console.log('this is upNews ' + upNews);
       request(upNews.originalLink, function (err, res, body) {
         if (!err && res.statusCode === 200) {
           var $ = cheerio.load(body);
@@ -228,8 +229,9 @@ function spiderTinNongNghiep_updateUrl(url) {
                 callback(null, upNews.title);
               },
               content: function (callback) {
-                upNews.content = $('#main-content > div.content > article > div > div.entry').html();
-                callback(null, upNews.content);
+                let content = $('#main-content > div.content > article > div > div.entry').html();
+                let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
+                callback(null, content.split(remove).join(''));
               },
               author: function (callback) {
                 upNews.author = $('#main-content > div.content > article > div > p > span:nth-child(1) > a').text();

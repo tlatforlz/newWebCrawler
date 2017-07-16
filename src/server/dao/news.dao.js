@@ -9,6 +9,9 @@ module.exports = {
   updateNews: updateNews,
   deleteNews: deleteNews,
   addNews: addNews,
+  activeNews: activeNews,
+  deActiveNews: deActiveNews,
+  getNewsHome: getNewsHome
 };
 
 function addNews(request) {
@@ -24,7 +27,6 @@ function addNews(request) {
     createDate: request.createDate,
     updateDate: Date.now()
   });
-  console.log(news.title + " jump to dao news");
   return News.findOne({
     title: request.title
   }).exec().then(function (New) {
@@ -32,7 +34,6 @@ function addNews(request) {
       return;
     }
     news.save().then(function () {
-      console.log('save success');
       return Promise.resolve();
     })
   });
@@ -166,4 +167,77 @@ function deleteNews(request) {
       message: successMessage.news.delete
     });
   });
+}
+
+function activeNews(request) {
+  request.newsId.forEach(function (Id) {
+    console.log(Id);
+    News.findById({
+      _id: Id
+    }).exec().then(function (upNews) {
+      upNews.active = true;
+      upNews.save().then(function (err) {
+        if (err) {
+          return Promise.reject({
+            message: failMessage.news.active
+          });
+        }
+      });
+
+    }).catch(function (err) {
+      if (err) {
+        return Promise.reject({
+          message: failMessage.news.active
+        });
+      }
+    })
+  });
+  return Promise.resolve({
+    message: successMessage.news.active
+  });
+}
+
+function deActiveNews(request) {
+  request.newsId.forEach(function (Id) {
+    console.log(Id);
+    News.findById({
+      _id: Id
+    }).exec().then(function (upNews) {
+      upNews.active = false;
+      upNews.save().then(function (err) {
+        if (err) {
+          return Promise.reject({
+            message: failMessage.news.deActive
+          });
+        }
+      });
+
+    }).catch(function (err) {
+      if (err) {
+        return Promise.reject({
+          message: failMessage.news.deActive
+        });
+      }
+    })
+  });
+  return Promise.resolve({
+    message: successMessage.news.deActive
+  });
+}
+
+function getNewsHome() {
+  return News.find({
+      active: true
+    }).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      });
+    });
 }

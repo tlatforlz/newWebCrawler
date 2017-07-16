@@ -1,12 +1,21 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('app', [
-    'app.core',
-    'app.widgets',
-    'app.admin',
-    'app.dashboard',
-    'app.layout'
+
+    'app.homepage',
+
+    'ui.router',
+    'angular-jwt',
+    'ngStorage',
+    'ngAnimate',
+    'ngSanitize',
+    'ngplus',
+    'app.auth',
+    'blocks.exception',
+    'blocks.logger',
+    'blocks.router',
+    'infinite-scroll'
   ]);
 
 })();

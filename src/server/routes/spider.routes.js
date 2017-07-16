@@ -11,8 +11,8 @@ module.exports = function () {
   router.post('/:crawlingName/update', updateNewsSpider);
   router.post('/:crawlingName/:catelogyId', callSpiderPath);
   router.post('/:crawlingName/:catelogyId/update', updateNewsSpiderPath);
-  router.post('/:crawlingName/url', callSpiderUrl);
-  router.post('/:crawlingName/:url/update', updateNewsSpiderUrl);
+  router.post('/:crawlingName/call/url', callSpiderUrl);
+  router.post('/:crawlingName/:url/updateurl', updateNewsSpiderUrl);
 
   function createSpider(req, res, next) {
     var request = {
@@ -160,7 +160,7 @@ module.exports = function () {
       crawlingName: req.params.crawlingName,
       url: req.params.url
     }
-
+    console.log(request);
     spiderDao.updateNewsSpiderUrl(request)
       .then(function (spider) {
         res.status(200).send(spider).end();

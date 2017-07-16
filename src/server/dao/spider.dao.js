@@ -3,6 +3,7 @@ var NewsDao = require('./news.dao.js');
 var successMessage = require('./../services/successMessage');
 var failMessage = require('./../services/failMessage');
 var ListSpider = require('./../services/spider');
+var News = require('./../model/news.model');
 
 module.exports = {
   createSpider: createSpider,
@@ -242,33 +243,38 @@ function updateNewsSpiderPath(request) {
 
 
 function callSpiderUrl(request) {
-  return Spider.findOne({
-      crawlingName: request.crawlingName,
-    })
-    .populate('urlId')
-    .exec()
-    .then(function (spider) {
-      if (spider === null) {
-        return Promise.reject({
-          message: failMessage.spider.notFound
-        });
-      }
-      switch (request.crawlingName) {
-        case "spiderTinNongNghiep":
-          console.log(request);
-          var check = ListSpider.spiderTinNongNghiep_Url(spider.urlId, spider._id, request.url);
-          if (check === false) {
-            return Promise.reject({
-              message: failMessage.spider.urlDupplicate
-            })
-          }
-          break;
-      }
-      return Promise.resolve({
-        messsage: successMessage.spider.callSpider,
-        spider: spider
+  return News.findOne({
+    originalLink: request.url
+  }).exec().then(function (upNews) {
+    if (upNews !== null) {
+      return Promise.reject({
+        message: failMessage.spider.urlDupplicate
       });
-    });
+    }
+    return Spider.findOne({
+        crawlingName: request.crawlingName,
+      })
+      .populate('urlId')
+      .exec()
+      .then(function (spider) {
+        if (spider === null) {
+          return Promise.reject({
+            message: failMessage.spider.notFound
+          });
+        }
+        switch (request.crawlingName) {
+          case "spiderTinNongNghiep":
+            console.log(request);
+            istSpider.spiderTinNongNghiep_Url(spider.urlId, spider._id, request.url);
+            break;
+        }
+        return Promise.resolve({
+          messsage: successMessage.spider.callSpider,
+          spider: spider
+        });
+      });
+  });
+
 }
 
 
