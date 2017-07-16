@@ -33,6 +33,10 @@ var newsSchema = new Schema({
   },
   createDate: {
     type: Date
+  },
+  active: {
+    type: Boolean,
+    default: false
   }
 });
 

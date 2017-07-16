@@ -10,7 +10,9 @@ module.exports = function () {
   router.post('/:crawlingName', callSpider);
   router.post('/:crawlingName/update', updateNewsSpider);
   router.post('/:crawlingName/:catelogyId', callSpiderPath);
-  router.post('/:crawlingName/:catelogyId/update', updateNewsSpiderUpdatePath)
+  router.post('/:crawlingName/:catelogyId/update', updateNewsSpiderPath);
+  router.post('/:crawlingName/url', callSpiderUrl);
+  router.post('/:crawlingName/:url/update', updateNewsSpiderUrl);
 
   function createSpider(req, res, next) {
     var request = {
@@ -122,19 +124,51 @@ module.exports = function () {
   }
 
 
-
   // update all news in crawlingName with catelogyId
-  function updateNewsSpiderUpdatePath(req, res, next) {
+  function updateNewsSpiderPath(req, res, next) {
     var request = {
       crawlingName: req.params.crawlingName,
       catelogyId: req.params.catelogyId
     }
-    spiderDao.updateNewsSpiderUpdate(request)
+    spiderDao.updateNewsSpiderPath(request)
       .then(function (spider) {
         res.status(200).send(spider).end();
       }).catch(function (err) {
         res.status(400).send(err).end();
       });
   }
+
+  //call get all news in crawlingNews with URL
+  function callSpiderUrl(req, res, next) {
+    var request = {
+      crawlingName: req.params.crawlingName,
+      url: req.body.url
+    };
+    console.log("may goi tao a");
+    console.log(request);
+    spiderDao.callSpiderUrl(request)
+      .then(function (spider) {
+        res.status(200).send(spider).end();
+      }).catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  // update all news in crawlingName with newsID
+  function updateNewsSpiderUrl(req, res, next) {
+    var request = {
+      crawlingName: req.params.crawlingName,
+      url: req.params.url
+    }
+
+    spiderDao.updateNewsSpiderUrl(request)
+      .then(function (spider) {
+        res.status(200).send(spider).end();
+      }).catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+
   return router;
 }

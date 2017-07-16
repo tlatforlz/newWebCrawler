@@ -29,6 +29,7 @@ module.exports = function () {
   }
 
   function getAllNews(req, res, next) {
+    console.log('fuck gi vay');
     newsDao.getAllNews()
       .then(function (news) {
         res.status(200).send(news).end();

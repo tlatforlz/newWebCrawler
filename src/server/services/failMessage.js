@@ -5,7 +5,8 @@ var url = {
 
 var spider = {
   dupplicate: 'DUPPLICATE_SPIDER',
-  notFound: 'NOT_FOUND_SPIDER'
+  notFound: 'NOT_FOUND_SPIDER',
+  urlDupplicate: 'URL_DUPPLICAATE'
 }
 
 
@@ -18,6 +19,8 @@ var news = {
   dupplicate: 'DUPPLICATE_NEWS',
   notFound: 'NOT_FOUND_NEWS'
 }
+
+
 module.exports = {
   url: url,
   spider: spider,

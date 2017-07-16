@@ -13,7 +13,9 @@ module.exports = {
   callSpider: callSpider,
   updateNewsSpider: updateNewsSpider,
   callSpiderPath: callSpiderPath,
-  updateNewsSpiderUpdate: updateNewsSpiderUpdate
+  updateNewsSpiderPath: updateNewsSpiderPath,
+  callSpiderUrl: callSpiderUrl,
+  updateNewsSpiderUrl: updateNewsSpiderUrl
 };
 
 function createSpider(request) {
@@ -215,7 +217,7 @@ function callSpiderPath(request) {
     });
 }
 
-function updateNewsSpiderUpdate(request) {
+function updateNewsSpiderPath(request) {
   return Spider.findOne({
       crawlingName: request.crawlingName
     })
@@ -228,8 +230,62 @@ function updateNewsSpiderUpdate(request) {
       }
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
-          console.log(request);
           ListSpider.spiderTinNongNghiep_updatePath(request.catelogyId);
+          break;
+      }
+      return Promise.resolve({
+        messsage: successMessage.spider.callSpider,
+        spider: spider
+      });
+    });
+}
+
+
+function callSpiderUrl(request) {
+  return Spider.findOne({
+      crawlingName: request.crawlingName,
+    })
+    .populate('urlId')
+    .exec()
+    .then(function (spider) {
+      if (spider === null) {
+        return Promise.reject({
+          message: failMessage.spider.notFound
+        });
+      }
+      switch (request.crawlingName) {
+        case "spiderTinNongNghiep":
+          console.log(request);
+          var check = ListSpider.spiderTinNongNghiep_Url(spider.urlId, spider._id, request.url);
+          if (check === false) {
+            return Promise.reject({
+              message: failMessage.spider.urlDupplicate
+            })
+          }
+          break;
+      }
+      return Promise.resolve({
+        messsage: successMessage.spider.callSpider,
+        spider: spider
+      });
+    });
+}
+
+
+function updateNewsSpiderUrl(request) {
+  return Spider.findOne({
+      crawlingName: request.crawlingName
+    })
+    .exec()
+    .then(function (spider) {
+      if (spider === null) {
+        return Promise.reject({
+          message: failMessage.spider.notFound
+        });
+      }
+      switch (request.crawlingName) {
+        case "spiderTinNongNghiep":
+          ListSpider.spiderTinNongNghiep_updateUrl(request.url);
           break;
       }
       return Promise.resolve({
