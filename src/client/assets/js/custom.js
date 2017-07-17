@@ -1,5 +1,6 @@
-jQuery(document).ready(function () {
+$(document).ready(function () {
   // for hover dropdown menu
+  console.log('ádsa');
   $('ul.nav li.dropdown').hover(function () {
     $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(200);
   }, function () {
@@ -16,7 +17,7 @@ jQuery(document).ready(function () {
     autoplaySpeed: 2000,
     cssEase: 'linear'
   });
-  // slick slider2 call 
+  //slick slider2 call
   $('.slick_slider2').slick({
     dots: true,
     infinite: true,
@@ -28,7 +29,7 @@ jQuery(document).ready(function () {
     cssEase: 'linear'
   });
   //Check to see if the window is top if not then display button
-  jQuery(window).scroll(function () {
+  $(window).scroll(function () {
     if ($(this).scrollTop() > 300) {
       $('.scrollToTop').fadeIn();
     } else {
@@ -44,11 +45,11 @@ jQuery(document).ready(function () {
   });
 });
 
-// wow = new WOW({
-//     animateClass: 'animated',
-//     offset: 100
-// });
-// wow.init();
+wow = new WOW({
+  animateClass: 'animated',
+  offset: 100
+});
+wow.init();
 
 jQuery(window).load(function () { // makes sure the whole site is loaded
   $('#status').fadeOut(); // will first fade out the loading animation

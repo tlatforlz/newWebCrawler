@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function () {
   var client = './src/client/';
   var server = './src/server/';
   var clientApp = client + 'app/';
@@ -7,7 +7,9 @@ module.exports = function() {
   var specRunnerFile = 'specs.html';
   var temp = './.tmp/';
   var wiredep = require('wiredep');
-  var bowerFiles = wiredep({ devDependencies: true })['js'];
+  var bowerFiles = wiredep({
+    devDependencies: true
+  })['js'];
   var bower = {
     json: require('./bower.json'),
     directory: './bower_components/',
@@ -66,7 +68,9 @@ module.exports = function() {
     /**
      * plato
      */
-    plato: { js: clientApp + '**/*.js' },
+    plato: {
+      js: clientApp + '**/*.js'
+    },
 
     /**
      * browser sync
@@ -133,7 +137,7 @@ module.exports = function() {
   /**
    * wiredep and bower settings
    */
-  config.getWiredepDefaultOptions = function() {
+  config.getWiredepDefaultOptions = function () {
     var options = {
       bowerJson: config.bower.json,
       directory: config.bower.directory,
@@ -166,9 +170,17 @@ module.exports = function() {
         dir: report + 'coverage',
         reporters: [
           // reporters not supporting the `file` property
-          { type: 'html', subdir: 'report-html' },
-          { type: 'lcov', subdir: 'report-lcov' },
-          { type: 'text-summary' } //, subdir: '.', file: 'text-summary.txt'}
+          {
+            type: 'html',
+            subdir: 'report-html'
+          },
+          {
+            type: 'lcov',
+            subdir: 'report-lcov'
+          },
+          {
+            type: 'text-summary'
+          } //, subdir: '.', file: 'text-summary.txt'}
         ]
       },
       preprocessors: {}
