@@ -22,9 +22,10 @@
     routerHelper.configureStates(getStates(), otherwise);
 
     $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
+      console.log('state to homepage');
       if (toState.url === '/') {
         event.preventDefault();
-        $state.go('app.homepage');
+        $state.go('layout.homepage');
       }
     });
   }
