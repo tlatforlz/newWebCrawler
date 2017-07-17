@@ -18,14 +18,12 @@
   function appRun($state, $rootScope, routerHelper) {
 
     var otherwise = '/404';
-
     routerHelper.configureStates(getStates(), otherwise);
-
     $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
       console.log('state to homepage');
-      if (toState.url === '/') {
+      if (toState.url === '') {
         event.preventDefault();
-        $state.go('layout.homepage');
+        $state.go('homepage');
       }
     });
   }

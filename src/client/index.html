@@ -37,7 +37,7 @@
 
 <body>
   <div>
-    <ng-view> </ng-view>
+    <ui-view> </ui-view>
 
     <!-- build:js js/lib.js -->
     <!-- bower:js -->
@@ -61,17 +61,18 @@
     <!-- inject:js -->
     <script src="/src/client/app/app.module.js"></script>
     <script src="/src/client/app/components/homepage/homepage.module.js"></script>
-    <script src="/src/client/app/widgets/widgets.module.js"></script>
+    <script src="/src/client/app/shared/blocks/exception/exception.module.js"></script>
+    <script src="/src/client/app/shared/blocks/logger/logger.module.js"></script>
+    <script src="/src/client/app/shared/blocks/router/router.module.js"></script>
     <script src="/src/client/app/app.route.js"></script>
-    <script src="/src/client/app/assets/js/bootstrap.min.js"></script>
-    <script src="/src/client/app/assets/js/custom.js"></script>
-    <script src="/src/client/app/assets/js/html5shiv.min.js"></script>
-    <script src="/src/client/app/assets/js/jquery.min.js"></script>
-    <script src="/src/client/app/assets/js/respond.min.js"></script>
-    <script src="/src/client/app/assets/js/slick.min.js"></script>
-    <script src="/src/client/app/assets/js/wow.min.js"></script>
     <script src="/src/client/app/components/homepage/homepage.controller.js"></script>
     <script src="/src/client/app/components/homepage/homepage.route.js"></script>
+    <script src="/src/client/app/shared/blocks/exception/exception-handler.provider.js"></script>
+    <script src="/src/client/app/shared/blocks/exception/exception.js"></script>
+    <script src="/src/client/app/shared/blocks/logger/logger.js"></script>
+    <script src="/src/client/app/shared/blocks/router/router-helper.provider.js"></script>
+    <script src="/src/client/app/shared/blocks/toastr/constants.js"></script>
+    <script src="/src/client/app/shared/blocks/toastr/toastr.config.js"></script>
     <!-- endinject -->
 
     <!-- inject:templates:js -->

@@ -44,6 +44,7 @@ module.exports = function() {
       '**/*.js'
     ],
     less: client + 'styles/styles.less',
+    css: client + 'assets/css/styles.scss',
     report: report,
     root: root,
     server: server,

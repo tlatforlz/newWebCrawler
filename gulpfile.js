@@ -64,9 +64,11 @@ gulp.task('styles', ['clean-styles'], function() {
   log('Compiling Less --> CSS');
 
   return gulp
-    .src(config.less)
+    .src(config.css)
     .pipe($.plumber()) // exit gracefully if something fails after this
-    .pipe($.less())
+    .pipe($.sass({
+            'bundleExec': true
+        }))
     //        .on('error', errorLogger) // more verbose and dupe output. requires emit.
     .pipe($.autoprefixer({ browsers: ['last 2 version', '> 5%'] }))
     .pipe(gulp.dest(config.temp));
@@ -98,7 +100,7 @@ gulp.task('images', ['clean-images'], function() {
 });
 
 gulp.task('less-watcher', function() {
-  gulp.watch([config.less], ['styles']);
+  gulp.watch([config.css], ['styles']);
 });
 
 /**
