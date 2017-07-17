@@ -9,7 +9,8 @@ module.exports = function () {
   router.delete('/:id', deleteNews);
   router.put('/action/active', activeNews);
   router.put('/action/deActive', deActiveNews);
-  router.get('/getNewsHome', getNewsHome);
+  router.get('/getHome/getNewsHome', getNewsHome);
+  router.get('/getNews/getNewsNearest', getNewsNearest);
 
   function createNews(req, res, next) {
     var request = {
@@ -126,5 +127,16 @@ module.exports = function () {
       });
   }
 
+
+  //getNewsNearest
+  function getNewsNearest(req, res, next) {
+    newsDao.getNewsNearest()
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
   return router;
 }

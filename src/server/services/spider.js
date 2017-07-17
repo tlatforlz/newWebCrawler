@@ -29,24 +29,38 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
     return;
   }
   request(path, function (error, response, body) {
-    if (!error) {
+    if (!error && response.statusCode === 200) {
       var $ = cheerio.load(body);
-    }
-    $('.post-listing .post-box-title a').each(function () {
-      url = ($(this).attr('href'));
-      var news = new News({
-        originalLink: url,
-        spiderId: spiderId,
-        categoryId: catelogyId
-      });
-      News.findOne({
-        originalLink: news.originalLink
-      }, function (err, New) {
-        if (New === null) {
-          news.save();
+      var i = 1;
+      $('.post-listing .post-box-title a').each(function () {
+        //#main-content > div.content > div.post-listing > article:nth-child(1)
+        url = ($(this).attr('href'));
+        image = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
+        console.log(image);
+        des = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.entry > p').text();
+        if (image === undefined) {
+          image = null;
+        } else {
+          image = image.split('-150x150').join('');
         }
+        var news = new News({
+          originalLink: url,
+          spiderId: spiderId,
+          categoryId: catelogyId,
+          image: image,
+          description: des,
+          active: true
+        });
+        News.findOne({
+          originalLink: news.originalLink
+        }, function (err, New) {
+          if (New === null) {
+            news.save();
+          }
+        });
+        i++;
       });
-    });
+    }
     gotoPage = $('#tie-next-page a').attr('href');
     if (gotoPage === undefined) {
       return;

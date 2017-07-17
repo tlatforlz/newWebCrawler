@@ -11,7 +11,8 @@ module.exports = {
   addNews: addNews,
   activeNews: activeNews,
   deActiveNews: deActiveNews,
-  getNewsHome: getNewsHome
+  getNewsHome: getNewsHome,
+  getNewsNearest: getNewsNearest
 };
 
 function addNews(request) {
@@ -235,6 +236,29 @@ function getNewsHome() {
           message: failMessage.news.notFound
         });
       }
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      });
+    });
+}
+
+//getNewsNearest
+function getNewsNearest() {
+  return News.find({
+      active: true
+    }).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+      newss.sort(function (a, b) {
+        var dateA = new Date(a.createDate),
+          dateB = new Date(b.createDate);
+        return dateB - dateA;
+      });
       return Promise.resolve({
         message: successMessage.news.getAll,
         news: newss

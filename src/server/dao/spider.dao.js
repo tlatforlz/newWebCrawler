@@ -265,7 +265,7 @@ function callSpiderUrl(request) {
         switch (request.crawlingName) {
           case "spiderTinNongNghiep":
             console.log(request);
-            istSpider.spiderTinNongNghiep_Url(spider.urlId, spider._id, request.url);
+            ListSpider.spiderTinNongNghiep_Url(spider.urlId, spider._id, request.url);
             break;
         }
         return Promise.resolve({
