@@ -12,7 +12,8 @@ module.exports = {
   activeNews: activeNews,
   deActiveNews: deActiveNews,
   getNewsHome: getNewsHome,
-  getNewsNearest: getNewsNearest
+  getNewsNearest: getNewsNearest,
+  getNewsMostPopular: getNewsMostPopular
 };
 
 function addNews(request) {
@@ -264,4 +265,27 @@ function getNewsNearest() {
         news: newss
       });
     });
+}
+
+//getNewsMostPopular
+function getNewsMostPopular() {
+  return News.find({
+      active: true
+    }).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+
+      newss.sort(function (a, b) {
+        return b.views - a.views;
+      });
+
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      })
+    })
 }

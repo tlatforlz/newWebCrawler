@@ -34,6 +34,10 @@ var newsSchema = new Schema({
   createDate: {
     type: Date
   },
+  views: {
+    type: Number,
+    default: 10
+  },
   active: {
     type: Boolean,
     default: false

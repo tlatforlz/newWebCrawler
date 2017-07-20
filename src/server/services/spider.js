@@ -116,7 +116,8 @@ function spiderTinNongNghiep_updateAll() {
                   content: function (callback) {
                     let content = $('#main-content > div.content > article > div > div.entry').html();
                     let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
-                    callback(null, content.split(remove).join(''));
+                    let remove_review_overview = $('#main-content > div.content > article > div > div.entry > div.review-box.review-top.review-stars').html();
+                    callback(null, content.split(remove).join('').split(remove_review_overview).join(''));
                   },
                   author: function (callback) {
                     let author = $('#main-content > div.content > article > div > p > span:nth-child(1) > a').text();
