@@ -4,7 +4,7 @@ angular.module('app.singlepage')
 function singlepageConfig($stateProvider) {
   $stateProvider
     .state('singlePage', {
-      url: '/singlepage',
+      url: '/singlepage/:id',
       templateUrl: 'app/components/singlepage/singlepage.html',
       controller: 'SinglePageController',
       controllerAs: 'vm'

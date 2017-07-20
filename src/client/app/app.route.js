@@ -24,6 +24,11 @@
       if (toState.url === '') {
         event.preventDefault();
         $state.go('homepage');
+      } else {
+        if (toState.url === 'singlepage/:id') {
+          event.preventDefault();
+          $state.go('singlepage');
+        }
       }
     });
   }

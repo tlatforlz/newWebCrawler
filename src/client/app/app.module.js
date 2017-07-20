@@ -3,7 +3,7 @@
 
   angular.module('app', [
     'app.homepage',
-    'app.header',
+    'app.singlepage',
 
     'ui.router',
     'angular-jwt',

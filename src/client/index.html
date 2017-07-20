@@ -39,8 +39,12 @@
 
 <body>
   <div>
-    <ui-view> </ui-view>
-
+    <div class="container">
+      <my-header></my-header>
+      <my-navbar></my-navbar>
+      <ui-view> </ui-view>
+    </div>
+    <my-footer></my-footer>
     <!-- build:js js/lib.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>

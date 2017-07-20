@@ -1,6 +1,4 @@
 (function () {
-
   angular
-    .module('app.singlepage', ['ui.router'])
-
+    .module('app.singlepage', ['ui.router']);
 })();
