@@ -230,7 +230,7 @@ function deActiveNews(request) {
 function getNewsHome() {
   return News.find({
       active: true
-    }).exec()
+    }).limit(5).exec()
     .then(function (newss) {
       if (newss.length === 0) {
         return Promise.reject({
@@ -248,7 +248,7 @@ function getNewsHome() {
 function getNewsNearest() {
   return News.find({
       active: true
-    }).exec()
+    }).limit(5).exec()
     .then(function (newss) {
       if (newss.length === 0) {
         return Promise.reject({
@@ -271,7 +271,7 @@ function getNewsNearest() {
 function getNewsMostPopular() {
   return News.find({
       active: true
-    }).exec()
+    }).limit(5).exec()
     .then(function (newss) {
       if (newss.length === 0) {
         return Promise.reject({
