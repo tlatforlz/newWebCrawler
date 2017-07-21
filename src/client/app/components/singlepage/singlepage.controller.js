@@ -106,25 +106,21 @@
     getSuggest().then(
       (res) => {
         var index = 0;
-        for (var i in res.news) {
-          i = Math.floor((Math.random() * res.news.length) - 1);
+        while (index < 3) {
+          i = Math.floor((Math.random() * (res.news.length - 1) + 1));
           console.log(i);
-          if (index === 3) {
-            break;
+          let check = false;
+          for (var j in vm.listSuggest) {
+            if (vm.listSuggest[j].originalLink === res.news[i].originalLink) {
+              check = true;
+              break;
+            }
           }
-          if (res.news[i]) {
-            let check = false;
-            for (var j in vm.listSuggest) {
-              if (vm.listSuggest[j].orginalLink === res.news[i].originalLink) {
-                check = true;
-              }
-            }
-            if (check === false) {
-              res.news[i].createDate = moment(res.news[i].createDate).format('DD-MM-YYYY');
-              res.news[i].updateDate = moment(res.news[i].updateDate).format('DD-MM-YYYY');
-              vm.listSuggest.push(res.news[i]);
-              index++;
-            }
+          if (check === false) {
+            res.news[i].createDate = moment(res.news[i].createDate).format('DD-MM-YYYY');
+            res.news[i].updateDate = moment(res.news[i].updateDate).format('DD-MM-YYYY');
+            vm.listSuggest.push(res.news[i]);
+            index++;
           }
         }
       }

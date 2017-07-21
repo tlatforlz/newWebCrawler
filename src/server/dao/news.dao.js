@@ -271,7 +271,7 @@ function getNewsNearest() {
 function getNewsMostPopular() {
   return News.find({
       active: true
-    }).limit(5).exec()
+    }).limit(20).exec()
     .then(function (newss) {
       if (newss.length === 0) {
         return Promise.reject({
