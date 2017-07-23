@@ -308,18 +308,37 @@ function getNewsArchive(request) {
     }
     var count = 0;
     var list_length = list_archive.listCategory.length;
+    var list_news = [];
     console.log(count + " " + list_length);
+
     async.whilst(function () {
       return count < list_length
     }, function (next) {
       console.log('logg ' + list_archive.listCategory[count]);
-      count++;
-      next();
-    }, function (err) {
+      return News.find({
+          categoryId: list_archive.listCategory[count]
+        })
+        .exec().then(function (upNews) {
+          var index = 0;
+          console.log('length ' + upNews.length);
+          async.whilst(function () {
+            return index < upNews.length
+          }, function (callback2) {
+            console.log(upNews[index].title);
+            list_news.add(upNews[index]);
+            index++;
+            callback2();
+          }, function (error) {
+            count++;
+            next();
+          });
 
-    });
-    return Promise.resolve({
-      message: successMessage.news.getAll
+        });
+    }, function (err) {
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: list_news
+      });
     });
   });
 }
