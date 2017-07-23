@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.homepage')
+  angular.module('app')
     .directive('myHeader', myHeader);
 
   /* @ngInject */

@@ -28,6 +28,19 @@
         if (toState.url === 'singlepage/:id') {
           event.preventDefault();
           $state.go('singlepage');
+        } else {
+          console.log('call here');
+          console.log(toState.url);
+          if (toState.url === 'contact') {
+            console.log('call contact');
+            event.preventDefault();
+            $state.go('contactpage');
+          } else {
+            if (toState.url === 'about') {
+              event.preventDefault();
+              $state.go('about');
+            }
+          }
         }
       }
     });

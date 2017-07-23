@@ -1,6 +1,9 @@
 ﻿var News = require('./../model/news.model');
 var successMessage = require('./../services/successMessage');
 var failMessage = require('./../services/failMessage');
+var Archive = require('./../model/archive.model');
+var Category = require('./../model/category.model');
+var async = require('async');
 
 module.exports = {
   createNews: createNews,
@@ -13,7 +16,8 @@ module.exports = {
   deActiveNews: deActiveNews,
   getNewsHome: getNewsHome,
   getNewsNearest: getNewsNearest,
-  getNewsMostPopular: getNewsMostPopular
+  getNewsMostPopular: getNewsMostPopular,
+  getNewsArchive: getNewsArchive
 };
 
 function addNews(request) {
@@ -288,4 +292,34 @@ function getNewsMostPopular() {
         news: newss
       })
     })
+}
+
+//getNewsArchive
+function getNewsArchive(request) {
+  console.log(request);
+  return Archive.findOne({
+    path: request.path
+  }).exec().then(function (list_archive) {
+    console.log(list_archive);
+    if (list_archive === null) {
+      return Promise.reject({
+        message: failMessage.news.notFound
+      });
+    }
+    var count = 0;
+    var list_length = list_archive.listCategory.length;
+    console.log(count + " " + list_length);
+    async.whilst(function () {
+      return count < list_length
+    }, function (next) {
+      console.log('logg ' + list_archive.listCategory[count]);
+      count++;
+      next();
+    }, function (err) {
+
+    });
+    return Promise.resolve({
+      message: successMessage.news.getAll
+    });
+  });
 }

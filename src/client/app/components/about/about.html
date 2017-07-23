@@ -1,0 +1,73 @@
+<section id="mainContent">
+  <div class="content_bottom">
+    <div class="col-lg-8 col-md-8">
+      <div class="content_bottom_left">
+        <div class="single_page_area">
+          <h2 class="post_titile">About us </h2>
+          <div class="single_page_content">
+            <p>ĐỀ TÀI THỰC TẬP TỐT NGHIỆP</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4">
+      <div class="content_bottom_right">
+        <div class="single_bottom_rightbar">
+          <h2>Recent Post</h2>
+          <ul class="small_catg popular_catg wow fadeInDown">
+            <div ng-repeat="news in vm.listTop3">
+              <li>
+                <div class="media wow fadeInDown"> <a href="{{news.image}}" class="media-left"><img style="width:120px; height:120px" alt="" src="{{news.image}}"> </a>
+                  <div class="media-body">
+                    <h4 class="media-heading"><a href="/singlepage/{{news._id}}">{{news.title}}</a></h4>
+                    {{news.title}}
+                  </div>
+                </div>
+              </li>
+            </div>
+          </ul>
+        </div>
+        <div class="single_bottom_rightbar">
+          <ul role="tablist" class="nav nav-tabs custom-tabs">
+            <li class="active" role="presentation"><a data-toggle="tab" role="tab" aria-controls="home" href="#mostPopular">Most Popular</a></li>
+            <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="messages" href="#recentComent">Recent Comment</a></li>
+          </ul>
+          <div class="tab-content">
+            <div ng-repeat="news in vm.listPopular">
+              <li>
+                <div class="media wow fadeInDown"> <a class="media-left" href="#"><img style="width:120px; height:120px" src="{{news.image}}" alt=""></a>
+                  <div class="media-body">
+                    <h4 class="media-heading"><a href="/singlepage/{{news._id}}">{{news.title}} </a></h4>
+                    {{news.title}}
+                  </div>
+                </div>
+              </li>
+            </div>
+
+          </div>
+        </div>
+        <div class="single_bottom_rightbar">
+          <h2>Blog Archive</h2>
+          <div class="blog_archive wow fadeInDown">
+            <form action="#">
+              <select>
+                  <option value="">Blog Archive</option>
+                  <option value="">October(20)</option>
+                </select>
+            </form>
+          </div>
+        </div>
+        <div class="single_bottom_rightbar wow fadeInDown">
+          <h2>Popular Lnks</h2>
+          <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Blog Home</a></li>
+            <li><a href="#">Error Page</a></li>
+            <li><a href="#">Social link</a></li>
+            <li><a href="#">Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

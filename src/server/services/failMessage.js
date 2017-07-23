@@ -15,6 +15,11 @@ var catelogy = {
   notFound: 'NOT_FOUND_CATELOGY'
 }
 
+var Archive = {
+  dupplicate: 'DUPPLICATE_ARCHIVE',
+  notFound: 'NOT_FOUND_ARCHIVE'
+}
+
 var news = {
   dupplicate: 'DUPPLICATE_NEWS',
   notFound: 'NOT_FOUND_NEWS',
@@ -22,10 +27,10 @@ var news = {
   deActive: 'DEACTIVE_NEWS_FAIL'
 }
 
-
 module.exports = {
   url: url,
   spider: spider,
   catelogy: catelogy,
-  news: news
+  news: news,
+  Archive: Archive
 }

@@ -12,6 +12,7 @@ module.exports = function () {
   router.get('/getHome/getNewsHome', getNewsHome);
   router.get('/getNews/getNewsNearest', getNewsNearest);
   router.get('/getNews/getNewsMostPopular', getNewsMostPopular);
+  router.get('/getNews/getNewsArchive/:path', getNewsArchive);
 
   function createNews(req, res, next) {
     var request = {
@@ -149,6 +150,20 @@ module.exports = function () {
       .catch(function (err) {
         res.status(400).send(err).end();
       });
+  }
+
+  function getNewsArchive(req, res, next) {
+    var request = {
+      path: req.params.path
+    }
+    newsDao.getNewsArchive(request)
+      .then(function (news) {
+        console.log(news);
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      })
   }
   return router;
 }

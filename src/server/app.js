@@ -24,7 +24,8 @@ app.use(config.BASE_URL + '/url', require('./routes/url.routes')());
 app.use(config.BASE_URL + '/spider', require('./routes/spider.routes')());
 app.use(config.BASE_URL + '/category', require('./routes/category.routes')());
 app.use(config.BASE_URL + '/news', require('./routes/news.routes')());
-app.use(config.BASE_URL + '/giay', require('./routes/giay.routes')());
+app.use(config.BASE_URL + '/archive', require('./routes/archive.routes')());
+
 
 console.log('About to crank up node');
 console.log('PORT=' + port);

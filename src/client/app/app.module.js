@@ -4,6 +4,8 @@
   angular.module('app', [
     'app.homepage',
     'app.singlepage',
+    'app.contactpage',
+    'app.about',
 
     'ui.router',
     'angular-jwt',
