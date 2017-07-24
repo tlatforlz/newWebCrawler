@@ -158,7 +158,6 @@ module.exports = function () {
     }
     newsDao.getNewsArchive(request)
       .then(function (news) {
-        console.log(news);
         res.status(200).send(news).end();
       })
       .catch(function (err) {

@@ -310,35 +310,39 @@ function getNewsArchive(request) {
     var list_length = list_archive.listCategory.length;
     var list_news = [];
     console.log(count + " " + list_length);
-
-    async.whilst(function () {
-      return count < list_length
-    }, function (next) {
-      console.log('logg ' + list_archive.listCategory[count]);
-      return News.find({
-          categoryId: list_archive.listCategory[count]
-        })
-        .exec().then(function (upNews) {
-          var index = 0;
-          console.log('length ' + upNews.length);
+    return new Promise(function (resolve, reject) {
+      async.series({
+        list_news: function (callback) {
           async.whilst(function () {
-            return index < upNews.length
-          }, function (callback2) {
-            console.log(upNews[index].title);
-            list_news.add(upNews[index]);
-            index++;
-            callback2();
-          }, function (error) {
-            count++;
-            next();
+            return count < list_length
+          }, function (next) {
+            return News.find({
+                categoryId: list_archive.listCategory[count]
+              })
+              .exec().then(function (upNews) {
+                var index = 0;
+                async.whilst(function () {
+                  return index < upNews.length
+                }, function (callback2) {
+                  list_news.push(upNews[index]);
+                  index++;
+                  callback2();
+                }, function (err) {
+                  count++;
+                  next();
+                });
+              });
+          }, function (err) {
+            callback(null, list_news);
           });
-
+        }
+      }, function (err, result) {
+        return resolve({
+          message: successMessage.news.getAll,
+          news: list_news
         });
-    }, function (err) {
-      return Promise.resolve({
-        message: successMessage.news.getAll,
-        news: list_news
-      });
+      })
     });
+
   });
 }
