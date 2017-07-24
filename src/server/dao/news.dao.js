@@ -319,11 +319,16 @@ function getNewsArchive(request) {
             return News.find({
                 categoryId: list_archive.listCategory[count]
               })
+              .limit(8)
               .exec().then(function (upNews) {
                 var index = 0;
                 async.whilst(function () {
                   return index < upNews.length
                 }, function (callback2) {
+                  if (list_news.length === 8) {
+                    count++;
+                    next();
+                  }
                   list_news.push(upNews[index]);
                   index++;
                   callback2();

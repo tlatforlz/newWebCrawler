@@ -8,6 +8,10 @@
     vm.listTop3 = [];
     vm.listPopular = [];
     vm.listSuggest = [];
+    vm.listTinTuc = [];
+    vm.listNongNghiep = [];
+    vm.listChuyenNhaNong = [];
+    vm.listChanNuoi = [];
 
     function getTop5() {
       var deferred = $q.defer();
@@ -61,6 +65,126 @@
       });
       return deferred.promise;
     }
+
+    function getTinTuc() {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: '/api/news/getNews/getNewsArchive/tin-tuc'
+      }).then(function successCallback(res) {
+        deferred.resolve(res.data);
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
+    }
+
+    function getChanNuoi() {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: '/api/news/getNews/getNewsArchive/chan-nuoi'
+      }).then(function successCallback(res) {
+        deferred.resolve(res.data);
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
+    }
+
+    function getNongNghiep() {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: 'api/news/getNews/getNewsArchive/nong-nghiep'
+      }).then(function successCallback(res) {
+        deferred.resolve(res.data);
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
+    }
+
+    function getChuyenNhaNong() {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: '/api/news/getNews/getNewsArchive/chuyen-nha-nong'
+      }).then(function successCallback(res) {
+        deferred.resolve(res.data);
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
+    }
+
+    getTinTuc().then(
+      (res) => {
+        var index = 0;
+        for (var i in res.news) {
+          if (index === 5) {
+            break;
+          }
+          if (res.news[i]) {
+            res.news[i].createDate = moment(res.news[i].createDate).format('DD-MM-YYYY');
+            res.news[i].updateDate = moment(res.news[i].updateDate).format('DD-MM-YYYY');
+            vm.listTinTuc.push(res.news[i]);
+            index++;
+          }
+        }
+      }
+    )
+
+    getNongNghiep().then(
+      (res) => {
+        var index = 0;
+        for (var i in res.news) {
+          if (index === 5) {
+            break;
+          }
+          if (res.news[i]) {
+            res.news[i].createDate = moment(res.news[i].createDate).format('DD-MM-YYYY');
+            res.news[i].updateDate = moment(res.news[i].updateDate).format('DD-MM-YYYY');
+            vm.listNongNghiep.push(res.news[i]);
+            index++;
+          }
+        }
+      }
+    )
+
+    getChanNuoi().then(
+      (res) => {
+        var index = 0;
+        for (var i in res.news) {
+          if (index === 5) {
+            break;
+          }
+          if (res.news[i]) {
+            res.news[i].createDate = moment(res.news[i].createDate).format('DD-MM-YYYY');
+            res.news[i].updateDate = moment(res.news[i].updateDate).format('DD-MM-YYYY');
+            vm.listChanNuoi.push(res.news[i]);
+            index++;
+          }
+        }
+      }
+    )
+
+    getChuyenNhaNong().then(
+      (res) => {
+        var index = 0;
+        for (var i in res.news) {
+          if (index === 5) {
+            break;
+          }
+          if (res.news[i]) {
+            res.news[i].createDate = moment(res.news[i].createDate).format('DD-MM-YYYY');
+            res.news[i].updateDate = moment(res.news[i].updateDate).format('DD-MM-YYYY');
+            vm.listChuyenNhaNong.push(res.news[i]);
+            index++;
+          }
+        }
+      }
+    )
 
 
     getTop5().then(

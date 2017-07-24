@@ -42,42 +42,41 @@
     <div class="col-lg-8 col-md-8">
       <div class="content_bottom_left">
         <div class="single_category wow fadeInDown">
-          <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Business</a>            </h2>
+          <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Tin Tức</a>            </h2>
           <div class="business_category_left wow fadeInDown">
             <ul class="fashion_catgnav">
               <li>
-                <div class="catgimg2_container"> <a href="pages/single.html"><img alt="" src="assets/css/images/390x240x1.jpg"></a> </div>
-                <h2 class="catg_titile"><a href="pages/single.html">Aenean mollis metus sit amet ligula adipiscing</a></h2>
-                <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>
-                  <span class="meta_more"><a href="#">Read More...</a></span>
+                <div class="catgimg2_container"> <a href="/singlepage/{{vm.listTinTuc[0]._id}}"><img alt="" src="{{vm.listTinTuc[0].image}}"></a> </div>
+                <h2 class="catg_titile"><a href="/singlepage/{{vm.listTinTuc[0]._id}}">{{vm.listTinTuc[0].title}}</a></h2>
+                <div class="comments_box"> <span class="meta_date">{{vm.listTinTuc[0].createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>
+                  <span class="meta_more"><a href="/singlepage/{{vm.listTinTuc[0]._id}}">Read More...</a></span>
                 </div>
-                <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla...</p>
               </li>
             </ul>
           </div>
           <div class="business_category_right wow fadeInDown">
             <ul class="small_catg">
               <li>
-                <div class="media wow fadeInDown"> <a class="media-left" href="pages/single.html"><img src="assets/css/images/112x112.jpg" alt=""></a>
+                <div class="media wow fadeInDown"> <a class="media-left" href="/singlepage/{{vm.listTinTuc[1]._id}}"><img src="{{vm.listTinTuc[1].image}}" alt=""></a>
                   <div class="media-body">
-                    <h4 class="media-heading"><a href="pages/single.html">Duis condimentum nunc pretium lobortis </a></h4>
-                    <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      </div>
+                    <h4 class="media-heading"><a href="/singlepage/{{vm.listTinTuc[1]._id}}">{{vm.listTinTuc[1].title}}</a></h4>
+                    <div class="comments_box"> <span class="meta_date">{{vm.listTinTuc[1].createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      </div>
                   </div>
                 </div>
               </li>
               <li>
-                <div class="media wow fadeInDown"> <a class="media-left" href="#"><img src="assets/css/images/112x112.jpg" alt=""></a>
+                <div class="media wow fadeInDown"> <a class="media-left" href="/singlepage/{{vm.listTinTuc[2]._id}}"><img src="{{vm.listTinTuc[2].image}}" alt=""></a>
                   <div class="media-body">
-                    <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                    <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      </div>
+                    <h4 class="media-heading"><a href="/singlepage/{{vm.listTinTuc[2]._id}}">{{vm.listTinTuc[2].title}}</a></h4>
+                    <div class="comments_box"> <span class="meta_date">{{vm.listTinTuc[2].createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      </div>
                   </div>
                 </div>
               </li>
               <li>
-                <div class="media wow fadeInDown"> <a class="media-left" href="#"><img src="assets/css/images/112x112.jpg" alt=""></a>
+                <div class="media wow fadeInDown"> <a class="media-left" href="/singlepage/{{vm.listTinTuc[3]._id}}"><img src="{{vm.listTinTuc[3].image}}" alt=""></a>
                   <div class="media-body">
-                    <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                    <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      </div>
+                    <h4 class="media-heading"><a href="/singlepage/{{vm.listTinTuc[3]._id}}">{{vm.listTinTuc[3].title}}</a></h4>
+                    <div class="comments_box"> <span class="meta_date">{{vm.listTinTuc[3].createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      </div>
                   </div>
                 </div>
               </li>
@@ -87,50 +86,58 @@
         <div class="games_fashion_area">
           <div class="games_category">
             <div class="single_category">
-              <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Games</a>                </h2>
+              <h2>
+                <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Nông Nghiệp</a>                </h2>
               <ul class="fashion_catgnav wow fadeInDown">
                 <li>
-                  <div class="catgimg2_container"> <a href="pages/single.html"><img alt="" src="assets/css/images/390x240x1.jpg"></a> </div>
-                  <h2 class="catg_titile"><a href="#">Aenean mollis metus sit amet ligula adipiscing</a></h2>
-                  <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                    <span class="meta_more"><a  href="#">Read More...</a></span> </div>
-                  <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla...</p>
+                  <div class="catgimg2_container">
+                    <a href="/singlepage/{{vm.listNongNghiep[0]._id}}">
+                      <img alt="" src="{{vm.listNongNghiep[0].image}}">
+                    </a>
+                  </div>
+                  <h2 class="catg_titile">
+                    <a href="/singlepage/{{vm.listNongNghiep[0]._id}}">{{vm.listNongNghiep[0].title}}</a>
+                  </h2>
+                  <div class="comments_box">
+                    <span class="meta_date">{{vm.listNongNghiep[0].createDate}}</span>
+                    <span class="meta_comment">
+                       <a href="#">No Comments</a>
+                      </span>
+                    <span class="meta_more">
+                        <a  href="/singlepage/{{vm.listNongNghiep[0]._id}}"
+                        >Read More...
+                      </a>
+                    </span>
+                  </div>
                 </li>
               </ul>
               <ul class="small_catg wow fadeInDown">
                 <li>
-                  <div class="media"> <a class="media-left" href="#"><img src="assets/css/images/112x112.jpg" alt=""></a>
+                  <div class="media"> <a class="media-left" href="/singlepage/{{vm.listNongNghiep[1]._id}}"><img src="{{vm.listNongNghiep[1].image}}" alt=""></a>
                     <div class="media-body">
-                      <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                      <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                        </div>
+                      <h4 class="media-heading"><a href="/singlepage/{{vm.listNongNghiep[1]._id}}">{{vm.listNongNghiep[1].title}} </a></h4>
+                      <div class="comments_box"> <span class="meta_date">{{vm.listNongNghiep[1].createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>                        </div>
                     </div>
                   </div>
                 </li>
-                <li>
-                  <div class="media wow fadeInDown"> <a class="media-left" href="#"><img src="assets/css/images/112x112.jpg" alt=""></a>
-                    <div class="media-body">
-                      <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
-                      <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                        </div>
-                    </div>
-                  </div>
-                </li>
+
               </ul>
             </div>
           </div>
           <div class="fashion_category">
             <div class="single_category">
               <div class="single_category wow fadeInDown">
-                <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Fashion</a>                  </h2>
+                <h2> <span class="bold_line"><span></span></span> <span class="solid_line"></span> <a class="title_text" href="#">Chăn Nuôi</a>                  </h2>
                 <ul class="fashion_catgnav wow fadeInDown">
                   <li>
-                    <div class="catgimg2_container"> <a href="#"><img alt="" src="assets/css/images/390x240x1.jpg"></a> </div>
-                    <h2 class="catg_titile"><a href="#">Aenean mollis metus sit amet ligula adipiscing</a></h2>
-                    <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      <span class="meta_more"><a  href="#">Read More...</a></span> </div>
-                    <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla...</p>
+                    <div class="catgimg2_container"> <a href="/singlepage/{{vm.listChanNuoi[0]._id}}"><img alt="" src="{{vm.listChanNuoi[0].image}}"></a>                      </div>
+                    <h2 class="catg_titile"><a href="/singlepage/{{vm.listChanNuoi[0]._id}}">{{vm.listChanNuoi[0].title}}</a></h2>
+                    <div class="comments_box"> <span class="meta_date">{{vm.listChanNuoi[0].createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      <span class="meta_more"><a  href="/singlepage/{{vm.listChanNuoi[0]._id}}">Read More...</a></span> </div>
                   </li>
                 </ul>
                 <ul class="small_catg wow fadeInDown">
                   <li>
-                    <div class="media wow fadeInDown"> <a class="media-left" href="#"><img src="assets/css/images/112x112.jpg" alt=""></a>
+                    <div class="media wow fadeInDown"> <a class="media-left" href="#"><img src="images/112x112.jpg" alt=""></a>
                       <div class="media-body">
                         <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
                         <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                          </div>
@@ -138,7 +145,7 @@
                     </div>
                   </li>
                   <li>
-                    <div class="media wow fadeInDown"> <a class="media-left" href="#"><img src="assets/css/images/112x112.jpg" alt=""></a>
+                    <div class="media wow fadeInDown"> <a class="media-left" href="#"><img src="images/112x112.jpg" alt=""></a>
                       <div class="media-body">
                         <h4 class="media-heading"><a href="#">Duis condimentum nunc pretium lobortis </a></h4>
                         <div class="comments_box"> <span class="meta_date">14/12/2045</span> <span class="meta_comment"><a href="#">No Comments</a></span>                          </div>
