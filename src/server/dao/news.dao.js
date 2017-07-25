@@ -4,6 +4,7 @@ var failMessage = require('./../services/failMessage');
 var Archive = require('./../model/archive.model');
 var Category = require('./../model/category.model');
 var async = require('async');
+var pagination = require('../services/pagination');
 
 module.exports = {
   createNews: createNews,
@@ -17,7 +18,8 @@ module.exports = {
   getNewsHome: getNewsHome,
   getNewsNearest: getNewsNearest,
   getNewsMostPopular: getNewsMostPopular,
-  getNewsArchive: getNewsArchive
+  getNewsArchive: getNewsArchive,
+  getNewsArchivePagination: getNewsArchivePagination
 };
 
 function addNews(request) {
@@ -319,7 +321,7 @@ function getNewsArchive(request) {
             return News.find({
                 categoryId: list_archive.listCategory[count]
               })
-              .limit(8)
+              .limit(5)
               .exec().then(function (upNews) {
                 var index = 0;
                 async.whilst(function () {
@@ -338,6 +340,11 @@ function getNewsArchive(request) {
                 });
               });
           }, function (err) {
+            list_news.sort(function (a, b) {
+              var dateA = new Date(a.createDate),
+                dateB = new Date(b.createDate);
+              return dateB - dateA;
+            });
             callback(null, list_news);
           });
         }
@@ -349,5 +356,58 @@ function getNewsArchive(request) {
       })
     });
 
+  });
+}
+
+
+//getNewsArchivePagination
+function getNewsArchivePagination(request) {
+  console.log(request);
+  return Archive.findOne({
+    path: request.path
+  }).exec().then(function (list_archive) {
+    console.log(list_archive);
+    if (list_archive === null) {
+      return Promise.reject({
+        message: failMessage.news.notFound
+      });
+    }
+    var count = 0;
+    var list_length = list_archive.listCategory.length;
+    var list_news = [];
+    console.log(count + " " + list_length);
+    return new Promise(function (resolve, reject) {
+      async.series({
+        list_news: function (callback) {
+          async.whilst(function () {
+            return count < list_length
+          }, function (next) {
+            return News.find({
+                categoryId: list_archive.listCategory[count]
+              })
+              .exec().then(function (upNews) {
+                console.log(upNews.length);
+                var index = 0;
+                async.whilst(function () {
+                  return index < upNews.length
+                }, function (callback2) {
+
+                  list_news.push(upNews[index]);
+                  index++;
+                  callback2();
+                }, function (err) {
+                  count++;
+                  next();
+                });
+              });
+          }, function (err) {
+            callback(null, list_news);
+          });
+        }
+      }, function (err, result) {
+        var res = pagination.pagination(list_news.splice(request.pageSize * (request.pageIndex - 1), request.pageSize), list_news.length, request.pageIndex, request.pageSize);
+        return resolve(res);
+      })
+    });
   });
 }

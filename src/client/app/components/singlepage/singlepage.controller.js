@@ -3,7 +3,6 @@
     .controller('SinglePageController', ['$q', '$http', '$state', '$scope', '$stateParams', SinglePageController]);
 
   function SinglePageController($q, $http, $state, $scope, $stateParams) {
-    console.log($stateParams.id);
     var vm = this;
     vm.news = null;
     vm.listTop3 = [];

@@ -6,7 +6,7 @@
     'app.singlepage',
     'app.contactpage',
     'app.about',
-
+    'app.category',
     'ui.router',
     'angular-jwt',
     'ngStorage',

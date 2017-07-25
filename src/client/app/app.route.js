@@ -39,6 +39,11 @@
             if (toState.url === 'about') {
               event.preventDefault();
               $state.go('about');
+            } else {
+              if (toState.url === 'category') {
+                event.preventDefault();
+                $state.go('category');
+              }
             }
           }
         }

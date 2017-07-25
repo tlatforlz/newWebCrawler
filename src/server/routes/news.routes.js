@@ -13,6 +13,7 @@ module.exports = function () {
   router.get('/getNews/getNewsNearest', getNewsNearest);
   router.get('/getNews/getNewsMostPopular', getNewsMostPopular);
   router.get('/getNews/getNewsArchive/:path', getNewsArchive);
+  router.get('/getNews/getNewsArchive/pagination/:path/:pageIndex/:pageSize', getNewsArchivePagination);
 
   function createNews(req, res, next) {
     var request = {
@@ -157,6 +158,23 @@ module.exports = function () {
       path: req.params.path
     }
     newsDao.getNewsArchive(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      })
+  }
+
+  //getNewsArchivePagegination
+  function getNewsArchivePagination(req, res, next) {
+    var request = {
+      path: req.params.path,
+      pageIndex: parseInt(req.params.pageIndex),
+      pageSize: parseInt(req.params.pageSize)
+    }
+    console.log(request);
+    newsDao.getNewsArchivePagination(request)
       .then(function (news) {
         res.status(200).send(news).end();
       })
