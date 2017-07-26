@@ -75,6 +75,7 @@
     getContent().then(
       (res) => {
         vm.totalPage = res.totalPage;
+
         var index = 0;
         for (var i in res.items) {
           if (res.items[i]) {
@@ -84,7 +85,9 @@
           }
         }
       }
-    )
+    ).catch((err) => {
+      $state.go('404');
+    });
 
     getTop3().then(
       (res) => {

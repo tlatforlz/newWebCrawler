@@ -3,7 +3,8 @@
     <div class="col-lg-8 col-md-8">
       <div class="content_bottom_left">
         <div class="single_category wow fadeInDown">
-          <div class="archive_style_1">
+
+          <div class="archive_style_1" ng-if="vm.listContent.length != 0">
             <div ng-repeat="news in vm.listContent">
               <div class="business_category_left wow fadeInDown" style="width: 45% !important; margin-right:25px">
                 <!-- <ul class="featured_nav wow fadeInDown"> -->
@@ -13,16 +14,17 @@
                   </li> -->
                   <li>
                     <div class="catgimg2_container"> <a href="/singlepage/{{news._id}}"><img style="width:250px; height:250px" alt="" src="{{news.image}}"></a>                      </div>
-                    <h2 class="catg_titile"><a style="font-size: 20px;" href="/singlepage/{{news._id}}">{{news.title}}</a></h2>
+                    <h2 class="catg_titile"><a style="font-size: 20px;" href="/singlepage/{{news._id}}">{{news.title.substring(0, 20) + '...'}}</a></h2>
                     <div class="comments_box"> <span class="meta_date">{{news.createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      <span class="meta_more"><a  href="/singlepage/{{news._id}}">Read More...</a></span> </div>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
+
         </div>
       </div>
-      <div class="pagination_area">
+      <div class="pagination_area" ng-if="vm.totalPage > 1">
         <nav>
           <ul class="pagination">
             <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
