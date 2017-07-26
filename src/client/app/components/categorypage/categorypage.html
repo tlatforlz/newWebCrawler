@@ -5,13 +5,16 @@
         <div class="single_category wow fadeInDown">
           <div class="archive_style_1">
             <div ng-repeat="news in vm.listContent">
-              <div class="business_category_left wow fadeInDown" style="width: 45% !important; margin-right:30px">
+              <div class="business_category_left wow fadeInDown" style="width: 45% !important; margin-right:25px">
+                <!-- <ul class="featured_nav wow fadeInDown"> -->
                 <ul class="fashion_catgnav">
+                  <!-- <li><img src="{{news.image}}" alt="">
+                    <div class="title_caption"><a href="/singlepage/{{news._id}}">{{news.title}}</a></div>
+                  </li> -->
                   <li>
                     <div class="catgimg2_container"> <a href="/singlepage/{{news._id}}"><img style="width:250px; height:250px" alt="" src="{{news.image}}"></a>                      </div>
-                    <h2 class="catg_titile"><a href="/singlepage/{{news._id}}">{{news.title}}</a></h2>
+                    <h2 class="catg_titile"><a style="font-size: 20px;" href="/singlepage/{{news._id}}">{{news.title}}</a></h2>
                     <div class="comments_box"> <span class="meta_date">{{news.createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>                      <span class="meta_more"><a  href="/singlepage/{{news._id}}">Read More...</a></span> </div>
-                    <p>{{news.originalLink}}</p>
                   </li>
                 </ul>
               </div>
@@ -23,9 +26,7 @@
         <nav>
           <ul class="pagination">
             <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-            <div ng-repeat="i in range(vm.totalPage)">
-              <li><a href="/category/{{vm.path}}/{{$index}}/{{vm.pageSize}}">i</a></li>
-            </div>
+            <li ng-repeat="i in range(vm.totalPage)"><a href="/category/{{vm.path}}/{{i + 1}}/{{vm.pageSize}}">{{i + 1}}</a></li>
             <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
           </ul>
         </nav>
