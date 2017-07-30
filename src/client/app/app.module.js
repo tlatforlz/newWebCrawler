@@ -7,6 +7,9 @@
     'app.contactpage',
     'app.about',
     'app.category',
+    'app.search',
+    'app.header',
+
     'ui.router',
     'angular-jwt',
     'ngStorage',

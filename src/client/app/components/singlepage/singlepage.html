@@ -10,7 +10,13 @@
           </ol> -->
           <h2 class="post_titile">{{vm.news.title}} </h2>
           <div class="single_page_content">
-            <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>{{vm.news.author}}</a> <span><i class="fa fa-calendar"></i>{{vm.news.createDate}}</span>              <a href="#"><i class="fa fa-tags"></i>Technology</a> </div>
+            <div class="post_commentbox">
+              <a href="#">
+              <i class="fa fa-user"></i>{{vm.news.author}}</a>
+              <span>
+                 <i class="fa fa-calendar"></i>{{vm.news.createDate}}</span>
+              <a><i class="fa fa-tags"></i>{{vm.news.views}}</a>
+            </div>
             <div ng-bind-html="vm.news.content"></div>
           </div>
         </div>

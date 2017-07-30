@@ -24,7 +24,8 @@ var news = {
   dupplicate: 'DUPPLICATE_NEWS',
   notFound: 'NOT_FOUND_NEWS',
   active: 'ACTIVE_NEWS_FAIL',
-  deActive: 'DEACTIVE_NEWS_FAIL'
+  deActive: 'DEACTIVE_NEWS_FAIL',
+  error: 'SYSTEM_ERROR'
 }
 
 module.exports = {

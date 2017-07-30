@@ -113,15 +113,12 @@ function updateSpider(request) {
         }]
       }).exec()
       .then(function (spiders) {
-        console.log(spider);
         if (spiders !== null) {
-          console.log("log herre");
           return Promise.reject({
             message: failMessage.spider.dupplicate
           });
         }
         return spider.save().then(function (err) {
-          console.log(err);
           return Promise.resolve({
             message: successMessage.spider.update,
             spider: spider
@@ -264,7 +261,6 @@ function callSpiderUrl(request) {
         }
         switch (request.crawlingName) {
           case "spiderTinNongNghiep":
-            console.log(request);
             ListSpider.spiderTinNongNghiep_Url(spider.urlId, spider._id, request.url);
             break;
         }

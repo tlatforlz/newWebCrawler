@@ -19,8 +19,32 @@ module.exports = {
   getNewsNearest: getNewsNearest,
   getNewsMostPopular: getNewsMostPopular,
   getNewsArchive: getNewsArchive,
-  getNewsArchivePagination: getNewsArchivePagination
+  getNewsArchivePagination: getNewsArchivePagination,
+  viewCount: viewCount,
+  getNewsSearch: getNewsSearch
 };
+
+
+
+function viewCount(request) {
+  return News.findById({
+    _id: request.id
+  }).exec().then(function (newss) {
+    if (newss === null) {
+      return Promise.reject({
+        message: failMessage.news.notFound
+      });
+    }
+    newss.views = newss.views + 1;
+    return newss.save().then(function (err) {
+
+      return Promise.resolve({
+        message: successMessage.news.success,
+        news: newss
+      });
+    });
+  })
+}
 
 function addNews(request) {
   var news = new News({
@@ -179,7 +203,6 @@ function deleteNews(request) {
 
 function activeNews(request) {
   request.newsId.forEach(function (Id) {
-    console.log(Id);
     News.findById({
       _id: Id
     }).exec().then(function (upNews) {
@@ -207,7 +230,6 @@ function activeNews(request) {
 
 function deActiveNews(request) {
   request.newsId.forEach(function (Id) {
-    console.log(Id);
     News.findById({
       _id: Id
     }).exec().then(function (upNews) {
@@ -236,7 +258,7 @@ function deActiveNews(request) {
 function getNewsHome() {
   return News.find({
       active: true
-    }).limit(5).exec()
+    }).exec()
     .then(function (newss) {
       if (newss.length === 0) {
         return Promise.reject({
@@ -254,7 +276,7 @@ function getNewsHome() {
 function getNewsNearest() {
   return News.find({
       active: true
-    }).limit(5).exec()
+    }).exec()
     .then(function (newss) {
       if (newss.length === 0) {
         return Promise.reject({
@@ -277,7 +299,7 @@ function getNewsNearest() {
 function getNewsMostPopular() {
   return News.find({
       active: true
-    }).limit(20).exec()
+    }).exec()
     .then(function (newss) {
       if (newss.length === 0) {
         return Promise.reject({
@@ -298,11 +320,9 @@ function getNewsMostPopular() {
 
 //getNewsArchive
 function getNewsArchive(request) {
-  console.log(request);
   return Archive.findOne({
     path: request.path
   }).exec().then(function (list_archive) {
-    console.log(list_archive);
     if (list_archive === null) {
       return Promise.reject({
         message: failMessage.news.notFound
@@ -311,7 +331,6 @@ function getNewsArchive(request) {
     var count = 0;
     var list_length = list_archive.listCategory.length;
     var list_news = [];
-    console.log(count + " " + list_length);
     return new Promise(function (resolve, reject) {
       async.series({
         list_news: function (callback) {
@@ -362,11 +381,9 @@ function getNewsArchive(request) {
 
 //getNewsArchivePagination
 function getNewsArchivePagination(request) {
-  console.log(request);
   return Archive.findOne({
     path: request.path
   }).exec().then(function (list_archive) {
-    console.log(list_archive);
     if (list_archive === null) {
       return Promise.reject({
         message: failMessage.news.notFound
@@ -375,7 +392,6 @@ function getNewsArchivePagination(request) {
     var count = 0;
     var list_length = list_archive.listCategory.length;
     var list_news = [];
-    console.log(count + " " + list_length);
     return new Promise(function (resolve, reject) {
       async.series({
         list_news: function (callback) {
@@ -386,12 +402,10 @@ function getNewsArchivePagination(request) {
                 categoryId: list_archive.listCategory[count]
               })
               .exec().then(function (upNews) {
-                console.log(upNews.length);
                 var index = 0;
                 async.whilst(function () {
                   return index < upNews.length
                 }, function (callback2) {
-
                   list_news.push(upNews[index]);
                   index++;
                   callback2();
@@ -409,5 +423,18 @@ function getNewsArchivePagination(request) {
         return resolve(res);
       })
     });
+  });
+}
+
+
+function getNewsSearch(request) {
+  return News.find({
+    "title": {
+      $regex: request.searchKey
+    }
+  }).exec().then(function (newss) {
+    d
+    var res = pagination.pagination(newss.splice(request.pageSize * (request.pageIndex - 1), request.pageSize), newss.length, request.pageIndex, request.pageSize);
+    return Promise.resolve(res);
   });
 }

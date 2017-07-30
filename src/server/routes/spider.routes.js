@@ -144,8 +144,6 @@ module.exports = function () {
       crawlingName: req.params.crawlingName,
       url: req.body.url
     };
-    console.log("may goi tao a");
-    console.log(request);
     spiderDao.callSpiderUrl(request)
       .then(function (spider) {
         res.status(200).send(spider).end();
@@ -160,7 +158,6 @@ module.exports = function () {
       crawlingName: req.params.crawlingName,
       url: req.params.url
     }
-    console.log(request);
     spiderDao.updateNewsSpiderUrl(request)
       .then(function (spider) {
         res.status(200).send(spider).end();

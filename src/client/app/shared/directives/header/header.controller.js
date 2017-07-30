@@ -1,18 +1,9 @@
 (function () {
-  angular.module('app.search', []).filter('searchFor', function () {
-    return function (arr, searchString) {
-      if (!searchString) {
-        return arr;
-      }
-
-      var result = [];
-      searchString = searchString.toLowerCase();
-      angular.forEach(arr, function (item) {
-        if (item.title.toLowerCase().indexOf(searchString) !== -1) {
-          result.push(item);
-        }
-      });
-      retur result;
-    };
-  });
+  angular.module('app.header', []).controller('SearchHeader', ['$scope', '$window', function ($scope, $window) {
+    var searchString = $scope.searchString;
+    console.log(searchString);
+    $scope.submit = function () {
+      $window.location.href = "search/" + $scope.searchString + "/1/8";
+    }
+  }])
 })();

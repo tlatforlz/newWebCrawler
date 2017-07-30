@@ -10,8 +10,8 @@
           </ul>
         </div>
         <div class="header_top_right">
-          <form action="#" class="search_form">
-            <input type="text" placeholder="Text to Search" ng-model="searchString">
+          <form ng-submit="submit()" ng-controller="SearchHeader" class="search_form">
+            <input type="text" placeholder="Text to Search" ng-model="searchString" name="searchString" />
             <input type="submit" value="">
           </form>
         </div>

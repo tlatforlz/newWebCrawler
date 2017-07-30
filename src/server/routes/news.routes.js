@@ -14,6 +14,8 @@ module.exports = function () {
   router.get('/getNews/getNewsMostPopular', getNewsMostPopular);
   router.get('/getNews/getNewsArchive/:path', getNewsArchive);
   router.get('/getNews/getNewsArchive/pagination/:path/:pageIndex/:pageSize', getNewsArchivePagination);
+  router.get('/getNews/getNewsSearch/pagination/:searchKey/:pageIndex/:pageSize', getNewsSearch);
+
 
   function createNews(req, res, next) {
     var request = {
@@ -49,7 +51,7 @@ module.exports = function () {
     var request = {
       id: req.params.id
     }
-    newsDao.getNewsById(request)
+    newsDao.viewCount(request)
       .then(function (news) {
         res.status(200).send(news).end()
       })
@@ -173,8 +175,23 @@ module.exports = function () {
       pageIndex: parseInt(req.params.pageIndex),
       pageSize: parseInt(req.params.pageSize)
     }
-    console.log(request);
     newsDao.getNewsArchivePagination(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      })
+  }
+
+  //getNewsSearch
+  function getNewsSearch(req, res, next) {
+    var request = {
+      searchKey: req.params.searchKey,
+      pageIndex: parseInt(req.params.pageIndex),
+      pageSize: parseInt(req.params.pageSize)
+    }
+    newsDao.getNewsSearch(request)
       .then(function (news) {
         res.status(200).send(news).end();
       })
