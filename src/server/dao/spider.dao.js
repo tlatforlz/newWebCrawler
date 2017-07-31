@@ -160,6 +160,9 @@ function callSpider(request) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep(spider.urlId, spider._id);
           break;
+        case "spiderTinNongNghiepVietNam":
+          ListSpider.spiderNongNghiepVietNam(spider.urlId, spider._id);
+          break;
       }
       return Promise.resolve({
         messsage: successMessage.spider.callSpider,
@@ -182,6 +185,9 @@ function updateNewsSpider(request) {
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep_updateAll();
+          break;
+        case "spiderTinNongNghiepVietNam":
+          ListSpider.spiderNongNghiepVietNam_updateAll();
           break;
       }
       return Promise.resolve({
@@ -207,6 +213,9 @@ function callSpiderPath(request) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep_path(spider.urlId, spider._id, request.catelogyId);
           break;
+        case "spiderTinNongNghiepVietNam":
+          ListSpider.spiderNongNghiepVietNam_path(spider.urlId, spider._id, request.catelogyId);
+          break;
       }
       return Promise.resolve({
         messsage: successMessage.spider.callSpider,
@@ -229,6 +238,9 @@ function updateNewsSpiderPath(request) {
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep_updatePath(request.catelogyId);
+          break;
+        case "spiderTinNongNghiepVietNam":
+          ListSpider.spiderNongNghiepVietNam_updatePath(request.catelogyId);
           break;
       }
       return Promise.resolve({
@@ -263,6 +275,9 @@ function callSpiderUrl(request) {
           case "spiderTinNongNghiep":
             ListSpider.spiderTinNongNghiep_Url(spider.urlId, spider._id, request.url);
             break;
+          case "spiderTinNongNghiepVietNam":
+            ListSpider.spiderNongNghiepVietNam_Url(spider.urlId, spdier._id, request.url);
+            break;
         }
         return Promise.resolve({
           messsage: successMessage.spider.callSpider,
@@ -288,6 +303,9 @@ function updateNewsSpiderUrl(request) {
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep_updateUrl(request.url);
+          break;
+        case "spiderTinNongNghiepVietNam":
+          ListSpider.spiderNongNghiepVietNam_updateUrl(request.url);
           break;
       }
       return Promise.resolve({
