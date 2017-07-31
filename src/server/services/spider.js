@@ -33,6 +33,9 @@ function spiderTinNongNghiep(urlId, spiderId) {
 }
 
 function spiderNongNghiepVietNam(urlId, spiderId) {
+  console.log(urlId);
+  console.log(urlId.path);
+
   urlId.path.forEach(url => {
     var disUrl = urlId.hostname + url.namePath;
     console.log(disUrl);
@@ -94,54 +97,44 @@ function getPath_spiderNongNghiepVietNam(path, spiderId, catelogyId) {
   request(path, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       var $ = cheerio.load(body);
-      var i = 1;
+      let i = 1;
+      $('#main-content > div > div.post-listing.archive-box   h2 a').each(function () {
+        //#main-content > div.content > div.post-listing > article:nth-child(1)
+        url = ($('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > h2 > a').attr('href'));
+        console.log('url ' + url);
+        image = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
 
-      async.series({
-        content: function (callback) {
-          $('#main-content > div > div.post-listing.archive-box > article:nth-child(1) > h2 > a').each(function () {
-            //#main-content > div.content > div.post-listing > article:nth-child(1)
-            url = ($('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > h2 > a').attr('href'));
-            console.log('url ' + url);
-            image = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
-
-            des = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.entry > p').text();
-            console.log('des ' + des);
-            if (image === undefined) {
-              image = null;
-            } else {
-              image = image.split('-310x165').join('');
-            }
-            console.log(image);
-            var news = new News({
-              originalLink: url,
-              spiderId: spiderId,
-              categoryId: catelogyId,
-              image: image,
-              description: des,
-              active: true
-            });
-            News.findOne({
-              originalLink: news.originalLink
-            }, function (err, New) {
-              console.log(err);
-              if (New === null) {
-                news.save();
-              }
-            });
-            i++;
-          });
-          callback(cheri, )
-        },
-        indexIncrement: function (callback) {
-          gotoPage = $('#tie-next-page > a').attr('href');
-          if (gotoPage === undefined) {
-            return;
-          }
-          getPath_spiderNongNghiepVietNam(gotoPage, spiderId, catelogyId);
+        des = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.entry > p').text();
+        console.log('des ' + des);
+        if (image === undefined) {
+          image = null;
+        } else {
+          image = image.split('-310x165').join('');
         }
-      }, function (err, result) {
-
+        console.log(image);
+        var news = new News({
+          originalLink: url,
+          spiderId: spiderId,
+          categoryId: catelogyId,
+          image: image,
+          description: des,
+          active: true
+        });
+        News.findOne({
+          originalLink: news.originalLink
+        }, function (err, New) {
+          if (New === null) {
+            news.save();
+          }
+        });
+        i++;
       });
+
+      gotoPage = $('#tie-next-page > a').attr('href');
+      if (gotoPage === undefined) {
+        return;
+      }
+      getPath_spiderNongNghiepVietNam(gotoPage, spiderId, catelogyId);
 
     }
 
@@ -262,6 +255,9 @@ function spiderTinNongNghiep_updateAll() {
             page++;
             next();
           });
+        } else {
+          page++;
+          next();
         }
       },
       function (err) {});
@@ -269,9 +265,11 @@ function spiderTinNongNghiep_updateAll() {
 }
 
 function spiderNongNghiepVietNam_updateAll() {
+  console.log("you call me ? ");
   News.find({}, function (err, news) {
     var page = 0;
     var lastPage = news.length;
+    console.log(lastPage);
     async.whilst(function () {
         return page < lastPage;
       },
@@ -288,8 +286,9 @@ function spiderNongNghiepVietNam_updateAll() {
                   content: function (callback) {
                     let content = $('#the-post > div > div.entry').html();
                     let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
-                    // let remove_review_overview = $('#main-content > div.content > article > div > div.entry > div.review-box.review-top.review-stars').html();
-                    callback(null, content.split(remove).join(''));
+                    let remove_review_overview = $('#the-post > div > div.entry > h2').html();
+                    let remove_link = $('#the-post > div > div.entry > ul').html();
+                    callback(null, content.split(remove).join('').split(remove_review_overview).join('').split(remove_link).join(''));
                   },
                   author: function (callback) {
                     let author = $('#the-post > div > p > span.post-meta-author > a').text();
@@ -328,6 +327,9 @@ function spiderNongNghiepVietNam_updateAll() {
             page++;
             next();
           });
+        } else {
+          page++;
+          next();
         }
       },
       function (err) {});
@@ -394,6 +396,9 @@ function spiderTinNongNghiep_updatePath(categoryId) {
             page++;
             next();
           });
+        } else {
+          page++;
+          next();
         }
       },
       function (err) {});
@@ -423,8 +428,9 @@ function spiderNongNghiepVietNam_updatePath(categoryId) {
                   content: function (callback) {
                     let content = $('#the-post > div > div.entry').html();
                     let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
-                    // let remove_review_overview = $('#main-content > div.content > article > div > div.entry > div.review-box.review-top.review-stars').html();
-                    callback(null, content.split(remove).join(''));
+                    let remove_review_overview = $('#the-post > div > div.entry > h2').html();
+                    let remove_link = $('#the-post > div > div.entry > ul').html();
+                    callback(null, content.split(remove).join('').split(remove_review_overview).join('').split(remove_link).join(''));
                   },
                   author: function (callback) {
                     let author = $('#the-post > div > p > span.post-meta-author > a').text();
@@ -463,6 +469,9 @@ function spiderNongNghiepVietNam_updatePath(categoryId) {
             page++;
             next();
           });
+        } else {
+          page++;
+          next();
         }
       },
       function (err) {});
