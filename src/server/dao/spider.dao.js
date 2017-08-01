@@ -185,10 +185,10 @@ function updateNewsSpider(request) {
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep_updateAll();
-          break;
         case "spiderTinNongNghiepVietNam":
-          ListSpider.spiderNongNghiepVietNam_updateAll();
-          break;
+          ListSpider.spiderNongNghiepVietNam_updateAll().then(function (length) {
+            console.log('length' + length);
+          });
       }
       return Promise.resolve({
         messsage: successMessage.spider.callSpider,
