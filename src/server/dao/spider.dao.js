@@ -4,6 +4,7 @@ var successMessage = require('./../services/successMessage');
 var failMessage = require('./../services/failMessage');
 var ListSpider = require('./../services/spider');
 var News = require('./../model/news.model');
+var async = require('async');
 
 module.exports = {
   createSpider: createSpider,
@@ -16,8 +17,27 @@ module.exports = {
   callSpiderPath: callSpiderPath,
   updateNewsSpiderPath: updateNewsSpiderPath,
   callSpiderUrl: callSpiderUrl,
-  updateNewsSpiderUrl: updateNewsSpiderUrl
+  updateNewsSpiderUrl: updateNewsSpiderUrl,
+  testSpider: testSpider
 };
+
+function testSpider(request) {
+  return new Promise(function (resolve, reject) {
+    ListSpider.spiderCountUpdateAll(request.crawlingName)
+      .then(function (spider) {
+        return resolve({
+          messsage: successMessage.spider.callSpider,
+          spider: spider
+        });
+      })
+      .catch(function (err) {
+        return reject({
+          spider: err
+        });
+      })
+  })
+
+}
 
 function createSpider(request) {
   var newSpider = new Spider({
@@ -182,17 +202,30 @@ function updateNewsSpider(request) {
           message: failMessage.spider.notFound
         });
       }
-      switch (request.crawlingName) {
-        case "spiderTinNongNghiep":
-          ListSpider.spiderTinNongNghiep_updateAll();
-        case "spiderTinNongNghiepVietNam":
-          ListSpider.spiderNongNghiepVietNam_updateAll().then(function (length) {
-            console.log('length' + length);
+      return new Promise(function (resolve, reject) {
+        async.series({
+          length: function (callback) {
+            switch (request.crawlingName) {
+              case "spiderTinNongNghiep":
+                ListSpider.spiderTinNongNghiep_updateAll();
+                break;
+              case "spiderTinNongNghiepVietNam":
+                ListSpider.spiderNongNghiepVietNam_updateAll();
+                break;
+            }
+
+            ListSpider.spiderCountUpdateAll(request.crawlingName)
+              .then(function (result1) {
+                console.log(result1.length);
+                callback(null, result1.length);
+              });
+          }
+        }, function (err, result) {
+          return resolve({
+            messsage: successMessage.spider.callSpider,
+            spider: result.length
           });
-      }
-      return Promise.resolve({
-        messsage: successMessage.spider.callSpider,
-        spider: spider
+        })
       });
     });
 }

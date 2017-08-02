@@ -3,9 +3,12 @@ var cheerio = require("cheerio");
 var Spider = require('../dao/spider.dao');
 var newsDao = require('../dao/news.dao');
 var News = require('./../model/news.model');
+var SpiderModel = require('./../model/spider.model');
 var async = require('async');
 
 module.exports = {
+  spiderCountUpdateAll: spiderCountUpdateAll,
+
   spiderTinNongNghiep: spiderTinNongNghiep,
   spiderTinNongNghiep_updateAll: spiderTinNongNghiep_updateAll,
   spiderTinNongNghiep_path: spiderTinNongNghiep_path,
@@ -19,6 +22,75 @@ module.exports = {
   spiderNongNghiepVietNam_updateAll: spiderNongNghiepVietNam_updateAll,
   spiderNongNghiepVietNam_updateUrl: spiderNongNghiepVietNam_updateUrl,
   spiderNongNghiepVietNam_updatePath: spiderNongNghiepVietNam_updatePath
+}
+
+function spiderCountUpdateAll(crawlingName) {
+  return SpiderModel.findOne({
+      crawlingName: crawlingName
+    })
+    .populate('urlId')
+    .exec()
+    .then(function (spiderN) {
+      console.log(spiderN);
+      if (spiderN === null) {
+        message: failMessage.spider.notFound
+      }
+      var count = 0;
+      var list_length = spiderN.urlId.path.length;
+      var list_news = [];
+      console.log(spiderN);
+      return new Promise(function (resolve, reject) {
+        async.series({
+          list_news: function (callback) {
+            async.whilst(function () {
+              return count < list_length
+            }, function (next) {
+              return News.find({
+                  categoryId: spiderN.urlId.path[count].catelogyId,
+                  $or: [{
+                    title: undefined
+                  }, {
+                    title: ""
+                  }, {
+                    content: undefined
+                  }, {
+                    author: undefined
+                  }, {
+                    author: ""
+                  }, {
+                    createDate: undefined
+                  }, {
+                    createDate: ""
+                  }]
+                })
+                .exec().then(function (upNews) {
+                  var index = 0;
+                  async.whilst(function () {
+                    return index < upNews.length
+                  }, function (callback2) {
+                    var check = list_news.find(o => o.originalLink === upNews[index].originalLink);
+                    if (check === undefined) {
+                      list_news.push(upNews[index]);
+                    }
+                    index++;
+                    callback2();
+                  }, function (err) {
+                    count++;
+                    next();
+                  });
+                });
+            }, function (err) {
+              callback(null, list_news);
+            });
+          }
+        }, function (err, result) {
+          return resolve({
+            length: list_news.length,
+            list: list_news
+          });
+        })
+      });
+    });
 }
 
 function spiderTinNongNghiep(urlId, spiderId) {
@@ -51,6 +123,7 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
       var $ = cheerio.load(body);
       var i = 1;
       $('.post-listing .post-box-title a').each(function () {
+        //#main-content > div.content > div.post-listing > article:nth-child(1)
         url = ($(this).attr('href'));
         image = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
         console.log(image);
@@ -278,7 +351,7 @@ function spiderTinNongNghiep_updateAll() {
 }
 
 function spiderNongNghiepVietNam_updateAll() {
-  return News.find({
+  News.find({
     $or: [{
       title: undefined
     }, {
@@ -294,7 +367,7 @@ function spiderNongNghiepVietNam_updateAll() {
     }, {
       createDate: ""
     }]
-  }).exec().then(function (news) {
+  }, function (err, news) {
     var page = 0;
     var lastPage = news.length;
     console.log(lastPage);
@@ -303,7 +376,6 @@ function spiderNongNghiepVietNam_updateAll() {
       },
       function (next) {
         if (news[page].title === undefined || news[page].title === "") {
-          console.log(news[page].originalLink);
           request(news[page].originalLink, function (err, res, body) {
             if (!err && res.statusCode === 200) {
               var $ = cheerio.load(body);
@@ -361,11 +433,7 @@ function spiderNongNghiepVietNam_updateAll() {
           next();
         }
       },
-      function (err) {
-        return Promise.resolve({
-          length: news.length
-        })
-      });
+      function (err) {});
   });
 }
 
