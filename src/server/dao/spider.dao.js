@@ -175,7 +175,6 @@ function callSpider(request) {
           message: failMessage.spider.notFound
         });
       }
-
       switch (request.crawlingName) {
         case "spiderTinNongNghiep":
           ListSpider.spiderTinNongNghiep(spider.urlId, spider._id);
@@ -203,20 +202,20 @@ function updateNewsSpider(request) {
         });
       }
       return new Promise(function (resolve, reject) {
+        switch (request.crawlingName) {
+          case "spiderTinNongNghiep":
+            ListSpider.spiderTinNongNghiep_updateAll();
+            break;
+          case "spiderTinNongNghiepVietNam":
+            ListSpider.spiderNongNghiepVietNam_updateAll();
+            break;
+        }
+
         async.series({
           length: function (callback) {
-            switch (request.crawlingName) {
-              case "spiderTinNongNghiep":
-                ListSpider.spiderTinNongNghiep_updateAll();
-                break;
-              case "spiderTinNongNghiepVietNam":
-                ListSpider.spiderNongNghiepVietNam_updateAll();
-                break;
-            }
-
             ListSpider.spiderCountUpdateAll(request.crawlingName)
               .then(function (result1) {
-                console.log(result1.length);
+                console.log('blabla' + result1.length);
                 callback(null, result1.length);
               });
           }

@@ -31,14 +31,13 @@ function spiderCountUpdateAll(crawlingName) {
     .populate('urlId')
     .exec()
     .then(function (spiderN) {
-      console.log(spiderN);
+      console.log('spider ' + spiderN);
       if (spiderN === null) {
         message: failMessage.spider.notFound
       }
       var count = 0;
       var list_length = spiderN.urlId.path.length;
       var list_news = [];
-      console.log(spiderN);
       return new Promise(function (resolve, reject) {
         async.series({
           list_news: function (callback) {
@@ -109,8 +108,7 @@ function spiderNongNghiepVietNam(urlId, spiderId) {
 
   urlId.path.forEach(url => {
     var disUrl = urlId.hostname + url.namePath;
-    console.log(disUrl);
-    getPath_spiderNongNghiepVietNam(disUrl, spiderId, url.catelogoryId);
+    getPath_spiderNongNghiepVietNam(disUrl, spiderId, url.catelogyId);
   })
 }
 

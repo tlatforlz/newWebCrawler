@@ -3,6 +3,6 @@
   "BASE_URL": "/api",
   "mongodb": {
     "host": "localhost:27017",
-    "database": "news2"
+    "database": "news"
   }
 }

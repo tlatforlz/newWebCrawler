@@ -429,11 +429,10 @@ function getNewsArchivePagination(request) {
 
 function getNewsSearch(request) {
   return News.find({
-    "title": {
-      $regex: request.searchKey
+    $text: {
+      $search: request.searchKey
     }
   }).exec().then(function (newss) {
-    d
     var res = pagination.pagination(newss.splice(request.pageSize * (request.pageIndex - 1), request.pageSize), newss.length, request.pageIndex, request.pageSize);
     return Promise.resolve(res);
   });

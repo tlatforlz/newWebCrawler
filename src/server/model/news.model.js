@@ -44,5 +44,10 @@ var newsSchema = new Schema({
   }
 });
 
+newsSchema.index({
+  name: 'text',
+  content: 'text'
+});
+
 var spider = mongoose.model('news', newsSchema);
 module.exports = spider;
