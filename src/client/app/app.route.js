@@ -23,33 +23,35 @@
       if (toState.url === '') {
         event.preventDefault();
         $state.go('homepage');
-      } else {
-        if (toState.url === 'singlepage/:id') {
-          event.preventDefault();
-          $state.go('singlepage');
-        } else {
-          console.log(toState.url);
-          if (toState.url === 'contact') {
-            event.preventDefault();
-            $state.go('contactpage');
-          } else {
-            if (toState.url === 'about') {
-              event.preventDefault();
-              $state.go('about');
-            } else {
-              if (toState.url === 'category') {
-                event.preventDefault();
-                $state.go('category');
-              } else {
-                if (toState.url === 'search') {
-                  console.log('call search 111');
-                  event.preventDefault();
-                  $state.go('search');
-                }
-              }
-            }
-          }
-        }
+      }
+      if (toState.url === 'singlepage/:id') {
+        event.preventDefault();
+        $state.go('singlepage');
+      }
+      console.log(toState.url);
+      if (toState.url === 'contact') {
+        event.preventDefault();
+        $state.go('contactpage');
+      }
+      if (toState.url === 'about') {
+        event.preventDefault();
+        $state.go('about');
+      }
+      if (toState.url === 'category') {
+        event.preventDefault();
+        $state.go('category');
+      }
+      if (toState.url === 'search') {
+        event.preventDefault();
+        $state.go('search');
+      }
+      if (toState.url === 'adminlogin') {
+        event.preventDefault();
+        $state.go('adminlogin');
+      }
+      if (toState.url === 'adminpage') {
+        event.preventDefault();
+        $state.go('adminpage');
       }
     });
   }

@@ -9,6 +9,8 @@
     'app.category',
     'app.search',
     'app.header',
+    'app.adminlogin',
+    'app.adminpage',
 
     'ui.router',
     'angular-jwt',

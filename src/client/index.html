@@ -38,87 +38,88 @@
 </head>
 
 <body>
-  <div>
-    <div class="container">
-      <my-header></my-header>
-      <my-navbar></my-navbar>
-      <ui-view> </ui-view>
-    </div>
-    <my-footer></my-footer>
-    <!-- build:js js/lib.js -->
-    <!-- bower:js -->
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/angular/angular.js"></script>
-    <script src="/bower_components/angular-animate/angular-animate.js"></script>
-    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="/bower_components/angular-jwt/dist/angular-jwt.js"></script>
-    <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="/bower_components/extras.angular.plus/ngplus-overlay.js"></script>
-    <script src="/bower_components/moment/moment.js"></script>
-    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="/bower_components/toastr/toastr.js"></script>
-    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="/bower_components/ngstorage/ngStorage.js"></script>
-    <script src="/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
 
-    <!-- build:js js/app.js -->
-    <!-- inject:js -->
-    <script src="/src/client/app/app.module.js"></script>
-    <script src="/src/client/app/components/about/about.module.js"></script>
-    <script src="/src/client/app/components/adminpage/adminpage.module.js"></script>
-    <script src="/src/client/app/components/categorypage/categorypage.module.js"></script>
-    <script src="/src/client/app/components/contactpage/contactpage.module.js"></script>
-    <script src="/src/client/app/components/footer/footer.module.js"></script>
-    <script src="/src/client/app/components/header/header.module.js"></script>
-    <script src="/src/client/app/components/homepage/homepage.module.js"></script>
-    <script src="/src/client/app/components/navarea/navarea.module.js"></script>
-    <script src="/src/client/app/components/search/search.module.js"></script>
-    <script src="/src/client/app/components/singlepage/singlepage.module.js"></script>
-    <script src="/src/client/app/shared/blocks/exception/exception.module.js"></script>
-    <script src="/src/client/app/shared/blocks/logger/logger.module.js"></script>
-    <script src="/src/client/app/shared/blocks/router/router.module.js"></script>
-    <script src="/src/client/app/shared/directives/header/header.module.js"></script>
-    <script src="/src/client/app/app.route.js"></script>
-    <script src="/src/client/app/components/about/about.controller.js"></script>
-    <script src="/src/client/app/components/about/about.route.js"></script>
-    <script src="/src/client/app/components/adminpage/adminpage.controller.js"></script>
-    <script src="/src/client/app/components/adminpage/adminpage.route.js"></script>
-    <script src="/src/client/app/components/categorypage/categorypage.controller.js"></script>
-    <script src="/src/client/app/components/categorypage/categorypage.route.js"></script>
-    <script src="/src/client/app/components/contactpage/contactpage.controller.js"></script>
-    <script src="/src/client/app/components/contactpage/contactpage.route.js"></script>
-    <script src="/src/client/app/components/footer/footer.controller.js"></script>
-    <script src="/src/client/app/components/footer/footer.route.js"></script>
-    <script src="/src/client/app/components/header/header.controller.js"></script>
-    <script src="/src/client/app/components/header/header.route.js"></script>
-    <script src="/src/client/app/components/homepage/homepage.controller.js"></script>
-    <script src="/src/client/app/components/homepage/homepage.route.js"></script>
-    <script src="/src/client/app/components/navarea/navarea.controller.js"></script>
-    <script src="/src/client/app/components/navarea/navarea.route.js"></script>
-    <script src="/src/client/app/components/search/search.controller.js"></script>
-    <script src="/src/client/app/components/search/search.route.js"></script>
-    <script src="/src/client/app/components/singlepage/singlepage.controller.js"></script>
-    <script src="/src/client/app/components/singlepage/singlepage.route.js"></script>
-    <script src="/src/client/app/shared/blocks/exception/exception-handler.provider.js"></script>
-    <script src="/src/client/app/shared/blocks/exception/exception.js"></script>
-    <script src="/src/client/app/shared/blocks/logger/logger.js"></script>
-    <script src="/src/client/app/shared/blocks/router/router-helper.provider.js"></script>
-    <script src="/src/client/app/shared/blocks/toastr/constants.js"></script>
-    <script src="/src/client/app/shared/blocks/toastr/toastr.config.js"></script>
-    <script src="/src/client/app/shared/directives/footer/footer.js"></script>
-    <script src="/src/client/app/shared/directives/header/header.controller.js"></script>
-    <script src="/src/client/app/shared/directives/header/header.js"></script>
-    <script src="/src/client/app/shared/directives/navbar/navbar.js"></script>
-    <script src="/src/client/app/shared/directives/recentpost/recentpost.controller.js"></script>
-    <script src="/src/client/app/shared/directives/recentpost/recentpost.js"></script>
-    <script src="/src/client/app/shared/directives/searchKey.js"></script>
-    <!-- endinject -->
+  <ui-view> </ui-view>
 
-    <!-- inject:templates:js -->
-    <!-- endinject -->
-    <!-- endbuild -->
+
+  <!-- build:js js/lib.js -->
+  <!-- bower:js -->
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/bower_components/angular/angular.js"></script>
+  <script src="/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="/bower_components/angular-jwt/dist/angular-jwt.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/bower_components/extras.angular.plus/ngplus-overlay.js"></script>
+  <script src="/bower_components/moment/moment.js"></script>
+  <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="/bower_components/toastr/toastr.js"></script>
+  <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="/bower_components/ngstorage/ngStorage.js"></script>
+  <script src="/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js js/app.js -->
+  <!-- inject:js -->
+  <script src="/src/client/app/app.module.js"></script>
+  <script src="/src/client/app/components/about/about.module.js"></script>
+  <script src="/src/client/app/components/adminlogin/adminlogin.module.js"></script>
+  <script src="/src/client/app/components/adminpage/adminpage.module.js"></script>
+  <script src="/src/client/app/components/categorypage/categorypage.module.js"></script>
+  <script src="/src/client/app/components/contactpage/contactpage.module.js"></script>
+  <script src="/src/client/app/components/footer/footer.module.js"></script>
+  <script src="/src/client/app/components/header/header.module.js"></script>
+  <script src="/src/client/app/components/homepage/homepage.module.js"></script>
+  <script src="/src/client/app/components/navarea/navarea.module.js"></script>
+  <script src="/src/client/app/components/search/search.module.js"></script>
+  <script src="/src/client/app/components/singlepage/singlepage.module.js"></script>
+  <script src="/src/client/app/shared/blocks/exception/exception.module.js"></script>
+  <script src="/src/client/app/shared/blocks/logger/logger.module.js"></script>
+  <script src="/src/client/app/shared/blocks/router/router.module.js"></script>
+  <script src="/src/client/app/shared/directives/header/header.module.js"></script>
+  <script src="/src/client/app/app.route.js"></script>
+  <script src="/src/client/app/components/about/about.controller.js"></script>
+  <script src="/src/client/app/components/about/about.route.js"></script>
+  <script src="/src/client/app/components/adminlogin/adminlogin.controller.js"></script>
+  <script src="/src/client/app/components/adminlogin/adminlogin.route.js"></script>
+  <script src="/src/client/app/components/adminpage/adminpage.controller.js"></script>
+  <script src="/src/client/app/components/adminpage/adminpage.route.js"></script>
+  <script src="/src/client/app/components/categorypage/categorypage.controller.js"></script>
+  <script src="/src/client/app/components/categorypage/categorypage.route.js"></script>
+  <script src="/src/client/app/components/contactpage/contactpage.controller.js"></script>
+  <script src="/src/client/app/components/contactpage/contactpage.route.js"></script>
+  <script src="/src/client/app/components/footer/footer.controller.js"></script>
+  <script src="/src/client/app/components/footer/footer.route.js"></script>
+  <script src="/src/client/app/components/header/header.controller.js"></script>
+  <script src="/src/client/app/components/header/header.route.js"></script>
+  <script src="/src/client/app/components/homepage/homepage.controller.js"></script>
+  <script src="/src/client/app/components/homepage/homepage.route.js"></script>
+  <script src="/src/client/app/components/navarea/navarea.controller.js"></script>
+  <script src="/src/client/app/components/navarea/navarea.route.js"></script>
+  <script src="/src/client/app/components/search/search.controller.js"></script>
+  <script src="/src/client/app/components/search/search.route.js"></script>
+  <script src="/src/client/app/components/singlepage/singlepage.controller.js"></script>
+  <script src="/src/client/app/components/singlepage/singlepage.route.js"></script>
+  <script src="/src/client/app/shared/blocks/exception/exception-handler.provider.js"></script>
+  <script src="/src/client/app/shared/blocks/exception/exception.js"></script>
+  <script src="/src/client/app/shared/blocks/logger/logger.js"></script>
+  <script src="/src/client/app/shared/blocks/router/router-helper.provider.js"></script>
+  <script src="/src/client/app/shared/blocks/toastr/constants.js"></script>
+  <script src="/src/client/app/shared/blocks/toastr/toastr.config.js"></script>
+  <script src="/src/client/app/shared/directives/footer/footer.js"></script>
+  <script src="/src/client/app/shared/directives/header/header.controller.js"></script>
+  <script src="/src/client/app/shared/directives/header/header.js"></script>
+  <script src="/src/client/app/shared/directives/headeradmin/headeradmin.js"></script>
+  <script src="/src/client/app/shared/directives/navbar/navbar.js"></script>
+  <script src="/src/client/app/shared/directives/recentpost/recentpost.controller.js"></script>
+  <script src="/src/client/app/shared/directives/recentpost/recentpost.js"></script>
+  <script src="/src/client/app/shared/directives/searchKey.js"></script>
+  <!-- endinject -->
+
+  <!-- inject:templates:js -->
+  <!-- endinject -->
+  <!-- endbuild -->
 
 </body>
 
