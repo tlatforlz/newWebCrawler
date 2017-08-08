@@ -58,7 +58,9 @@
       }
       if (toState.url === 'admincategory') {
         event.preventDefault();
-        $state.go('admincategory');
+        $state.go('admincategory', {
+          reload: true
+        });
       }
       if (toState.url === 'adminnews') {
         event.preventDefault();

@@ -11,25 +11,24 @@ $(document).ready(function () {
     }
   });
 
-  $("#confirm-remove").dialog({
+  $("#dialog-conform").dialog({
     autoOpen: false,
     modal: true,
-    height: 200,
-    width: 500,
+    height: 150,
+    width: 400,
     position: {
       my: "center",
       at: "center",
       of: window
     }
-
   });
 
   $("#add-new-category").on('click', function () {
     $('#dialog-add-new').dialog('open');
   });
 
-  $("#remove-category").on('click', function () {
+  $(".remove-category").on('click', function () {
     console.log('blabla');
-    $("#confirm-remove").dialog('open');
-  })
+    $("#dialog-conform").dialog('open');
+  });
 });
