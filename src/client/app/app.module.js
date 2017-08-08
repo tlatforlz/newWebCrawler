@@ -11,6 +11,11 @@
     'app.header',
     'app.adminlogin',
     'app.adminpage',
+    'app.adminarchive',
+    'app.admincategory',
+    'app.adminnews',
+    'app.adminspider',
+    'app.adminurls',
 
     'ui.router',
     'angular-jwt',

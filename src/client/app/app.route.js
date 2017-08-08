@@ -28,7 +28,6 @@
         event.preventDefault();
         $state.go('singlepage');
       }
-      console.log(toState.url);
       if (toState.url === 'contact') {
         event.preventDefault();
         $state.go('contactpage');
@@ -52,6 +51,26 @@
       if (toState.url === 'adminpage') {
         event.preventDefault();
         $state.go('adminpage');
+      }
+      if (toState.url === 'adminarchive') {
+        event.preventDefault();
+        $state.go('adminarchive');
+      }
+      if (toState.url === 'admincategory') {
+        event.preventDefault();
+        $state.go('admincategory');
+      }
+      if (toState.url === 'adminnews') {
+        event.preventDefault();
+        $state.go('adminnews');
+      }
+      if (toState.url === 'adminspider') {
+        event.preventDefault();
+        $state.go('adminspider');
+      }
+      if (toState.url === 'adminurls') {
+        event.preventDefault();
+        $state.go('adminurls');
       }
     });
   }

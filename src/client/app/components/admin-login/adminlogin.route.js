@@ -5,7 +5,7 @@ function adminloginConfig($stateProvider) {
   $stateProvider
     .state('adminlogin', {
       url: '/adminlogin',
-      templateUrl: 'app/components/adminlogin/adminlogin.html',
+      templateUrl: 'app/components/admin-login/adminlogin.html',
       controller: 'AdminLoginController',
       controllerAs: 'vm'
     });
