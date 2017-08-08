@@ -26,10 +26,5 @@
         vm.listCategory = res.categorys;
       }
     )
-
-    $scope.addnewcategory = function () {
-      console.log($scope.name);
-      console.log($scope.key);
-    }
   }
 })();
