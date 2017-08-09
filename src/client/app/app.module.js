@@ -26,6 +26,7 @@
     'blocks.exception',
     'blocks.logger',
     'blocks.router',
-    'infinite-scroll'
+    'infinite-scroll',
+    'ngTable'
   ]);
 })();

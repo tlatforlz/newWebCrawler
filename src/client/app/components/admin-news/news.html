@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="/src/client/assets/css/icon-admin.css">
 <link rel="stylesheet" href="/src/client/assets/css/admin-responsive.css">
 <link rel="stylesheet" href="/src/client/assets/css/styles-admin.css">
+<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+
 <style>
   .modal {
     text-align: center;
@@ -82,7 +84,6 @@
     <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
   </div>
 </script>
-
 <script type="text/ng-template" id="conformDelete.html">
   <div class="modal-header">
     <h3 class="modal-title" id="modal-title">Are you sure ?</h3>
@@ -109,29 +110,25 @@
             <header class="panel-heading">
               Category Table
             </header>
-            <table class="table table-striped table-advance table-hover">
-              <tbody>
-                <tr>
-                  <th><i class="fa fa-list-ol"></i> STT</th>
-                  <th><i class="fa fa-info"></i> ObjectId</th>
-                  <th><i class="fa fa-bug"></i> Title</th>
-                  <th><i class="fa fa-bug"></i> Active</th>
-                  <th><i class="fa fa-cogs"></i> Action</th>
-                </tr>
-                <tr ng-repeat="cate in vm.listNews">
-                  <td>{{$index + 1}}</td>
-                  <td>{{cate._id}}</td>
-                  <td>{{cate.title}}</td>
-                  <td><input type="checkbox" name="myTextEditBox" value="checked" />
-                    <td>
-                      <div class="btn-group">
-                        <a class="btn btn-primary" href="#"><i class="fa fa-plus"></i></a>
-                        <a class="btn btn-success" ng-click="vm.editCate(cate._id)"><i class="fa fa-pencil"></i></a>
-                        <a class="btn btn-danger" ng-click="vm.conform(cate._id)"><i class="fa fa-trash"></i></a>
-                      </div>
-                    </td>
-                </tr>
-              </tbody>
+            <table show-filter="true" class="table table-condensed table-bordered table-striped" ng-table="vm.tableParams">
+              <!-- <tr ng-repeat="row in $data">
+                <td>{{$index + 1}}</td>
+                <td title="'_Id'">{{row._id}}</td>
+                <td title="'Title'">{{row.title}}</td>
+              </tr> -->
+              <tr ng-repeat="row in $data">
+                <td data-title="'id'" filter="{_id: 'text'}">{{row._id}}</td>
+                <td data-title="'id'" filter="{title: 'text'}">{{row.title}}</td>
+                <td data-title="'id'"> <input type="checkbox" name="myTextEditBox" value="checked" /></td>
+                <td data-title="'id'">
+                  <div class="btn-group">
+                    <a class="btn btn-primary" href="#"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-success" ng-click="vm.editCate(cate._id)"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-danger" ng-click="vm.conform(cate._id)"><i class="fa fa-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+
             </table>
           </section>
           <!-- <button class="btn btn-primary" ng-click="vm.open()">Add New Category</button> -->
