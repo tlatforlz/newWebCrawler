@@ -119,7 +119,7 @@
     }
 
     getTinTuc().then(
-      (res) => {
+      function (res) {
         var index = 0;
         for (var i in res.news) {
           if (index === 5) {
@@ -132,8 +132,7 @@
             index++;
           }
         }
-      }
-    )
+      });
 
     getNongNghiep().then(
       (res) => {

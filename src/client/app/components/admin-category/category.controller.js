@@ -1,8 +1,8 @@
 (function () {
   angular.module('app.admincategory')
-    .controller('CategoryController', ['$q', '$http', '$state', '$stateParams', '$scope', '$rootScope', '$uibModal', CategoryController]);
+    .controller('CategoryController', ['$q', '$http', '$state', '$scope', '$rootScope', '$uibModal', CategoryController]);
 
-  function CategoryController($q, $http, $state, $stateParams, $scope, $rootScope, $uibModal) {
+  function CategoryController($q, $http, $state, $scope, $rootScope, $uibModal) {
     var vm = this;
     vm.listCategory = [];
 
@@ -15,15 +15,14 @@
         deferred.resolve(res.data);
       }, function () {
         deferred.reject(null);
-      })
+      });
       return deferred.promise;
     }
 
     getListCategory().then(
-      (res) => {
+      function (res) {
         vm.listCategory = res.categorys;
-      }
-    )
+      });
 
     vm.animationsEnabled = true;
     vm.open = function (size) {
@@ -36,7 +35,7 @@
         controllerAs: 'vm',
         size: size
       });
-    }
+    };
 
     vm.animationsEnabled = true;
     vm.editCate = function (id) {
@@ -49,7 +48,7 @@
         controller: 'editCategory',
         controllerAs: 'vm'
       });
-    }
+    };
 
     vm.animationsEnabled = true;
     vm.conform = function (id) {
@@ -63,13 +62,13 @@
         controllerAs: 'vm',
         size: 'lg'
       });
-    }
+    };
   }
 
   angular.module('app.admincategory')
-    .controller('addNewCategory', ['$q', '$http', '$state', '$stateParams', '$scope', '$uibModalInstance', addNewCategory]);
+    .controller('addNewCategory', ['$q', '$http', '$state', '$scope', '$uibModalInstance', addNewCategory]);
 
-  function addNewCategory($q, $http, $state, $stateParams, $scope, $uibModalInstance) {
+  function addNewCategory($q, $http, $state, $scope, $uibModalInstance) {
     var vm = this;
 
     function add(category) {
@@ -82,13 +81,13 @@
         deferred.resolve(res.data);
       }, function () {
         deferred.reject(null);
-      })
+      });
       return deferred.promise;
     }
     vm.ok = function () {
       var data = {
-        "name": vm.name,
-        "keys": vm.key
+        'name': vm.name,
+        'keys': vm.key
       };
       add(data).then(function (res) {
         if (res.message === 'CREATE_SUCCESS') {
@@ -97,7 +96,7 @@
         }
       }, function () {
         vm.isShow = true;
-      })
+      });
     };
 
     vm.cancel = function () {
@@ -119,19 +118,19 @@
         deferred.resolve(res.data);
       }, function () {
         deferred.reject(null);
-      })
+      });
       return deferred.promise;
     }
     getCategory().then(function (res) {
       console.log(res);
       vm.name = res.category.name;
       vm.key = res.category.keys;
-    })
+    });
 
     function conformEdit() {
       var data = {
-        "name": vm.name,
-        "key": [vm.keys]
+        'name': vm.name,
+        'key': [vm.keys]
       };
       var deferred = $q.defer();
       $http({
@@ -142,7 +141,7 @@
         deferred.resolve(res.data);
       }, function () {
         deferred.reject(null);
-      })
+      });
       return deferred.promise;
     }
     vm.ok = function () {
@@ -153,7 +152,7 @@
         }
       }, function () {
         vm.isShow = true;
-      })
+      });
     };
 
     vm.cancel = function () {
@@ -161,9 +160,9 @@
     };
   }
   angular.module('app.admincategory')
-    .controller('conformDelete', ['$q', '$http', '$state', '$stateParams', '$scope', '$rootScope', '$uibModalInstance', conformDelete]);
+    .controller('conformDelete', ['$q', '$http', '$state', '$scope', '$rootScope', '$uibModalInstance', conformDelete]);
 
-  function conformDelete($q, $http, $state, $stateParams, $scope, $rootScope, $uibModalInstance) {
+  function conformDelete($q, $http, $state, $scope, $rootScope, $uibModalInstance) {
     var vm = this;
 
     function deleteCategory(category) {
@@ -175,7 +174,7 @@
         deferred.resolve(res.data);
       }, function () {
         deferred.reject(null);
-      })
+      });
       return deferred.promise;
     }
     vm.ok = function () {
@@ -186,7 +185,7 @@
         }
       }, function () {
         vm.isShow = true;
-      })
+      });
     };
 
     vm.cancel = function () {

@@ -5,7 +5,6 @@
   function HeaderController($q, $http, $state) {
     var vm = this;
     vm.listTop5 = [];
-    vm.title = "12321321";
 
     function getTop5() {
       var deferred = $q.defer();

@@ -15,14 +15,12 @@
         deferred.resolve(res.data);
       }, function () {
         deferred.reject(null);
-      })
+      });
       return deferred.promise;
     }
 
-    getListNews().then(
-      (res) => {
-        vm.listNews = res.news;
-      }
-    )
+    getListNews().then(function (res) {
+      vm.listNews = res.news;
+    });
   }
 })();

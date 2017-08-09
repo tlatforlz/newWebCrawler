@@ -15,14 +15,13 @@
         deferred.resolve(res.data);
       }, function () {
         deferred.reject(null);
-      })
+      });
       return deferred.promise;
     }
 
     getListArchive().then(
-      (res) => {
+      function (res) {
         vm.listArchive = res.Archives;
-      }
-    )
+      });
   }
 })();
