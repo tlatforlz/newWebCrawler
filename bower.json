@@ -34,7 +34,8 @@
     "bootstrap-horizon": "^0.1.0",
     "ui-bootstrap": "^2.5.0",
     "ngAnimate": "*",
-    "ngSanitize": "^0.0.2"
+    "ngSanitize": "^0.0.2",
+    "angular-ui-utils": "^3.0.0"
   },
   "resolutions": {
     "angular": "~1.5.9"

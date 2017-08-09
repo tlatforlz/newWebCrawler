@@ -1,1 +1,1 @@
-angular.module('app.adminnews', ['ui.router']);
+angular.module('app.adminnews', ['ui.router', 'ui.bootstrap', 'ui.utils']);
