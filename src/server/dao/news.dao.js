@@ -164,6 +164,10 @@ function updateNews(request) {
     if (request.categoryId !== undefined && request.categoryId !== '') {
       news.categoryId = request.categoryId;
     }
+    if (request.active !== undefined) {
+      news.active = request.active;
+    }
+
     news.updateDate = Date.now();
     return News.findOne({
       title: request.title,

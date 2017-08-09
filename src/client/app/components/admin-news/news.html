@@ -23,34 +23,36 @@
     vertical-align: middle;
   }
 
+  .modal-body img {
+    height: 400px;
+    width: 400px;
+  }
+
 </style>
-<script type="text/ng-template" id="addNewCategory.html">
+<script type="text/ng-template" id="newsDetail.html">
   <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">Add New Category</h3>
+    <h3 class="modal-title" id="modal-title">News Details</h3>
   </div>
   <div class="modal-body" id="modal-body">
     <div class="row">
       <div class="col-lg-12">
         <div class="panel-body">
           <div class="form-group">
-            <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
-            <div class="col-lg-10">
-              <input class="form-control" id="cname" name="name" type="text" ng-model="vm.name" required />
-              <h5 ng-show="vm.isShow" style="color:red"> Category dupplicate </h5>
-            </div>
-          </div>
-          <div class="" style="margin-top:55px !important">
-            <label for="ckey" class="control-label col-lg-2">Keys <span class="required">*</span></label>
-            <div class="col-lg-10">
-              <input class="form-control" id="ckey" name="key" mtype="text" ng-model="vm.key" required />
-            </div>
+            <h3>{{vm.title}}</h3>
+            <h5>{{vm.originalLink}}</h5>
+            <h5>Author : {{vm.author}}</h5>
+            <h5>CreateDate : {{vm.createDate}}</h5>
+            <h5>spiderId : {{vm.spiderId}}</h5>
+            <h5>categoryId : {{vm.categoryId}}</h5>
+            <h5>Content : </h5>
+            <div ng-bind-html="vm.content"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="vm.ok()">Submit</button>
+    <button class="btn btn-primary" type="button" ng-click="vm.ok()">OK</button>
     <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
   </div>
 </script>
@@ -111,18 +113,14 @@
               Category Table
             </header>
             <table show-filter="true" class="table table-condensed table-bordered table-striped" ng-table="vm.tableParams">
-              <!-- <tr ng-repeat="row in $data">
-                <td>{{$index + 1}}</td>
-                <td title="'_Id'">{{row._id}}</td>
-                <td title="'Title'">{{row.title}}</td>
-              </tr> -->
               <tr ng-repeat="row in $data">
                 <td data-title="'id'" filter="{_id: 'text'}">{{row._id}}</td>
-                <td data-title="'id'" filter="{title: 'text'}">{{row.title}}</td>
-                <td data-title="'id'"> <input type="checkbox" name="myTextEditBox" value="checked" /></td>
-                <td data-title="'id'">
+                <td data-title="'title'" filter="{title: 'text'}">{{row.title}}</td>
+                <td data-title="'active'"> <input type="checkbox" name="myTextEditBox" ng-checked={{row.active}} ng-click="vm.checkAction(row.active,row._id)"
+                  /></td>
+                <td data-title="'action'">
                   <div class="btn-group">
-                    <a class="btn btn-primary" href="#"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-primary" ng-click="vm.newsDetail(row._id)"><i class="fa fa-plus"></i></a>
                     <a class="btn btn-success" ng-click="vm.editCate(cate._id)"><i class="fa fa-pencil"></i></a>
                     <a class="btn btn-danger" ng-click="vm.conform(cate._id)"><i class="fa fa-trash"></i></a>
                   </div>

@@ -71,6 +71,7 @@ module.exports = function () {
       originalLink: req.body.originaLink,
       spiderId: req.body.spiderId,
       categoryId: req.body.categoryId,
+      active: req.body.active
     }
     newsDao.updateNews(request)
       .then(function (news) {
