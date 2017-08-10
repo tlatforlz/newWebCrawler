@@ -16,6 +16,7 @@
     'app.adminnews',
     'app.adminspider',
     'app.adminurls',
+    'app.admincallspider',
 
     'ui.router',
     'angular-jwt',

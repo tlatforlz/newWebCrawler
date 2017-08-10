@@ -1,1 +1,1 @@
-angular.module('app.adminspider', ['ui.router']);
+angular.module('app.adminspider', ['ui.router', 'ngAnimate', 'ngSanitize', 'ui.bootstrap']);

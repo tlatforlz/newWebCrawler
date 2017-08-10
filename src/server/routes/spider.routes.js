@@ -5,6 +5,7 @@ module.exports = function () {
   router.post('/', createSpider);
   router.get('/', getAllSpider);
   router.get('/:id', getSpiderById);
+  router.get('/getNewsCall/:id', getNewsCall);
   router.put('/:id', updateSpider);
   router.delete('/:id', deleteSpider);
   router.post('/:crawlingName', callSpider);
@@ -157,7 +158,7 @@ module.exports = function () {
     var request = {
       crawlingName: req.params.crawlingName,
       url: req.params.url
-    }
+    };
     spiderDao.updateNewsSpiderUrl(request)
       .then(function (spider) {
         res.status(200).send(spider).end();
@@ -166,6 +167,17 @@ module.exports = function () {
       });
   }
 
+  function getNewsCall(req, res, next) {
+    var request = {
+      _id: req.params.id
+    };
+    spiderDao.getNewsCall(request)
+      .then(function (spider) {
+        res.status(200).send(spider).end();
+      }).catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
 
   return router;
 }

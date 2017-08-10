@@ -74,6 +74,10 @@
         event.preventDefault();
         $state.go('adminurls');
       }
+      if (toState.url === 'admincallspider/:id') {
+        event.preventDefault();
+        $state.go('admincallspider');
+      }
     });
   }
 

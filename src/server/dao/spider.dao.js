@@ -18,8 +18,13 @@ module.exports = {
   updateNewsSpiderPath: updateNewsSpiderPath,
   callSpiderUrl: callSpiderUrl,
   updateNewsSpiderUrl: updateNewsSpiderUrl,
-  testSpider: testSpider
+  testSpider: testSpider,
+  getNewsCall: getNewsCall
 };
+
+function getNewsCall(request) {
+
+}
 
 function testSpider(request) {
   return new Promise(function (resolve, reject) {

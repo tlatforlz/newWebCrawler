@@ -34,6 +34,11 @@
         controller: 'addNewCategory',
         controllerAs: 'vm',
         size: size
+      }).closed.then(function () {
+        getListCategory().then(
+          function (res) {
+            vm.listCategory = res.categorys;
+          });
       });
     };
 
@@ -47,7 +52,12 @@
         templateUrl: 'editCategory.html',
         controller: 'editCategory',
         controllerAs: 'vm'
-      });
+      }).closed.then(function () {
+        getListCategory().then(
+          function (res) {
+            vm.listCategory = res.categorys;
+          });
+      });;
     };
 
     vm.animationsEnabled = true;
@@ -61,7 +71,12 @@
         controller: 'conformDelete',
         controllerAs: 'vm',
         size: 'lg'
-      });
+      }).closed.then(function () {
+        getListCategory().then(
+          function (res) {
+            vm.listCategory = res.categorys;
+          });
+      });;
     };
   }
 
@@ -122,7 +137,6 @@
       return deferred.promise;
     }
     getCategory().then(function (res) {
-      console.log(res);
       vm.name = res.category.name;
       vm.key = res.category.keys;
     });
@@ -147,7 +161,6 @@
     vm.ok = function () {
       conformEdit().then(function (res) {
         if (res.message === 'CREATE_SUCCESS') {
-          location.reload();
           $uibModalInstance.close();
         }
       }, function () {
@@ -180,7 +193,6 @@
     vm.ok = function () {
       deleteCategory().then(function (res) {
         if (res.message === 'DELETE_SUCCESS') {
-          location.reload();
           $uibModalInstance.close();
         }
       }, function () {

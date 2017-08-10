@@ -1,0 +1,141 @@
+<link rel="stylesheet" href="/src/client/assets/css/icon-admin.css">
+<link rel="stylesheet" href="/src/client/assets/css/admin-responsive.css">
+<link rel="stylesheet" href="/src/client/assets/css/styles-admin.css">
+<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+
+<style>
+  .modal {
+    text-align: center;
+    padding: 0!important;
+  }
+
+  .modal::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
+
+  .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .modal-body img {
+    height: 400px;
+    width: 400px;
+  }
+
+</style>
+<script type="text/ng-template" id="newsDetail.html">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">News Details</h3>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel-body">
+          <div class="form-group">
+            <h3>{{vm.title}}</h3>
+            <h5>{{vm.originalLink}}</h5>
+            <h5>Author : {{vm.author}}</h5>
+            <h5>CreateDate : {{vm.createDate}}</h5>
+            <h5>spiderId : {{vm.spiderId}}</h5>
+            <h5>categoryId : {{vm.categoryId}}</h5>
+            <h5>Content : </h5>
+            <div ng-bind-html="vm.content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="vm.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+  </div>
+</script>
+<script type="text/ng-template" id="editCategory.html">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Edit Category</h3>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
+            <div class="col-lg-10">
+              <input class="form-control" id="cname" name="name" type="text" ng-model="vm.name" required />
+              <h5 ng-show="vm.isShow" style="color:red"> Category dupplicate </h5>
+            </div>
+          </div>
+          <div class="" style="margin-top:55px !important">
+            <label for="ckey" class="control-label col-lg-2">Keys <span class="required">*</span></label>
+            <div class="col-lg-10">
+              <input class="form-control" id="ckey" name="key" mtype="text" ng-model="vm.key" required />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="vm.ok()">Submit</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+  </div>
+</script>
+<script type="text/ng-template" id="conformDelete.html">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Are you sure ?</h3>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <button class="btn btn-primary" type="button" ng-click="vm.ok()" style="margin-left: 60px;margin-right: 20px;padding-left: 15px;padding-right: 15px;">Yes</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.cancel()" style="padding-left: 15px;padding-right: 15px;">No</button>
+  </div>
+  <div class="modal-footer">
+  </div>
+</script>
+<section id="container" class="">
+  <my-header-admin></my-header-admin>
+  <section id="main-content">
+    <section class="wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+          <h3 class="page-header"><i class="fa fa-table"></i> Spider</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <section class="panel">
+            <header class="panel-heading">
+              List Spider
+            </header>
+            <table show-filter="true" class="table table-condensed table-bordered table-striped" ng-table="vm.tableParams">
+              <tr ng-repeat="row in $data">
+                <td data-title="'id'" filter="{_id: 'text'}">{{row._id}}</td>
+                <td data-title="'urlId'" filter="{urlId: 'text'}">{{row.urlId}}</td>
+                <td data-title="'name'" filter="{name: 'text'}">{{row.name}}</td>
+                <td data-title="'crawlingName'" filter="{crawlingName: 'text'}">{{row.crawlingName}}</td>
+                <td data-title="'createDate'">{{row.createDate}}</td>
+                <td data-title="'action'">
+                  <div class="btn-group">
+                    <a class="btn btn-primary" href="admincallspider/{{row._id}}"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-success" ng-click="vm.editCate(cate._id)"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-danger" ng-click="vm.conform(row._id)"><i class="fa fa-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+
+            </table>
+          </section>
+          <!-- <button class="btn btn-primary" ng-click="vm.open()">Add New Category</button> -->
+        </div>
+      </div>
+    </section>
+  </section>
+</section>
+
+<script src="/src/client/assets/js/jquery.nicescroll.js"></script>
+<script src="/src/client/assets/js/script-admin.js"></script>
