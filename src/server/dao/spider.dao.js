@@ -19,11 +19,36 @@ module.exports = {
   callSpiderUrl: callSpiderUrl,
   updateNewsSpiderUrl: updateNewsSpiderUrl,
   testSpider: testSpider,
-  getNewsCall: getNewsCall
+  getNewsCall: getNewsCall,
+  getNewsNone: getNewsNone
 };
 
-function getNewsCall(request) {
+//getNewsNone
+function getNewsNone(request) {
+  return News.find({
+      active: false,
+      spiderId: request._id,
+      content: undefined
+    }).exec()
+    .then(function (res) {
+      console.log(res);
+      return Promise.resolve({
+        news: res
+      })
+    })
+}
 
+function getNewsCall(request) {
+  return News.find({
+      active: false,
+      spiderId: request._id
+    }).exec()
+    .then(function (res) {
+      console.log(res);
+      return Promise.resolve({
+        news: res
+      })
+    })
 }
 
 function testSpider(request) {
@@ -180,17 +205,25 @@ function callSpider(request) {
           message: failMessage.spider.notFound
         });
       }
-      switch (request.crawlingName) {
-        case "spiderTinNongNghiep":
-          ListSpider.spiderTinNongNghiep(spider.urlId, spider._id);
-          break;
-        case "spiderTinNongNghiepVietNam":
-          ListSpider.spiderNongNghiepVietNam(spider.urlId, spider._id);
-          break;
-      }
-      return Promise.resolve({
-        messsage: successMessage.spider.callSpider,
-        spider: spider
+      return new Promise(function (resolve, reject) {
+        async.series({
+          length: function (callback) {
+            switch (request.crawlingName) {
+              case "spiderTinNongNghiep":
+                ListSpider.spiderTinNongNghiep(spider.urlId, spider._id);
+
+              case "spiderTinNongNghiepVietNam":
+                ListSpider.spiderNongNghiepVietNam(spider.urlId, spider._id).then(function (res) {
+                  callback(null, res);
+                });
+            }
+          }
+        }, function (err, result) {
+          return resolve({
+            messsage: successMessage.spider.callSpider,
+            spider: result.length
+          });
+        })
       });
     });
 }

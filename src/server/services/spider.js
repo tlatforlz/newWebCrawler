@@ -46,6 +46,7 @@ function spiderCountUpdateAll(crawlingName) {
             }, function (next) {
               return News.find({
                   categoryId: spiderN.urlId.path[count].catelogyId,
+                  active: false,
                   $or: [{
                     title: undefined
                   }, {
@@ -103,112 +104,138 @@ function spiderTinNongNghiep(urlId, spiderId) {
 }
 
 function spiderNongNghiepVietNam(urlId, spiderId) {
-  console.log(urlId);
-  console.log(urlId.path);
+  return new Promise(function (resolve, reject) {
+    var page = 0;
 
-  urlId.path.forEach(url => {
-    var disUrl = urlId.hostname + url.namePath;
-    getPath_spiderNongNghiepVietNam(disUrl, spiderId, url.catelogyId);
-  })
+    async.whilst(function () {
+        return page < urlId.path.length;
+      },
+      function (next) {
+        var disUrl = urlId.hostname + urlId.path[page].namePath;
+        console.log(disUrl);
+        console.log(urlId.path[page]);
+        getPath_spiderNongNghiepVietNam(disUrl, spiderId, urlId.path[page].catelogyId).then(function (res) {
+          console.log('log' + res);
+          page++;
+          console.log(page);
+          next();
+        }).catch(function (err) {
+          console.log(err);
+        });
+
+      },
+      function (err) {
+        return resolve("CALL_SUCCESS");
+      });
+  });
 }
 
 function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
-  if (path === undefined) {
-    return;
-  }
-  request(path, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var $ = cheerio.load(body);
-      var i = 1;
-      $('.post-listing .post-box-title a').each(function () {
-        //#main-content > div.content > div.post-listing > article:nth-child(1)
-        url = ($(this).attr('href'));
-        image = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
-        console.log(image);
-        des = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.entry > p').text();
-        if (image === undefined) {
-          image = null;
-        } else {
-          image = image.split('-150x150').join('');
-        }
-        var news = new News({
-          originalLink: url,
-          spiderId: spiderId,
-          categoryId: catelogyId,
-          image: image,
-          description: des,
-          active: true
-        });
-        News.findOne({
-          originalLink: news.originalLink
-        }, function (err, New) {
-          if (New === null) {
-            news.save();
+  console.log('bla bla bla');
+  return new Promise(function (resolve, reject) {
+    if (path === undefined) {
+      return resolve(true);
+    }
+    request(path, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        var $ = cheerio.load(body);
+        var i = 1;
+        $('.post-listing .post-box-title a').each(function () {
+          //#main-content > div.content > div.post-listing > article:nth-child(1)
+          url = ($(this).attr('href'));
+          image = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
+          des = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.entry > p').text();
+          if (image === undefined) {
+            image = null;
+          } else {
+            image = image.split('-150x150').join('');
           }
+          var news = new News({
+            originalLink: url,
+            spiderId: spiderId,
+            categoryId: catelogyId,
+            image: image,
+            description: des,
+            active: false
+          });
+          News.findOne({
+            originalLink: news.originalLink
+          }, function (err, New) {
+            if (New === null) {
+              news.save();
+            }
+          });
+          i++;
         });
-        i++;
-      });
-    }
-    gotoPage = $('#tie-next-page a').attr('href');
-    if (gotoPage === undefined) {
-      return;
-    }
-    getPath_spiderTinNongNghiep(gotoPage, spiderId, catelogyId);
-  });
-  return;
+      }
+      gotoPage = $('#tie-next-page a').attr('href');
+      if (gotoPage === undefined) {
+        return resolve(true);
+      }
+      getPath_spiderTinNongNghiep(gotoPage, spiderId, catelogyId);
+    });
+  })
+
 }
 
 function getPath_spiderNongNghiepVietNam(path, spiderId, catelogyId) {
-  if (path === undefined) {
-    return;
-  }
-
-  request(path, function (error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var $ = cheerio.load(body);
-      let i = 1;
-      $('#main-content > div > div.post-listing.archive-box   h2 a').each(function () {
-        //#main-content > div.content > div.post-listing > article:nth-child(1)
-        url = ($('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > h2 > a').attr('href'));
-        console.log('url ' + url);
-        image = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
-
-        des = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.entry > p').text();
-        console.log('des ' + des);
-        if (image === undefined) {
-          image = null;
-        } else {
-          image = image.split('-310x165').join('');
-        }
-        console.log(image);
-        var news = new News({
-          originalLink: url,
-          spiderId: spiderId,
-          categoryId: catelogyId,
-          image: image,
-          description: des,
-          active: true
-        });
-        News.findOne({
-          originalLink: news.originalLink
-        }, function (err, New) {
-          if (New === null) {
-            news.save();
-          }
-        });
-        i++;
-      });
-
-      gotoPage = $('#tie-next-page > a').attr('href');
-      if (gotoPage === undefined) {
-        return;
-      }
-      getPath_spiderNongNghiepVietNam(gotoPage, spiderId, catelogyId);
-
+  return new Promise(function (resolve, reject) {
+    if (path === undefined) {
+      console.log('blo')
+      return resolve(true);
     }
+    async.whilst(function () {
+      return path !== undefined
+    }, function (next) {
+      async.series({
+        gotoPage: function (callback) {
+          request(path, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+              var $ = cheerio.load(body);
+              let i = 1;
+              $('#main-content > div > div.post-listing.archive-box   h2 a').each(function () {
+                url = ($('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > h2 > a').attr('href'));
+                image = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
+                des = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.entry > p').text();
+                if (image === undefined) {
+                  image = null;
+                } else {
+                  image = image.split('-310x165').join('');
+                }
+                var news = new News({
+                  originalLink: url,
+                  spiderId: spiderId,
+                  categoryId: catelogyId,
+                  image: image,
+                  description: des,
+                  active: false
+                });
+                News.findOne({
+                  originalLink: news.originalLink
+                }, function (err, New) {
+                  if (New === null) {
+                    news.save();
+                  }
+                });
+                i++;
+              });
 
+              gotoPage = $('#tie-next-page > a').attr('href');
+              if (gotoPage === undefined) {
+                return resolve(true);
+              }
+              callback(null, gotoPage);
+            }
+          });
+        }
+      }, function (err, result) {
+        path = result.gotoPage;
+        next();
+      });
+    }, function (err) {
+      return resolve(true);
+    })
   });
-  return;
 }
 
 function spiderTinNongNghiep_path(urlId, spiderId, catelogyId) {
