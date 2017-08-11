@@ -70,7 +70,7 @@
         templateUrl: 'conformDelete.html',
         controller: 'conformDelete',
         controllerAs: 'vm',
-        size: 'lg'
+        size: 'sm'
       }).closed.then(function () {
         getListCategory().then(
           function (res) {
