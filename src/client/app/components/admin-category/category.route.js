@@ -6,7 +6,7 @@ function admincategoryConfig($stateProvider) {
     .state('admincategory', {
       url: '/admincategory',
       templateUrl: 'app/components/admin-category/category.html',
-      controller: 'CategoryController',
+      controller: 'CategoryAdminController',
       controllerAs: 'vm'
     });
 }

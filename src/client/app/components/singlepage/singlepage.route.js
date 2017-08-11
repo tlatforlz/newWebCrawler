@@ -3,7 +3,7 @@ angular.module('app.singlepage')
 
 function singlepageConfig($stateProvider) {
   $stateProvider
-    .state('singlePage', {
+    .state('singlepage', {
       url: '/singlepage/:id',
       templateUrl: 'app/components/singlepage/singlepage.html',
       controller: 'SinglePageController',

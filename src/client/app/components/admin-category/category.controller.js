@@ -1,8 +1,8 @@
 (function () {
   angular.module('app.admincategory')
-    .controller('CategoryController', ['$q', '$http', '$state', '$scope', '$rootScope', '$uibModal', CategoryController]);
+    .controller('CategoryAdminController', ['$q', '$http', '$state', '$scope', '$rootScope', '$uibModal', CategoryAdminController]);
 
-  function CategoryController($q, $http, $state, $scope, $rootScope, $uibModal) {
+  function CategoryAdminController($q, $http, $state, $scope, $rootScope, $uibModal) {
     var vm = this;
     vm.listCategory = [];
 

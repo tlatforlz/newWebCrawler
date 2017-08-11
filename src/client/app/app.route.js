@@ -20,11 +20,13 @@
     var otherwise = '/404';
     routerHelper.configureStates(getStates(), otherwise);
     $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
+      console.log(toState.url);
       if (toState.url === '') {
         event.preventDefault();
         $state.go('homepage');
       }
       if (toState.url === 'singlepage/:id') {
+        console.log('blalalalasd');
         event.preventDefault();
         $state.go('singlepage');
       }
@@ -36,7 +38,8 @@
         event.preventDefault();
         $state.go('about');
       }
-      if (toState.url === 'category') {
+      if (toState.url === 'category/:path/:currentPage/:pageSize') {
+        console.log('call here');
         event.preventDefault();
         $state.go('category');
       }
@@ -58,9 +61,7 @@
       }
       if (toState.url === 'admincategory') {
         event.preventDefault();
-        $state.go('admincategory', {
-          reload: true
-        });
+        $state.go('admincategory');
       }
       if (toState.url === 'adminnews') {
         event.preventDefault();
