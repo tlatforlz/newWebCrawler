@@ -175,11 +175,12 @@ function updateNews(request) {
         $ne: request.id
       }
     }).exec().then(function (New) {
-      if (New !== null) {
-        return Promise.reject({
-          message: failMessage.news.dupplicate
-        });
-      }
+      // console.log(New);
+      // if (New !== null) {
+      //   return Promise.reject({
+      //     message: failMessage.news.dupplicate
+      //   });
+      // }
       return news.save().then(function (err) {
         return Promise.resolve({
           message: successMessage.news.update,

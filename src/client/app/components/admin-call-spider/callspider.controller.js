@@ -95,6 +95,39 @@
       })
     }
 
+    function updateNews(id, data) {
+      var deferred = $q.defer();
+      $http({
+        method: 'PUT',
+        url: '/api/news/' + id,
+        data: data
+      }).then(function successCallback(res) {
+        deferred.resolve(res.data);
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
+    }
+
+    vm.checkAction = function (active, _id) {
+      var data = {
+        'active': !active
+      };
+      console.log(data);
+      updateNews(_id, data).then(function (res) {
+        getNewsSpider().then(function (res) {
+          vm.listSpider = res.news;
+          vm.tableParams = new NgTableParams({
+            page: 1,
+            count: 15,
+            header: false
+          }, {
+            dataset: vm.listSpider
+          });
+        });
+      }, function () {});
+    };
+
     vm.updateSpider = function () {
       getSpider().then(function (res) {
         update(res.spider.crawlingName).then(function (ress) {
@@ -117,8 +150,8 @@
           //     }
           //   })
           // }
-        })
-      })
+        });
+      });
     }
     getNewsSpider().then(function (res) {
       vm.listSpider = res.news;

@@ -2,7 +2,10 @@
   angular.module('app.category')
     .controller('CategoryController', ['$q', '$http', '$state', '$stateParams', '$scope', CategoryController]);
 
+  console.log('controller category');
+
   function CategoryController($q, $http, $state, $stateParams, $scope) {
+    console.log('bla bla bla herer');
     var vm = this;
     vm.listTop3 = [];
     vm.listPopular = [];
@@ -80,7 +83,6 @@
         for (var i in res.items) {
           if (res.items[i]) {
             res.items[i].createDate = moment(res.items[i].createDate).format('DD-MM-YYYY');
-            res.items[i].updateDate = moment(res.items[i].updateDate).format('DD-MM-YYYY');
             vm.listContent.push(res.items[i]);
           }
         }
