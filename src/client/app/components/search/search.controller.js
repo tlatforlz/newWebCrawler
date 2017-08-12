@@ -12,11 +12,20 @@
     vm.pageSize = 8;
     vm.totalPage = 1;
     vm.path = $stateParams.path;
-
+    vm.currentPage = $stateParams.currentPage;
+    vm.path = $stateParams.searchKey;
+    vm.begin = $stateParams.currentPage;
+    vm.all = 0;
     $scope.range = function (count) {
       return Array.apply(0, Array(+count)).map(function (value, index) {
         return index;
       });
+    }
+    $scope.activeSelect = function (i) {
+      if (parseInt(i) === parseInt(vm.currentPage)) {
+        return "active-select";
+      }
+      return "";
     }
 
     function getContent() {
@@ -74,8 +83,14 @@
 
     getContent().then(
       (res) => {
+        vm.all = res.totalResult;
         vm.totalPage = res.totalPage;
+        vm.totalPage = parseInt($stateParams.currentPage) + 8;
 
+        if (vm.totalPage > res.totalPage) {
+          vm.totalPage = res.totalPage;
+          vm.begin = vm.totalPage - 8;
+        }
         var index = 0;
         for (var i in res.items) {
           if (res.items[i]) {

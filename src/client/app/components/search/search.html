@@ -8,6 +8,7 @@
           <div class="single_category wow fadeInDown">
 
             <div class="archive_style_1" ng-if="vm.listContent.length != 0">
+              <h5>Tìm được {{vm.all}} bài viết liên quan.</h5>
               <div ng-repeat="news in vm.listContent">
                 <div class="business_category_left wow fadeInDown" style="width: 45% !important; margin-right:25px">
                   <!-- <ul class="featured_nav wow fadeInDown"> -->
@@ -18,7 +19,7 @@
                     <li>
                       <div class="catgimg2_container"> <a href="/singlepage/{{news._id}}"><img style="width:250px; height:250px" alt="" src="{{news.image}}"></a>                        </div>
                       <h2 class="catg_titile"><a style="font-size: 20px;" href="/singlepage/{{news._id}}">{{news.title.substring(0, 20) + '...'}}</a></h2>
-                      <div class="comments_box"> <span class="meta_date">{{news.createDate}}</span> <span class="meta_comment"><a href="#">No Comments</a></span>                        <span class="meta_more"><a  href="/singlepage/{{news._id}}">Read More...</a></span> </div>
+                      <div class="comments_box"> <span class="meta_date">{{news.createDate}}</span> <span class="meta_more"><a  href="/singlepage/{{news._id}}">Đọc Thêm</a></span>                        </div>
                     </li>
                   </ul>
                 </div>
@@ -31,7 +32,7 @@
           <nav>
             <ul class="pagination">
               <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-              <li ng-repeat="i in range(vm.totalPage)"><a href="/category/{{vm.path}}/{{i + 1}}/{{vm.pageSize}}">{{i + 1}}</a></li>
+              <li ng-repeat="i in range(vm.totalPage) | limitTo:vm.totalPage:vm.begin"><a ng-class="activeSelect(i)" href="/search/{{vm.path}}/{{i}}/{{vm.pageSize}}">{{i}}</a></li>
               <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
             </ul>
           </nav>
@@ -40,7 +41,7 @@
       <div class="col-lg-4 col-md-4">
         <div class="content_bottom_right">
           <div class="single_bottom_rightbar">
-            <h2>Recent Post</h2>
+            <h2>Bài Viết Gần Đây</h2>
             <ul class="small_catg popular_catg wow fadeInDown">
               <div ng-repeat="news in vm.listTop3">
                 <li>
@@ -56,7 +57,7 @@
           </div>
           <div class="single_bottom_rightbar">
             <ul role="tablist" class="nav nav-tabs custom-tabs">
-              <li class="active" role="presentation"><a data-toggle="tab" role="tab" aria-controls="home" href="#mostPopular">Most Popular</a></li>
+              <li class="active" role="presentation"><a data-toggle="tab" role="tab" aria-controls="home" href="#mostPopular">Bài Viết Phổ Biến</a></li>
               <!-- <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="messages" href="#recentComent">Recent Comment</a></li> -->
             </ul>
             <div class="tab-content">
@@ -76,27 +77,8 @@
               </div>
             </div>
           </div>
-          <div class="single_bottom_rightbar">
-            <h2>Blog Archive</h2>
-            <div class="blog_archive wow fadeInDown">
-              <form action="#">
-                <select>
-                  <option value="">Blog Archive</option>
-                  <option value="">October(20)</option>
-                </select>
-              </form>
-            </div>
-          </div>
-          <div class="single_bottom_rightbar wow fadeInDown">
-            <h2>Popular Lnks</h2>
-            <ul>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Blog Home</a></li>
-              <li><a href="#">Error Page</a></li>
-              <li><a href="#">Social link</a></li>
-              <li><a href="#">Login</a></li>
-            </ul>
-          </div>
+
+
         </div>
       </div>
     </div>

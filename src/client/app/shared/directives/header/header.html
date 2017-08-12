@@ -4,20 +4,21 @@
       <div class="header_top">
         <div class="header_top_left">
           <ul class="top_nav">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="/">Trang Chủ</a></li>
+            <li><a href="/about">Giới thiệu</a></li>
+            <li><a href="/contact">Liên Lạc</a></li>
           </ul>
         </div>
         <div class="header_top_right">
           <form ng-submit="submit()" ng-controller="SearchHeader" class="search_form">
-            <input type="text" placeholder="Text to Search" ng-model="searchString" name="searchString" />
-            <input type="submit" value="">
+            <input style="border-style: groove <!important></!important>;" class="" type="text" placeholder="Nhập " ng-model="searchString"
+              name="searchString" />
+            <i class="fa fa-search"><input type="submit" value=""></i>
           </form>
         </div>
       </div>
       <div class="header_bottom">
-        <div class="header_bottom_left"><a class="logo" href="/"><strong>Tin Tức</strong> <span>Trang Web Thu Thập Tin Tức Nông Nghiệp</span></a></div>
+        <div class="header_bottom_left"><a class="logo" href="/"><strong>Tin Tức Nông Nghiệp</strong></a></div>
         <div class="header_bottom_right"><a href="#"><img src="assets/css/images/banner.jpg" alt="" style="width: 90%;"></a></div>
       </div>
     </div>

@@ -21,13 +21,13 @@
                 <a><i class="fa fa-tags"></i>{{vm.news.views}}</a>
               </div>
               <div ng-bind-html="vm.news.content"></div>
+              <div>Nguồn : <a href="{{vm.news.originalLink}}">{{vm.news.originalLink}}</a></div>
             </div>
           </div>
         </div>
 
-        <div class="share_post"> <a class="facebook" href="#"><i class="fa fa-facebook"></i>Facebook</a> <a class="twitter" href="#"><i class="fa fa-twitter"></i>Twitter</a>          <a class="googleplus" href="#"><i class="fa fa-google-plus"></i>Google+</a> <a class="linkedin" href="#"><i class="fa fa-linkedin"></i>LinkedIn</a>          <a class="stumbleupon" href="#"><i class="fa fa-stumbleupon"></i>StumbleUpon</a> <a class="pinterest" href="#"><i class="fa fa-pinterest"></i>Pinterest</a>          </div>
         <div class="similar_post">
-          <h2>Similar Post You May Like <i class="fa fa-thumbs-o-up"></i></h2>
+          <h2>Bài Viết Liên Quan : <i class="fa fa-thumbs-o-up"></i></h2>
           <ul class="small_catg similar_nav wow fadeInDown animated">
             <div ng-repeat="news in vm.listSuggest">
               <li>
@@ -45,7 +45,7 @@
       <div class="col-lg-4 col-md-4">
         <div class="content_bottom_right">
           <div class="single_bottom_rightbar">
-            <h2>Recent Post</h2>
+            <h2>Bài Viết Gần Đây</h2>
             <ul class="small_catg popular_catg wow fadeInDown">
               <div ng-repeat="news in vm.listTop3">
                 <li>
@@ -61,7 +61,7 @@
           </div>
           <div class="single_bottom_rightbar">
             <ul role="tablist" class="nav nav-tabs custom-tabs">
-              <li class="active" role="presentation"><a data-toggle="tab" role="tab" aria-controls="home" href="#mostPopular">Most Popular</a></li>
+              <li class="active" role="presentation"><a data-toggle="tab" role="tab" aria-controls="home" href="#mostPopular">Bài Viết Phổ Biến</a></li>
               <!-- <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="messages" href="#recentComent">Recent Comment</a></li> -->
             </ul>
             <div class="tab-content">
@@ -79,16 +79,7 @@
                   </div>
                 </ul>
               </div>
-              <div class="single_bottom_rightbar wow fadeInDown">
-                <h2>Popular Lnks</h2>
-                <ul>
-                  <li><a href="#">Blog</a></li>
-                  <li><a href="#">Blog Home</a></li>
-                  <li><a href="#">Error Page</a></li>
-                  <li><a href="#">Social link</a></li>
-                  <li><a href="#">Login</a></li>
-                </ul>
-              </div>
+
             </div>
           </div>
         </div>
