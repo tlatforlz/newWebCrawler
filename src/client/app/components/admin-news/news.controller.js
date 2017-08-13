@@ -98,8 +98,6 @@
           });
         });
       });
-
-
     };
   }
 
@@ -121,12 +119,12 @@
       });
       return deferred.promise;
     }
-    console.log($rootScope._id);
     find($rootScope._id).then(function (res) {
       vm.title = res.news.title;
       vm.originalLink = res.news.originalLink;
       vm.author = res.news.author;
-      vm.createDate = res.news.createDate;
+      vm.createDate = moment(res.news.createDate).format('DD-MM-YYYY');
+
       vm.spiderId = res.news.spiderId;
       vm.categoryId = res.news.categoryId;
       vm.content = res.news.content;
