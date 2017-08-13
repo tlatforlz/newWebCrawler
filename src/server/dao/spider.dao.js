@@ -20,8 +20,35 @@ module.exports = {
   updateNewsSpiderUrl: updateNewsSpiderUrl,
   testSpider: testSpider,
   getNewsCall: getNewsCall,
-  getNewsNone: getNewsNone
+  getNewsNone: getNewsNone,
+  countSpider: countSpider
 };
+
+//getNewsNone
+function countSpider(request) {
+  return Spider.find().exec()
+    .then(function (res) {
+      return Promise.resolve({
+        spider: res.length
+      })
+    })
+}
+
+
+function getNewsNone(request) {
+  return News.find({
+      active: false,
+      spiderId: request._id,
+      content: undefined
+    }).exec()
+    .then(function (res) {
+      console.log(res);
+      return Promise.resolve({
+        news: res
+      })
+    })
+}
+
 
 //getNewsNone
 function getNewsNone(request) {

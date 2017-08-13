@@ -21,10 +21,47 @@ module.exports = {
   getNewsArchive: getNewsArchive,
   getNewsArchivePagination: getNewsArchivePagination,
   viewCount: viewCount,
-  getNewsSearch: getNewsSearch
+  getNewsSearch: getNewsSearch,
+  countNews: countNews,
+  countNewsActive: countNewsActive,
+  totalView: totalView
 };
 
+function totalView() {
+  return News.aggregate({
+      $group: {
+        _id: "total",
+        total: {
+          $sum: "$views"
+        }
+      }
+    })
+    .exec().then(function (news) {
+      return Promise.resolve({
+        count: news
+      })
+    })
+}
 
+function countNews() {
+  return News.find()
+    .exec().then(function (news) {
+      return Promise.resolve({
+        count: news.length
+      })
+    })
+}
+
+function countNewsActive() {
+  return News.find({
+      active: true
+    })
+    .exec().then(function (news) {
+      return Promise.resolve({
+        count: news.length
+      })
+    })
+}
 
 function viewCount(request) {
   return News.findById({

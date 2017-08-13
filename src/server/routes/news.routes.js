@@ -4,6 +4,9 @@ var newsDao = require('./../dao/news.dao');
 module.exports = function () {
   router.post('/', createNews);
   router.get('/', getAllNews);
+  router.get('/countNews', countNews);
+  router.get('/countNewsActive', countNewsActive);
+  router.get('/totalView', totalView);
   router.get('/:id', getNewsById);
   router.put('/:id', updateNews);
   router.delete('/:id', deleteNews);
@@ -193,6 +196,42 @@ module.exports = function () {
       pageSize: parseInt(req.params.pageSize)
     }
     newsDao.getNewsSearch(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      })
+  }
+
+  //countNews
+  function countNews(req, res, next) {
+
+    newsDao.countNews()
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      })
+  }
+
+  //countNewsActive
+  function countNewsActive(req, res, next) {
+
+    newsDao.countNewsActive()
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      })
+  }
+
+  //totalView
+  function totalView(req, res, next) {
+
+    newsDao.totalView()
       .then(function (news) {
         res.status(200).send(news).end();
       })

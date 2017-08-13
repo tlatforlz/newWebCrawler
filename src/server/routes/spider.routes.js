@@ -4,6 +4,7 @@ var spiderDao = require('./../dao/spider.dao');
 module.exports = function () {
   router.post('/', createSpider);
   router.get('/', getAllSpider);
+  router.get('/countSpider', countSpider);
   router.get('/:id', getSpiderById);
   router.get('/getNewsCall/:id', getNewsCall);
   router.get('/getNewsNone/:id', getNewsNone);
@@ -186,6 +187,17 @@ module.exports = function () {
       _id: req.params.id
     };
     spiderDao.getNewsNone(request)
+      .then(function (spider) {
+        res.status(200).send(spider).end();
+      }).catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  //countSpider
+  function countSpider(req, res, next) {
+
+    spiderDao.countSpider()
       .then(function (spider) {
         res.status(200).send(spider).end();
       }).catch(function (err) {

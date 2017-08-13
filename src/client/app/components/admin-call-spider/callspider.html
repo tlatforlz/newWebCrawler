@@ -56,34 +56,19 @@
     <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
   </div>
 </script>
-<script type="text/ng-template" id="editCategory.html">
+<script type="text/ng-template" id="callSpider.html">
   <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">Edit Category</h3>
+    <h3 class="modal-title" id="modal-title">Call Spider</h3>
   </div>
   <div class="modal-body" id="modal-body">
     <div class="row">
       <div class="col-lg-12">
         <div class="panel-body">
-          <div class="form-group">
-            <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
-            <div class="col-lg-10">
-              <input class="form-control" id="cname" name="name" type="text" ng-model="vm.name" required />
-              <h5 ng-show="vm.isShow" style="color:red"> Category dupplicate </h5>
-            </div>
-          </div>
-          <div class="" style="margin-top:55px !important">
-            <label for="ckey" class="control-label col-lg-2">Keys <span class="required">*</span></label>
-            <div class="col-lg-10">
-              <input class="form-control" id="ckey" name="key" mtype="text" ng-model="vm.key" required />
-            </div>
-          </div>
+          <img style="max-width: 100%; height: auto;" src="/assets/css/images/spidercall.gif"></img>
+          <p ng-show="vm.checkShow">Call Spider Success</p>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="vm.ok()">Submit</button>
-    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
   </div>
 </script>
 <script type="text/ng-template" id="conformDelete.html">
@@ -115,7 +100,7 @@
             </header>
 
             <button class="btn btn-primary" ng-click="vm.callSpider()">Call All Path</button>
-            <button class="btn btn-success" ng-click="vm.updateSpider()">Update</button>
+            <!-- <button class="btn btn-success" ng-click="vm.updateSpider()">Update</button> -->
 
           </section>
         </div>
@@ -137,7 +122,7 @@
                     <a class="btn btn-primary" ng-click="vm.newsDetail(row._id)"><i class="fa fa-plus"></i></a>
                     <a class="btn btn-success" ng-click="vm.callOneUrl(row._id)"><i class="fa fa-pencil"></i></a>
                     <a class="btn btn-danger" ng-click="vm.conform(row._id)"><i class="fa fa-trash"></i></a>
-                    <a ng-show='row._id === "vm.showCallUrl"'><img style="margin-left:20px; max-width: 100%; height: auto;" src="/assets/css/images/loading.gif"></img></a>
+                    <a ng-show='row._id === vm.showCallUrl'><img style="margin-left:20px; max-width: 100%; height: auto;" src="/assets/css/images/loading.gif"></img></a>
                   </div>
 
                 </td>

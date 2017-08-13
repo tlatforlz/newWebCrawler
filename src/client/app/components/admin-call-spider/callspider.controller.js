@@ -89,24 +89,7 @@
       return deferred.promise;
     }
 
-    vm.callSpider = function () {
-      getSpider().then(function (res) {
-        call(res.spider.crawlingName).then(function (ress) {
-          if (ress.spider === "CALL_SUCCESS") {
-            getNewsSpider().then(function (res) {
-              vm.listSpider = res.news;
-              vm.tableParams = new NgTableParams({
-                page: 1,
-                count: 15,
-                header: false
-              }, {
-                dataset: vm.listSpider
-              });
-            });
-          }
-        })
-      })
-    }
+
 
     function updateNews(id, data) {
       var deferred = $q.defer();
@@ -126,7 +109,7 @@
       var data = {
         'active': !active
       };
-      console.log(data);
+
       updateNews(_id, data).then(function (res) {
         getNewsSpider().then(function (res) {
           vm.listSpider = res.news;
@@ -144,19 +127,18 @@
     vm.callOneUrl = function (_id) {
       getSpider().then(function (res) {
         callUrl(res.spider.crawlingName, _id).then(function (ress) {
-          vm.showCallUrl = new String(_id.toString());
-
-          console.log(vm.showCallUrl);
-          console.log(_id.toString());
+          vm.showCallUrl = new String(_id);
+          var temp_VM = '';
+          for (var index = 0; index < vm.showCallUrl.length; index++) {
+            temp_VM += vm.showCallUrl.charAt(index);
+          }
+          console.log(temp_VM);
+          vm.showCallUrl = temp_VM;
           if (ress.messsage === 'CALL_SUCCESS') {
-
-
             setTimeout(function () {
-              console.log('5s');
               vm.showCallUrl = false;
               getNewsSpider().then(function (res) {
                 vm.listSpider = res.news;
-                console.log(res.news.length);
                 vm.tableParams = new NgTableParams({
                   page: 1,
                   count: 15,
@@ -173,25 +155,7 @@
     vm.updateSpider = function () {
       getSpider().then(function (res) {
         update(res.spider.crawlingName).then(function (ress) {
-          // while (true) {
-          //   setTimeout(function () {
-          //     getNewsSpider().then(function (news) {
-          //       vm.listSpider = news.news;
-          //       vm.tableParams = new NgTableParams({
-          //         page: 1,
-          //         count: 15,
-          //         header: false
-          //       }, {
-          //         dataset: vm.listSpider
-          //       });
-          //     });
-          //   }, 5000);
-          //   getNewsNone().then(function (none) {
-          //     if (none.news.length === 0) {
-          //       break;
-          //     }
-          //   })
-          // }
+
         });
       });
     }
@@ -246,6 +210,32 @@
         });
       });
     };
+
+    vm.callSpider = function () {
+      getSpider().then(function (res) {
+        $rootScope.spiderName = res.spider.crawlingName;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'callSpider.html',
+          controller: 'callSpider',
+          controllerAs: 'vm',
+          size: 'sm'
+        }).closed.then(function () {
+          getNewsSpider().then(function (res) {
+            vm.listSpider = res.news;
+            vm.tableParams = new NgTableParams({
+              page: 1,
+              count: 15,
+              header: false
+            }, {
+              dataset: vm.listSpider
+            });
+          });
+        });
+      })
+    }
   }
 
   angular.module('app.admincallspider')
@@ -330,4 +320,36 @@
       $uibModalInstance.dismiss('cancel');
     };
   }
+
+  angular.module('app.admincallspider')
+    .controller('callSpider', ['$q', '$http', '$state', '$scope', '$rootScope', '$uibModalInstance', callSpider]);
+
+  function callSpider($q, $http, $state, $scope, $rootScope, $uibModalInstance) {
+    var vm = this;
+
+    function call(name) {
+      var deferred = $q.defer();
+      $http({
+        method: 'POST',
+        url: '/api/spider/' + name
+      }).then(function successCallback(res) {
+        deferred.resolve(res.data);
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
+    }
+    call($rootScope.spiderName).then(function (ress) {
+      vm.animationsEnabled = true;
+      if (ress.spider === "CALL_SUCCESS") {
+        vm.checkShow = true;
+        setTimeout(function () {
+          vm.checkShow = false;
+          $uibModalInstance.close();
+        }, 3000);
+
+      }
+    })
+  }
+
 })();
