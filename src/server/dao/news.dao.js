@@ -138,7 +138,11 @@ function createNews(request) {
 }
 
 function getAllNews() {
-  return News.find().exec()
+  return News.find({
+      title: {
+        $ne: undefined
+      }
+    }).exec()
     .then(function (newss) {
       if (newss.length === 0) {
         return Promise.reject({
@@ -475,6 +479,7 @@ function getNewsSearch(request) {
       $search: request.searchKey
     }
   }).exec().then(function (newss) {
+    console.log(newss);
     var res = pagination.pagination(newss.splice(request.pageSize * (request.pageIndex - 1), request.pageSize), newss.length, request.pageIndex, request.pageSize);
     return Promise.resolve(res);
   });

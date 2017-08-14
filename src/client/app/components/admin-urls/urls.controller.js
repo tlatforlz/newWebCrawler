@@ -53,7 +53,8 @@
         ariaDescribedBy: 'modal-body',
         templateUrl: 'moreInformation.html',
         controller: 'moreInformation',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        size: 'lg'
       }).closed.then(function () {
         getListUrl().then(
           function (res) {
@@ -83,7 +84,12 @@
     }
 
     urlInformation($rootScope.id).then(function (res) {
+
       console.log(res);
+      vm.urlId = res.url._id;
+      vm.urlTitle = res.url.title;
+      vm.urlHostname = res.url.hostname;
+      vm.path = res.url.path;
     });
 
     vm.ok = function () {

@@ -25,7 +25,9 @@
                 </div>
               </div>
             </div>
-
+            <div ng-if="vm.all === 0">
+              <h5>Không Tìm được bài viết nào.</h5>
+            </div>
           </div>
         </div>
         <div class="pagination_area" ng-if="vm.totalPage > 1">

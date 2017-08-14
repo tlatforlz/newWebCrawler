@@ -32,7 +32,7 @@
       var deferred = $q.defer();
       $http({
         method: 'GET',
-        url: '/api/news//getNews/getNewsSearch/pagination/' + $stateParams.searchKey + '/' + $stateParams.currentPage + '/' + $stateParams.pageSize
+        url: '/api/news/getNews/getNewsSearch/pagination/' + $stateParams.searchKey + '/' + $stateParams.currentPage + '/' + $stateParams.pageSize
       }).then(function successCallback(res) {
         deferred.resolve(res.data);
       }, function () {
@@ -83,7 +83,7 @@
 
     getContent().then(
       (res) => {
-        vm.all = res.totalResult;
+        vm.all = res.items.length;
         vm.totalPage = res.totalPage;
         vm.totalPage = parseInt($stateParams.currentPage) + 8;
 

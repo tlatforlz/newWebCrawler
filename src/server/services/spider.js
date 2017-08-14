@@ -94,12 +94,29 @@ function spiderCountUpdateAll(crawlingName) {
 }
 
 function spiderTinNongNghiep(urlId, spiderId) {
-  console.log(urlId);
-  console.log(urlId.path);
+  return new Promise(function (resolve, reject) {
+    var page = 0;
 
-  urlId.path.forEach(url => {
-    var disUrl = urlId.hostname + url.namePath;
-    getPath_spiderTinNongNghiep(disUrl, spiderId, url.catelogyId);
+    async.whilst(function () {
+        return page < urlId.path.length;
+      },
+      function (next) {
+        var disUrl = urlId.hostname + urlId.path[page].namePath;
+        console.log(disUrl);
+        console.log(urlId.path[page]);
+        getPath_spiderTinNongNghiep(disUrl, spiderId, urlId.path[page].catelogyId).then(function (res) {
+          console.log('log' + res);
+          page++;
+          console.log(page);
+          next();
+        }).catch(function (err) {
+          console.log(err);
+        });
+
+      },
+      function (err) {
+        return resolve("CALL_SUCCESS");
+      });
   });
 }
 
@@ -147,6 +164,7 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
               $('.post-listing .post-box-title a').each(function () {
                 //#main-content > div.content > div.post-listing > article:nth-child(1)
                 url = ($(this).attr('href'));
+                console.log(url);
                 image = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
                 des = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.entry > p').text();
                 if (image === undefined) {
@@ -166,6 +184,7 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
                   originalLink: news.originalLink
                 }, function (err, New) {
                   if (New === null) {
+                    console.log('News null');
                     news.save();
                   }
                 });
@@ -673,16 +692,16 @@ function spiderTinNongNghiep_updateUrl(url) {
 function spiderNongNghiepVietNam_updateUrl(url) {
   News.findById({
     _id: url
-  }, function (err, upNews) {
-    if (upNews !== null) {
-      console.log('this is upNews ' + upNews);
-      request(news[page].originalLink, function (err, res, body) {
+  }, function (err, news) {
+    if (news !== null) {
+      console.log('this is upNews ' + news);
+      request(news.originalLink, function (err, res, body) {
         if (!err && res.statusCode === 200) {
           var $ = cheerio.load(body);
           async.series({
               title: function (callback) {
-                news[page].title = $('#the-post > div > h1 > span').text();
-                callback(null, news[page].title);
+                news.title = $('#the-post > div > h1 > span').text();
+                callback(null, news.title);
               },
               content: function (callback) {
                 let content = $('#the-post > div > div.entry').html();
@@ -692,8 +711,8 @@ function spiderNongNghiepVietNam_updateUrl(url) {
               },
               author: function (callback) {
                 let author = $('#the-post > div > p > span.post-meta-author > a').text();
-                news[page].author = author;
-                callback(null, news[page].author);
+                news.author = author;
+                callback(null, news.author);
               },
               createDate: function (callback) {
                 var date = new Date();
@@ -708,14 +727,13 @@ function spiderNongNghiepVietNam_updateUrl(url) {
               }
             },
             function (err, result) {
-              news[page].title = result.title;
-              news[page].content = result.content;
-              news[page].author = result.author;
-              news[page].createDate = result.createDate;
-              news[page].updateDate = result.updateDate;
-              console.log(news[page].title);
-              console.log(news[page].createDate);
-              news[page].save(function (err) {
+              news.title = result.title;
+              news.content = result.content;
+              news.author = result.author;
+              news.createDate = result.createDate;
+              news.updateDate = result.updateDate;
+
+              news.save(function (err) {
                 if (err) {
                   console.log('error');
                 }
@@ -724,8 +742,6 @@ function spiderNongNghiepVietNam_updateUrl(url) {
         } else {
           console.log('log die');
         }
-        page++;
-        next();
       });
     }
   });
