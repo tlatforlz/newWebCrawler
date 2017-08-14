@@ -139,7 +139,7 @@
     };
   }
 
-  angular.module('app.admincategory')
+  angular.module('app.adminnews')
     .controller('conformDelete', ['$q', '$http', '$state', '$scope', '$rootScope', 'NgTableParams', '$uibModalInstance', conformDelete]);
 
   function conformDelete($q, $http, $state, $scope, $rootScope, NgTableParams, $uibModalInstance) {

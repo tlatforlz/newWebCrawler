@@ -7,8 +7,36 @@ module.exports = {
   getAllArchive: getAllArchive,
   getArchiveById: getArchiveById,
   updateArchive: updateArchive,
-  deleteArchive: deleteArchive
+  deleteArchive: deleteArchive,
+  addCategory: addCategory
 };
+
+function addCategory(request) {
+  console.log(request);
+  return Archive.findOne({
+      _id: request.id,
+      "listCategory": request.CateId
+    }).exec()
+    .then(function (archive) {
+      console.log(archive);
+      if (archive !== null) {
+        return Promise.reject({
+          message: failMessage.Archive.dupplicate
+        });
+      }
+      return Archive.findOne({
+        _id: request.id
+      }).exec().then(function (ar) {
+        ar.listCategory.push(request.CateId);
+        return ar.save().then(function (err) {
+          return Promise.resolve({
+            message: successMessage.Archive.create
+          });
+        });
+      })
+
+    });
+}
 
 function createArchive(request) {
   var newArchive = new Archive({

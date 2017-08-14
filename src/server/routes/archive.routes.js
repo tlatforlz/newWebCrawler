@@ -7,6 +7,7 @@ module.exports = function () {
   router.get('/', getAllArchive);
   router.get('/:id', getArchiveById);
   router.put('/:id', updateArchive);
+  router.put('/addCategory/:id', addCategory);
   router.delete('/:id', deleteArchive);
 
   function createArchive(req, res, next) {
@@ -15,7 +16,8 @@ module.exports = function () {
       path: req.body.path,
       listCategory: req.body.listCategory
     };
-    ArchiveDao.createArchive(request)
+    Arch
+    iveDao.createArchive(request)
       .then(function (Archive) {
         res.status(200).send(Archive).end();
       })
@@ -75,5 +77,18 @@ module.exports = function () {
       });
   }
 
+  function addCategory(req, res, next) {
+    var request = {
+      id: req.params.id,
+      CateId: req.body.CateId
+    }
+    ArchiveDao.addCategory(request)
+      .then(function (Archive) {
+        res.status(200).send(Archive).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
   return router;
 }

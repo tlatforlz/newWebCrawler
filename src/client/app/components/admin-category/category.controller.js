@@ -63,17 +63,19 @@
     vm.animationsEnabled = true;
     vm.conform = function (id) {
       $rootScope.id = id;
+      console.log(id);
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
         templateUrl: 'conformDelete.html',
-        controller: 'conformDelete',
+        controller: 'conformDelete2',
         controllerAs: 'vm',
         size: 'sm'
       }).closed.then(function () {
         getListCategory().then(
           function (res) {
+            console.log(res);
             vm.listCategory = res.categorys;
           });
       });;
@@ -173,10 +175,11 @@
     };
   }
   angular.module('app.admincategory')
-    .controller('conformDelete', ['$q', '$http', '$state', '$scope', '$rootScope', '$uibModalInstance', conformDelete]);
+    .controller('conformDelete2', ['$q', '$http', '$state', '$scope', '$rootScope', '$uibModalInstance', conformDelete2]);
 
-  function conformDelete($q, $http, $state, $scope, $rootScope, $uibModalInstance) {
+  function conformDelete2($q, $http, $state, $scope, $rootScope, $uibModalInstance) {
     var vm = this;
+    console.log('bla bla');
 
     function deleteCategory(category) {
       var deferred = $q.defer();

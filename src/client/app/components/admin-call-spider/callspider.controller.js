@@ -280,6 +280,7 @@
 
   function conformDelete($q, $http, $state, $scope, $rootScope, NgTableParams, $uibModalInstance) {
     var vm = this;
+    console.log('bla bla conformDelete');
 
     function getListNews() {
       var deferred = $q.defer();
