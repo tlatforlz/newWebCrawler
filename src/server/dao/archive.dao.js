@@ -8,8 +8,30 @@ module.exports = {
   getArchiveById: getArchiveById,
   updateArchive: updateArchive,
   deleteArchive: deleteArchive,
-  addCategory: addCategory
+  addCategory: addCategory,
+  removeCategory: removeCategory
 };
+
+
+function removeCategory(request) {
+  console.log(request);
+  return Archive.findOne({
+      _id: request.id,
+    }).exec()
+    .then(function (archive) {
+      return Archive.findOne({
+        _id: request.id
+      }).exec().then(function (ar) {
+        ar.listCategory.pull(request.CateId);
+        return ar.save().then(function (err) {
+          return Promise.resolve({
+            message: successMessage.Archive.create
+          });
+        });
+      })
+
+    });
+}
 
 function addCategory(request) {
   console.log(request);

@@ -78,7 +78,7 @@
             console.log(res);
             vm.listCategory = res.categorys;
           });
-      });;
+      });
     };
   }
 
@@ -179,7 +179,6 @@
 
   function conformDelete2($q, $http, $state, $scope, $rootScope, $uibModalInstance) {
     var vm = this;
-    console.log('bla bla');
 
     function deleteCategory(category) {
       var deferred = $q.defer();

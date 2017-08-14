@@ -1,8 +1,8 @@
 (function () {
   angular.module('app.adminurls')
-    .controller('UrlController', ['$q', '$http', '$state', '$stateParams', '$scope', UrlController]);
+    .controller('UrlController', ['$q', '$http', '$state', '$stateParams', '$scope', '$rootScope', '$uibModal', UrlController]);
 
-  function UrlController($q, $http, $state, $scope, $rootScope, $uibModal) {
+  function UrlController($q, $http, $state, $stateParams, $scope, $rootScope, $uibModal) {
     var vm = this;
     vm.urls = [];
 
@@ -44,41 +44,54 @@
     };
 
     vm.animationsEnabled = true;
-    vm.editCate = function (id) {
+    vm.moreInformation = function (id) {
       $rootScope.id = id;
+      console.log($rootScope.id);
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'editCategory.html',
-        controller: 'editCategory',
+        templateUrl: 'moreInformation.html',
+        controller: 'moreInformation',
         controllerAs: 'vm'
       }).closed.then(function () {
         getListUrl().then(
           function (res) {
             vm.urls = res.urls;
           });
-      });;
-    };
-
-    vm.animationsEnabled = true;
-    vm.conform = function (id) {
-      $rootScope.id = id;
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: 'conformDelete.html',
-        controller: 'conformDelete',
-        controllerAs: 'vm',
-        size: 'lg'
-      }).closed.then(function () {
-        getListUrl().then(
-          function (res) {
-            vm.urls = res.urls;
-          });
-      });;
+      });
     };
   }
 
+  angular.module('app.adminurls')
+    .controller('moreInformation', ['$q', '$http', '$state', '$scope', '$rootScope', '$uibModalInstance', moreInformation]);
+
+  function moreInformation($q, $http, $state, $scope, $rootScope, $uibModalInstance) {
+    var vm = this;
+
+    function urlInformation(id) {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: '/api/url/' + id
+      }).then(function successCallback(res) {
+        deferred.resolve(res.data);
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
+    }
+
+    urlInformation($rootScope.id).then(function (res) {
+      console.log(res);
+    });
+
+    vm.ok = function () {
+      $uibModalInstance.close();
+    };
+
+    vm.cancel = function () {
+      $uibModalInstance.dismiss('cancel');
+    };
+  }
 })();

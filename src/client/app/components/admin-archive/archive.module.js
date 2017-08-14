@@ -1,1 +1,1 @@
-angular.module('app.adminarchive', ['ui.router']);
+angular.module('app.adminarchive', ['ui.router', 'ngAnimate', 'ngSanitize', 'ui.bootstrap']);

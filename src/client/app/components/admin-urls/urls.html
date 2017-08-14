@@ -52,27 +52,15 @@
     <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
   </div>
 </script>
-<script type="text/ng-template" id="editCategory.html">
+<script type="text/ng-template" id="moreInformation.html">
   <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">Edit Category</h3>
+    <h3 class="modal-title" id="modal-title">Url Information</h3>
   </div>
   <div class="modal-body" id="modal-body">
     <div class="row">
       <div class="col-lg-12">
         <div class="panel-body">
-          <div class="form-group">
-            <label for="cname" class="control-label col-lg-2">Name <span class="required">*</span></label>
-            <div class="col-lg-10">
-              <input class="form-control" id="cname" name="name" type="text" ng-model="vm.name" required />
-              <h5 ng-show="vm.isShow" style="color:red"> Category dupplicate </h5>
-            </div>
-          </div>
-          <div class="" style="margin-top:55px !important">
-            <label for="ckey" class="control-label col-lg-2">Keys <span class="required">*</span></label>
-            <div class="col-lg-10">
-              <input class="form-control" id="ckey" name="key" mtype="text" ng-model="vm.key" required />
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -116,7 +104,7 @@
                   <th><i class="fa fa-info"></i> ObjectId</th>
                   <th><i class="fa fa-bug"></i> Name</th>
                   <th><i class="fa fa-key"></i> HostName</th>
-                  <th><i class="fa fa-key"></i> Path</th>
+                  <!-- <th><i class="fa fa-key"></i> Path</th> -->
                   <th><i class="fa fa-cogs"></i> Action</th>
                 </tr>
                 <tr ng-repeat="cate in vm.urls">
@@ -124,19 +112,19 @@
                   <td>{{cate._id}}</td>
                   <td>{{cate.title}}</td>
                   <td>{{cate.hostname}}</td>
-                  <td>{{cate.path}}</td>
+                  <!-- <td>{{cate.path}}</td> -->
                   <td>
                     <div class="btn-group">
                       <a class="btn btn-primary" href="#"><i class="fa fa-plus"></i></a>
-                      <a class="btn btn-success" ng-click="vm.editCate(cate._id)"><i class="fa fa-pencil"></i></a>
-                      <a class="btn btn-danger" ng-click="vm.conform(cate._id)"><i class="fa fa-trash"></i></a>
+                      <a style="padding-left:15px" class="btn btn-success" ng-click="vm.moreInformation(cate._id)"><i class="fa fa-info"></i></a>
+                      <!-- <a class="btn btn-danger" ng-click="vm.conform(cate._id)"><i class="fa fa-trash"></i></a> -->
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </section>
-          <button class="btn btn-primary" ng-click="vm.open()">Add New Category</button>
+          <!-- <button class="btn btn-primary" ng-click="vm.open()">Add New Category</button> -->
         </div>
       </div>
     </section>
