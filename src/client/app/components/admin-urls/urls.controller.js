@@ -84,6 +84,10 @@
 
     urlInformation($rootScope.id).then(function (res) {
       console.log(res);
+      vm.objectId = res.url._id;
+      vm.title = res.url.title;
+      vm.hostname = res.url.hostname;
+      vm.path = res.url.path;
     });
 
     vm.ok = function () {
