@@ -7,7 +7,7 @@
   /* @ngInject */
   function mySearchKey() {
     return function (scope, element, attrs) {
-      element.bind("keydown keypress", function (event) {
+      element.bind('keydown keypress', function (event) {
         scope.$apply(function () {
           scope.$eval(attrs.ngEnter);
         });

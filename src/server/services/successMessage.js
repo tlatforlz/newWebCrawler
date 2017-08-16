@@ -41,8 +41,16 @@ var news = {
   active: 'ACTIVE_NEWS_SUCESS',
   deActive: 'DEACTIVE_NEWS_SUCCESS'
 }
+var user = {
+  login: 'LOGIN_SUCESS',
+  register: 'REGISTER_SUCCESS',
+  signup: 'CREATE_SUCCESS',
+  changePassword: 'CHANGE_SUCCESS',
+  sendEmail: 'SEND_SUCCESS'
+}
 
 module.exports = {
+  user: user,
   url: url,
   spider: spider,
   category: category,

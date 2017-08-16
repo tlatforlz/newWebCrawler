@@ -1,7 +1,6 @@
 angular.module('app.category')
   .config(categorypageConfig);
 
-console.log('baasdsa');
 
 function categorypageConfig($stateProvider) {
   console.log('category route');

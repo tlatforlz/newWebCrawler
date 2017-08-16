@@ -84,8 +84,6 @@
     }
 
     urlInformation($rootScope.id).then(function (res) {
-
-      console.log(res);
       vm.urlId = res.url._id;
       vm.urlTitle = res.url.title;
       vm.urlHostname = res.url.hostname;

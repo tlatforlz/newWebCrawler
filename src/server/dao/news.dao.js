@@ -384,7 +384,8 @@ function getNewsArchive(request) {
             return count < list_length
           }, function (next) {
             return News.find({
-                categoryId: list_archive.listCategory[count]
+                categoryId: list_archive.listCategory[count],
+                active: true
               })
               .limit(5)
               .exec().then(function (upNews) {
@@ -445,7 +446,8 @@ function getNewsArchivePagination(request) {
             return count < list_length
           }, function (next) {
             return News.find({
-                categoryId: list_archive.listCategory[count]
+                categoryId: list_archive.listCategory[count],
+                active: true
               })
               .exec().then(function (upNews) {
                 var index = 0;
@@ -477,7 +479,8 @@ function getNewsSearch(request) {
   return News.find({
     $text: {
       $search: request.searchKey
-    }
+    },
+    active: true
   }).exec().then(function (newss) {
     console.log(newss);
     var res = pagination.pagination(newss.splice(request.pageSize * (request.pageIndex - 1), request.pageSize), newss.length, request.pageIndex, request.pageSize);

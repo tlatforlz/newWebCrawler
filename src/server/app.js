@@ -13,6 +13,7 @@ var config = require('./config');
 var mongoose = require('mongoose');
 var environment = process.env.NODE_ENV;
 
+process.env.SECRET_KEY = 'tranleanhthe';
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use(bodyParser.urlencoded({
   extended: true
@@ -25,8 +26,8 @@ app.use(config.BASE_URL + '/spider', require('./routes/spider.routes')());
 app.use(config.BASE_URL + '/category', require('./routes/category.routes')());
 app.use(config.BASE_URL + '/news', require('./routes/news.routes')());
 app.use(config.BASE_URL + '/archive', require('./routes/archive.routes')());
-
-
+app.use(config.BASE_URL + '/user', require('./routes/user.routes')());
+app.use(config.BASE_URL + '/auth', require('./routes/auth.routes')());
 console.log('About to crank up node');
 console.log('PORT=' + port);
 console.log('NODE_ENV=' + environment);

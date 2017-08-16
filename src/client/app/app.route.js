@@ -39,7 +39,6 @@
         $state.go('about');
       }
       if (toState.url === 'category/:path/:currentPage/:pageSize') {
-        console.log('call here');
         event.preventDefault();
         $state.go('category');
       }
