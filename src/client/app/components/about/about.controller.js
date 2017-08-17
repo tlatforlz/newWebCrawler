@@ -1,8 +1,8 @@
 (function () {
   angular.module('app.about')
-    .controller('AboutController', ['$q', '$http', '$state', AboutController]);
+    .controller('AboutController', ['$q', '$http', '$state', 'authService', AboutController]);
 
-  function AboutController($q, $http, $state) {
+  function AboutController($q, $http, $state, authService) {
     var vm = this;
     vm.listTop3 = [];
     vm.listPopular = [];

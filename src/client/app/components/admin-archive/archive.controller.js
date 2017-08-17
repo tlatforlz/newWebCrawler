@@ -1,8 +1,8 @@
 (function () {
   angular.module('app.adminarchive')
-    .controller('ArchiveController', ['$q', '$http', '$state', '$stateParams', '$scope', '$rootScope', '$uibModal', ArchiveController]);
+    .controller('ArchiveController', ['$q', '$http', '$state', '$stateParams', '$scope', '$rootScope', '$uibModal', 'authService', ArchiveController]);
 
-  function ArchiveController($q, $http, $state, $stateParams, $scope, $rootScope, $uibModal) {
+  function ArchiveController($q, $http, $state, $stateParams, $scope, $rootScope, $uibModal, authService) {
     var vm = this;
     vm.listArchive = [];
 
@@ -19,9 +19,13 @@
       return deferred.promise;
     }
 
-    getListArchive().then(
-      function (res) {
+    getListArchive()
+      .then(function (res) {
         vm.listArchive = res.Archives;
+      })
+      .catch(function (err) {
+        console.log(err);
+        $state.go('adminlogin');
       });
 
     vm.animationsEnabled = true;

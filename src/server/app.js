@@ -12,7 +12,7 @@ var db = require('./db/db.config');
 var config = require('./config');
 var mongoose = require('mongoose');
 var environment = process.env.NODE_ENV;
-
+var errorHandler = require('./middlewares/error-handler');
 process.env.SECRET_KEY = 'tranleanhthe';
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use(bodyParser.urlencoded({
@@ -67,7 +67,7 @@ switch (environment) {
     app.use('/*', express.static('./src/client/index.html'));
     break;
 }
-
+app.use(errorHandler.errorHandler());
 app.listen(port, function () {
   console.log('Express server listening on port ' + port);
   console.log('env = ' + app.get('env') +

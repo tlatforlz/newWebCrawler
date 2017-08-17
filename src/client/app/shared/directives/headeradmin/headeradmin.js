@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.headeradmin')
+  angular.module('app')
     .directive('myHeaderAdmin', myHeaderAdmin);
 
   /* @ngInject */

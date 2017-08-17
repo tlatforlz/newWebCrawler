@@ -1,15 +1,15 @@
 var router = require('express').Router();
 var ArchiveDao = require('./../dao/archive.dao');
-
+var middlewarejwt = require("../middlewares/jwt-parser");
 //Archive
 module.exports = function () {
-  router.post('/', createArchive);
-  router.get('/', getAllArchive);
-  router.get('/:id', getArchiveById);
-  router.put('/:id', updateArchive);
-  router.put('/addCategory/:id', addCategory);
-  router.put('/removeCategory/:id', removeCategory);
-  router.delete('/:id', deleteArchive);
+  router.post('/', middlewarejwt.authentication, createArchive);
+  router.get('/', middlewarejwt.authentication, getAllArchive);
+  router.get('/:id', middlewarejwt.authentication, getArchiveById);
+  router.put('/:id', middlewarejwt.authentication, updateArchive);
+  router.put('/addCategory/:id', middlewarejwt.authentication, addCategory);
+  router.put('/removeCategory/:id', middlewarejwt.authentication, removeCategory);
+  router.delete('/:id', middlewarejwt.authentication, deleteArchive);
 
   function createArchive(req, res, next) {
     var request = {

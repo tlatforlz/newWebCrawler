@@ -4,7 +4,10 @@ module.exports = {
 }
 
 function authentication(req, res, next) {
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  //var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var LocalStorage = require('node-localstorage').LocalStorage;
+  var token = LocalStorage.getItem('ngStorage-token');
+  console.log(token);
   if (token) {
     jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
       if (err) {
