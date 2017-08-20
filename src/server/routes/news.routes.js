@@ -3,6 +3,7 @@ var newsDao = require('./../dao/news.dao');
 
 module.exports = function () {
   router.post('/', createNews);
+  router.put('/activeAll', activeAll);
   router.get('/', getAllNews);
   router.get('/countNews', countNews);
   router.get('/countNewsActive', countNewsActive);
@@ -32,6 +33,16 @@ module.exports = function () {
       categoryId: req.body.categoryId
     }
     newsDao.createNews(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  function activeAll(req, res, next) {
+    newsDao.activeAll()
       .then(function (news) {
         res.status(200).send(news).end();
       })

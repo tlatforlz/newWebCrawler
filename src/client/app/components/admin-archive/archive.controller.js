@@ -23,10 +23,6 @@
       .then(function (res) {
         vm.listArchive = res.Archives;
       })
-      .catch(function (err) {
-        console.log(err);
-        $state.go('adminlogin');
-      });
 
     vm.animationsEnabled = true;
     vm.addCategoryInArchive = function (id) {

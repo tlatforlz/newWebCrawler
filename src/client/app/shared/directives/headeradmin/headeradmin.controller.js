@@ -8,6 +8,6 @@ function layoutController($state, authService) {
 
   function logout() {
     toastr.success(authService.logout());
-    $state.go('auth.login');
+    $state.go('adminlogin');
   }
 }

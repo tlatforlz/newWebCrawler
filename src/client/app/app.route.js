@@ -13,18 +13,23 @@
       });
   }
 
-  appRun.$inject = ['$state', '$rootScope', 'routerHelper'];
+  appRun.$inject = ['$state', '$rootScope', 'routerHelper', 'authService'];
 
-  function appRun($state, $rootScope, routerHelper) {
+  function appRun($state, $rootScope, routerHelper, authService) {
 
     var otherwise = '/404';
     routerHelper.configureStates(getStates(), otherwise);
     $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
       console.log(toState.url);
-      if (toState.url === '') {
-        event.preventDefault();
-        $state.go('homepage');
+
+      if (toState.url === '/adminpage') {
+        console.log(authService.login(null, 2));
+        if (!authService.login(null, 2)) {
+          event.preventDefault();
+          $state.go('adminlogin');
+        }
       }
+
     });
   }
 

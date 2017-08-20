@@ -17,9 +17,21 @@
     function login(request, state) {
       var deferred = $q.defer();
 
-      storage = $localStorage;
+      if (state === 1) {
+        storage = $localStorage;
+      } else if (state === 0) {
+        storage = $sessionStorage;
+      } else if (state === 2) {
+        if ($localStorage.token) {
+          $localStorage.user = jwtHelper.decodeToken($localStorage.token);
+          return true;
+        } else if ($sessionStorage.token) {
+          $sessionStorage.user = jwtHelper.decodeToken($sessionStorage.token);
+          return true;
+        }
+        return false;
+      }
 
-      console.log('herere');
       $http.post('api/auth/signin', request)
         .then(function (res) {
           storage.token = res.data.token;

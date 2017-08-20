@@ -209,6 +209,7 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
 }
 
 function getPath_spiderNongNghiepVietNam(path, spiderId, catelogyId) {
+  console.log('call pat ' + path);
   return new Promise(function (resolve, reject) {
     if (path === undefined) {
       return resolve(true);
@@ -224,6 +225,7 @@ function getPath_spiderNongNghiepVietNam(path, spiderId, catelogyId) {
               let i = 1;
               $('#main-content > div > div.post-listing.archive-box   h2 a').each(function () {
                 url = ($('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > h2 > a').attr('href'));
+                console.log(url);
                 image = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
                 des = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.entry > p').text();
                 if (image === undefined) {

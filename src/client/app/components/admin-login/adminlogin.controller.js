@@ -4,7 +4,6 @@
 
   function AdminLoginController($q, $http, $state, $stateParams, $scope, authService) {
     var vm = this;
-    console.log('call login');
     vm.login = function () {
       var request = {
         email: vm.email,

@@ -1,1 +1,1 @@
-angular.module('app.headeradmin', ['ui.bootstrap.collapse', 'services.auth', 'ui.router']);
+angular.module('app.headeradmin', ['services.auth', 'ui.router']);

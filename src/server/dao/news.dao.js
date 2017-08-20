@@ -24,8 +24,41 @@ module.exports = {
   getNewsSearch: getNewsSearch,
   countNews: countNews,
   countNewsActive: countNewsActive,
-  totalView: totalView
+  totalView: totalView,
+  activeAll: activeAll
 };
+
+
+function activeAll() {
+  return News.find({}).exec().then(function (listNews) {
+    listNews.forEach(function (Id) {
+      News.findById({
+        _id: Id._id
+      }).exec().then(function (upNews) {
+        upNews.active = true;
+        upNews.save().then(function (err) {
+          if (err) {
+            return Promise.reject({
+              message: failMessage.news.active
+            });
+          }
+        });
+
+      }).catch(function (err) {
+        if (err) {
+          return Promise.reject({
+            message: failMessage.news.active
+          });
+        }
+      })
+    })
+
+    return Promise.resolve({
+      message: successMessage.news.active
+    });
+  });
+
+}
 
 function totalView() {
   return News.aggregate({
