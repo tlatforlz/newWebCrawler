@@ -83,7 +83,7 @@
 
     getContent().then(
       (res) => {
-        vm.all = res.items.length;
+        vm.all = res.totalResult;
         vm.totalPage = res.totalPage;
         vm.totalPage = parseInt($stateParams.currentPage) + 8;
 

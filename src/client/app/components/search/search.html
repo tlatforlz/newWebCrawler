@@ -34,7 +34,7 @@
           <nav>
             <ul class="pagination">
               <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-              <li ng-repeat="i in range(vm.totalPage) | limitTo:vm.totalPage:vm.begin"><a ng-class="activeSelect(i)" href="/search/{{vm.path}}/{{i}}/{{vm.pageSize}}">{{i}}</a></li>
+              <li ng-repeat="i in range(vm.totalPage) | limitTo:vm.totalPage:vm.begin"><a ng-class="activeSelect(i)" href="/search/{{vm.path}}/{{i + 1}}/{{vm.pageSize}}">{{i + 1}}</a></li>
               <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
             </ul>
           </nav>

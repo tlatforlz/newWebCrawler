@@ -166,6 +166,7 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
                 url = ($(this).attr('href'));
                 console.log(url);
                 image = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
+                console.log('image ' + image);
                 des = $('#main-content > div.content > div.post-listing > article:nth-child(' + i + ') > div.entry > p').text();
                 if (image === undefined) {
                   image = null;
@@ -209,63 +210,73 @@ function getPath_spiderTinNongNghiep(path, spiderId, catelogyId) {
 }
 
 function getPath_spiderNongNghiepVietNam(path, spiderId, catelogyId) {
-  console.log('call pat ' + path);
+  console.log('call pat ');
   return new Promise(function (resolve, reject) {
     if (path === undefined) {
+      console.log('calllll page die ' + path);
       return resolve(true);
     }
     async.whilst(function () {
-      return path !== undefined
-    }, function (next) {
-      async.series({
-        gotoPage: function (callback) {
-          request(path, function (error, response, body) {
-            if (!error && response.statusCode === 200) {
-              var $ = cheerio.load(body);
-              let i = 1;
-              $('#main-content > div > div.post-listing.archive-box   h2 a').each(function () {
-                url = ($('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > h2 > a').attr('href'));
-                console.log(url);
-                image = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
-                des = $('#main-content > div > div.post-listing.archive-box > article:nth-child(' + i + ') > div.entry > p').text();
-                if (image === undefined) {
-                  image = null;
-                } else {
-                  image = image.split('-310x165').join('');
-                }
-                var news = new News({
-                  originalLink: url,
-                  spiderId: spiderId,
-                  categoryId: catelogyId,
-                  image: image,
-                  description: des,
-                  active: false
-                });
-                News.findOne({
-                  originalLink: news.originalLink
-                }, function (err, New) {
-                  if (New === null) {
-                    news.save();
-                  }
-                });
-                i++;
-              });
+        return path !== undefined
+      }, function (next) {
+        async.series({
+            gotoPage: function (callback) {
+              request(path, function (error, response, body) {
+                console.log('statusCode ' + response.statusCode);
+                if (!error && response.statusCode === 200) {
+                  var $ = cheerio.load(body);
+                  let i = 1;
+                  $('.post-listing .post-box-title a').each(function () {
+                    //#wrapper > div > div.content > div.post-listing.archive-box > article:nth-child(3) > h2 > a
+                    url = ($('#wrapper > div > div.content > div.post-listing.archive-box > article:nth-child(' + i + ') > h2 > a').attr('href'));
+                    console.log(url);
+                    //#wrapper > div > div.content > div.post-listing.archive-box > article:nth-child(2) > div.post-thumbnail > a > img
+                    image = $('#wrapper > div > div.content > div.post-listing.archive-box > article:nth-child(' + i + ') > div.post-thumbnail > a > img').attr('src');
+                    //#wrapper > div > div.content > div.post-listing.archive-box > article:nth-child(3) > div.entry > p
+                    des = $('#wrapper > div > div.content > div.post-listing.archive-box > article:nth-child(' + i + ') > div.entry > p').text();
+                    if (image === undefined) {
+                      image = null;
+                    } else {
+                      image = image.split('-310x165').join('');
+                    }
 
-              gotoPage = $('#tie-next-page > a').attr('href');
-              if (gotoPage === undefined) {
-                return resolve(true);
-              }
-              callback(null, gotoPage);
+                    var news = new News({
+                      originalLink: url,
+                      spiderId: spiderId,
+                      categoryId: catelogyId,
+                      image: image,
+                      description: des,
+                      active: false
+                    });
+                    News.findOne({
+                      originalLink: news.originalLink
+                    }, function (err, New) {
+                      if (New === null) {
+                        if (news.originalLink !== undefined) {
+                          news.save();
+                        }
+                      }
+                    });
+                    i++;
+                  });
+
+                  gotoPage = $('#tie-next-page > a').attr('href');
+                  if (gotoPage === undefined) {
+                    return resolve(true);
+                  }
+                  callback(null, gotoPage);
+                }
+              });
             }
+          },
+          function (err, result) {
+            path = result.gotoPage;
+            next();
           });
-        }
-      }, function (err, result) {
-        path = result.gotoPage;
-        next();
-      });
-    }, function (err) {
-      return resolve(true);
-    })
+      },
+      function (err) {
+        return resolve(true);
+      })
   });
 }
 
@@ -352,12 +363,18 @@ function spiderTinNongNghiep_updateAll() {
               async.series({
                   title: function (callback) {
                     news[page].title = $('#main-content > div.content > article > div > h1 > span').text();
+                    console.log(news[page].title);
                     callback(null, news[page].title);
                   },
                   content: function (callback) {
-                    let content = $('#main-content > div.content > article > div > div.entry').html();
-                    let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
-                    let remove_review_overview = $('#main-content > div.content > article > div > div.entry > div.review-box.review-top.review-stars').html();
+                    let content = $('#main-content > div.content > article > div').html();
+
+                    //console.log('log content + ' + content);
+                    //#main-content > div.content > article > div
+                    let remove = $('#main-content > div.content > article > div > p').html();
+                    //#main-content > div.content > article > div > p
+                    let remove_review_overview = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
+                    //#main-content > div.content > article > div > div.entry > div.share-post
                     callback(null, content.split(remove).join('').split(remove_review_overview).join(''));
                   },
                   author: function (callback) {
@@ -441,7 +458,10 @@ function spiderNongNghiepVietNam_updateAll() {
                     callback(null, news[page].title);
                   },
                   content: function (callback) {
+                    //#the-post > div
                     let content = $('#the-post > div > div.entry').html();
+                    //#post-ratings-2150
+                    //#the-post > div > div.entry > div
                     let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
                     let remove_review_overview = $('#the-post > div > div.entry > h2').html();
                     let remove_link = $('#the-post > div > div.entry > ul').html();
@@ -707,7 +727,9 @@ function spiderNongNghiepVietNam_updateUrl(url) {
               },
               content: function (callback) {
                 let content = $('#the-post > div > div.entry').html();
-                let remove = $('#main-content > div.content > article > div > div.entry > div.share-post').html();
+                let remove = $('#the-post > div > div.entry > div').html();
+                //#post-ratings-1750
+                //#the-post > div > div.entry > div
                 // let remove_review_overview = $('#main-content > div.content > article > div > div.entry > div.review-box.review-top.review-stars').html();
                 callback(null, content.split(remove).join(''));
               },

@@ -237,7 +237,9 @@ function callSpider(request) {
           length: function (callback) {
             switch (request.crawlingName) {
               case "spiderTinNongNghiep":
-                ListSpider.spiderTinNongNghiep(spider.urlId, spider._id);
+                ListSpider.spiderTinNongNghiep(spider.urlId, spider._id).then(function (res) {
+                  callback(null, res);
+                });;
 
               case "spiderTinNongNghiepVietNam":
                 ListSpider.spiderNongNghiepVietNam(spider.urlId, spider._id).then(function (res) {

@@ -21,7 +21,6 @@
     routerHelper.configureStates(getStates(), otherwise);
     $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
       console.log(toState.url);
-
       if (toState.url === '/adminpage') {
         console.log(authService.login(null, 2));
         if (!authService.login(null, 2)) {
@@ -29,7 +28,6 @@
           $state.go('adminlogin');
         }
       }
-
     });
   }
 
