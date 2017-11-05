@@ -19,7 +19,39 @@ module.exports = function () {
   router.get('/getNews/getNewsArchive/:path', getNewsArchive);
   router.get('/getNews/getNewsArchive/pagination/:path/:pageIndex/:pageSize', getNewsArchivePagination);
   router.get('/getNews/getNewsSearch/pagination/:searchKey/:pageIndex/:pageSize', getNewsSearch);
+  router.get('/getNews/getNewsHomePageIonic', getNewsHomePageIonic);
+  router.get('/getNews/getNewsHomePageTop4', getNewsHomePageTop4);
+  router.get('/getNews/getNewsHomePageTop', getNewsHomePageTop);
 
+  function getNewsHomePageIonic(req, res, next) {
+    newsDao.getNewsHomePageIonic()
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  function getNewsHomePageTop4(req, res, next) {
+    newsDao.getNewsHomePageTop4()
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  function getNewsHomePageTop(req, res, next) {
+    newsDao.getNewsHomePageTop()
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
 
   function createNews(req, res, next) {
     var request = {

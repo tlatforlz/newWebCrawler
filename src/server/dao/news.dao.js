@@ -25,9 +25,82 @@ module.exports = {
   countNews: countNews,
   countNewsActive: countNewsActive,
   totalView: totalView,
-  activeAll: activeAll
+  activeAll: activeAll,
+
+  getNewsHomePageIonic: getNewsHomePageIonic,
+  getNewsHomePageTop4: getNewsHomePageTop4,
+  getNewsHomePageTop: getNewsHomePageTop
 };
 
+function getNewsHomePageIonic() {
+  return News.find({
+      active: true,
+    }).limit(1).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+
+      newss.sort(function (a, b) {
+        return b.views - a.views;
+      });
+
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      })
+    })
+}
+
+function getNewsHomePageTop4() {
+  return News.find({
+      active: true,
+    })
+    .skip(1)
+    .limit(4).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+
+      newss.sort(function (a, b) {
+        return b.views - a.views;
+      });
+
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      })
+    })
+}
+
+function getNewsHomePageTop() {
+  return News.find({
+      active: true,
+    })
+    .skip(5)
+    .limit(15).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+
+      newss.sort(function (a, b) {
+        return b.views - a.views;
+      });
+
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      })
+    })
+}
 
 function activeAll() {
   return News.find({}).exec().then(function (listNews) {
