@@ -22,6 +22,36 @@ module.exports = function () {
   router.get('/getNews/getNewsHomePageIonic', getNewsHomePageIonic);
   router.get('/getNews/getNewsHomePageTop4', getNewsHomePageTop4);
   router.get('/getNews/getNewsHomePageTop', getNewsHomePageTop);
+  router.get('/getNews/getNewsHomePageTop/:limit', getNewsHomePageTopLimit);
+  router.get('/getNews/getNewsFriendly/:id', getNewsFriendly);
+
+
+
+  function getNewsHomePageTopLimit(req, res, next) {
+    var request = {
+      limit: req.params.limit
+    }
+    newsDao.getNewsHomePageTopLimit(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  function getNewsFriendly(req, res, next) {
+    var request = {
+      id: req.params.id
+    }
+    newsDao.getNewsFriendly(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
 
   function getNewsHomePageIonic(req, res, next) {
     newsDao.getNewsHomePageIonic()

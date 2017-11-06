@@ -29,8 +29,56 @@ module.exports = {
 
   getNewsHomePageIonic: getNewsHomePageIonic,
   getNewsHomePageTop4: getNewsHomePageTop4,
-  getNewsHomePageTop: getNewsHomePageTop
+  getNewsHomePageTop: getNewsHomePageTop,
+  getNewsFriendly: getNewsFriendly,
+  getNewsHomePageTopLimit: getNewsHomePageTopLimit
 };
+
+function getNewsHomePageTopLimit(request) {
+  return News.find({
+      active: true,
+    })
+    .skip(5)
+    .limit(15 + parseInt(request.limit)).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+
+      newss.sort(function (a, b) {
+        return b.views - a.views;
+      });
+      console.log(newss.length);
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      })
+    })
+}
+
+function getNewsFriendly(request) {
+  return News.findById({
+    _id: request.id
+  }).exec().then(function (newss) {
+    var random = Math.floor(Math.random() * 50)
+    return News.find({
+        categoryId: newss.categoryId,
+        active: true,
+      }).limit(5)
+      .sort('createDate')
+      .sort('views')
+      .skip(random)
+      .exec()
+      .then(function (list) {
+        return Promise.resolve({
+          message: successMessage.news.getAll,
+          news: list
+        })
+      })
+  })
+}
 
 function getNewsHomePageIonic() {
   return News.find({
