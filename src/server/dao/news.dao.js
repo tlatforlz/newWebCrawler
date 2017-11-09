@@ -33,9 +33,54 @@ module.exports = {
   getNewsFriendly: getNewsFriendly,
   getNewsHomePageTopLimit: getNewsHomePageTopLimit,
   getNewsHot: getNewsHot,
-  getNewsNew: getNewsNew
+  getNewsNew: getNewsNew,
+  getSearch: getSearch,
+  getSearchAll: getSearchAll
 };
 
+function getSearchAll(request) {
+  return News.find({
+      $text: {
+        $search: request.key
+      },
+      active: true
+    })
+    .exec().then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss.length
+      })
+    });
+}
+
+function getSearch(request) {
+  return News.find({
+      $text: {
+        $search: request.key
+      },
+      active: true
+    })
+    .limit(15 + parseInt(request.limit))
+    .exec().then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+      newss.sort(function (a, b) {
+        return b.views - a.views;
+      });
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      })
+    });
+}
 
 function getNewsHot(request) {
   return News.find({

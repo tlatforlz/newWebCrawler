@@ -26,8 +26,35 @@ module.exports = function () {
   router.get('/getNews/getNewsFriendly/:id', getNewsFriendly);
   router.get('/getNews/getNewsHot/:limit', getNewsHot);
   router.get('/getNews/getNewsNew/:limit', getNewsNew);
+  router.get('/getNews/getSearch/:key/:limit', getSearch);
+  router.get('/getNews/getSearchAll/:key', getSearchAll);
 
+  function getSearchAll(req, res, next) {
+    var request = {
+      key: req.params.key
+    }
+    newsDao.getSearchAll(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
 
+  function getSearch(req, res, next) {
+    var request = {
+      limit: req.params.limit,
+      key: req.params.key
+    }
+    newsDao.getSearch(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
 
   function getNewsNew(req, res, next) {
     var request = {
