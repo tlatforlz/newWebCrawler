@@ -24,7 +24,36 @@ module.exports = function () {
   router.get('/getNews/getNewsHomePageTop', getNewsHomePageTop);
   router.get('/getNews/getNewsHomePageTop/:limit', getNewsHomePageTopLimit);
   router.get('/getNews/getNewsFriendly/:id', getNewsFriendly);
+  router.get('/getNews/getNewsHot/:limit', getNewsHot);
+  router.get('/getNews/getNewsNew/:limit', getNewsNew);
 
+
+
+  function getNewsNew(req, res, next) {
+    var request = {
+      limit: req.params.limit
+    }
+    newsDao.getNewsNew(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
+
+  function getNewsHot(req, res, next) {
+    var request = {
+      limit: req.params.limit
+    }
+    newsDao.getNewsHot(request)
+      .then(function (news) {
+        res.status(200).send(news).end();
+      })
+      .catch(function (err) {
+        res.status(400).send(err).end();
+      });
+  }
 
 
   function getNewsHomePageTopLimit(req, res, next) {

@@ -31,8 +31,53 @@ module.exports = {
   getNewsHomePageTop4: getNewsHomePageTop4,
   getNewsHomePageTop: getNewsHomePageTop,
   getNewsFriendly: getNewsFriendly,
-  getNewsHomePageTopLimit: getNewsHomePageTopLimit
+  getNewsHomePageTopLimit: getNewsHomePageTopLimit,
+  getNewsHot: getNewsHot,
+  getNewsNew: getNewsNew
 };
+
+
+function getNewsHot(request) {
+  return News.find({
+      active: true,
+    })
+    .limit(15 + parseInt(request.limit)).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+      newss.sort(function (a, b) {
+        return b.views - a.views;
+      });
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      })
+    })
+}
+
+function getNewsNew(request) {
+  return News.find({
+      active: true,
+    })
+    .limit(15 + parseInt(request.limit)).exec()
+    .then(function (newss) {
+      if (newss.length === 0) {
+        return Promise.reject({
+          message: failMessage.news.notFound
+        });
+      }
+      newss.sort(function (a, b) {
+        return b.createDate - a.createDate;
+      });
+      return Promise.resolve({
+        message: successMessage.news.getAll,
+        news: newss
+      })
+    })
+}
 
 function getNewsHomePageTopLimit(request) {
   return News.find({
