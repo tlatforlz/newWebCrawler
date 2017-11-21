@@ -172,7 +172,7 @@ function getNewsFriendly(request) {
 
 function getNewsHomePageIonic() {
   return News.find({
-      active: true,
+      active: true
     }).limit(1).exec()
     .then(function (newss) {
       if (newss.length === 0) {

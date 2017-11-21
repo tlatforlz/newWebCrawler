@@ -1,6 +1,7 @@
 var Archive = require('./../model/archive.model');
 var successMessage = require('./../services/successMessage');
 var failMessage = require('./../services/failMessage');
+var News = require('./../model/news.model');
 
 module.exports = {
   createArchive: createArchive,
@@ -9,12 +10,47 @@ module.exports = {
   updateArchive: updateArchive,
   deleteArchive: deleteArchive,
   addCategory: addCategory,
-  removeCategory: removeCategory
+  removeCategory: removeCategory,
+  getAllNewsByCate: getAllNewsByCate
 };
 
+function getAllNewsByCate(request) {
+  return Archive.findOne({
+      _id: request.id,
+    }).exec()
+    .then(function (archive) {
+      var listNews = [];
+      var length = 0;
+      return new Promise(function (resolve, reject) {
+        archive.listCategory.forEach(element => {
+          var t = new Promise(function (resolve, reject) {
+            return News.find({
+              categoryId: element
+            }).exec().then(function (res) {
+              res.forEach(x => {
+                listNews.push(x);
+              });
+              if (listNews.length === res.length) {
+                resolve(true);
+              }
+            });
+          });
+          t.then(w => {
+            length++;
+            if (length === archive.listCategory.length) {
+              return resolve({
+                length: listNews.length,
+                listNews: listNews
+              });
+            }
+          });
+
+        });
+      });
+    });
+}
 
 function removeCategory(request) {
-  console.log(request);
   return Archive.findOne({
       _id: request.id,
     }).exec()
@@ -28,8 +64,7 @@ function removeCategory(request) {
             message: successMessage.Archive.create
           });
         });
-      })
-
+      });
     });
 }
 
