@@ -6,7 +6,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var port = process.env.PORT || 8001;
+var port = process.env.PORT || 8002;
 var four0four = require('./utils/404')();
 var db = require('./db/db.config');
 var config = require('./config');
@@ -23,7 +23,7 @@ app.use(logger('dev'));
 app.use(function (req, res, next) {
   // Website you wish to allow to connect 
   res.setHeader('Access-Control-Allow-Origin', '*');
-  // Request methods you wish to allow  
+  // Request methods you wgiish to allow  
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   // Request headers you wish to allow  
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');

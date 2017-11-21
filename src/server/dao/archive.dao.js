@@ -15,6 +15,7 @@ module.exports = {
 };
 
 function getAllNewsByCate(request) {
+  console.log(request.limit);
   return Archive.findOne({
       _id: request.id,
     }).exec()
@@ -28,7 +29,12 @@ function getAllNewsByCate(request) {
               categoryId: element
             }).exec().then(function (res) {
               res.forEach(x => {
-                listNews.push(x);
+                if (listNews.length < request.limit) {
+                  console.log(listNews.length);
+                  listNews.push(x);
+                } else {
+                  resolve(true);
+                }
               });
               if (listNews.length === res.length) {
                 resolve(true);

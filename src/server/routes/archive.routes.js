@@ -10,11 +10,12 @@ module.exports = function () {
   router.put('/addCategory/:id', addCategory);
   router.put('/removeCategory/:id', removeCategory);
   router.delete('/:id', deleteArchive);
-  router.get('/getAllNewsByCate/:id', getAllNewsByCate);
+  router.get('/getAllNewsByCate/:id/:limit', getAllNewsByCate);
 
   function getAllNewsByCate(req, res, next) {
     var request = {
-      id: req.params.id
+      id: req.params.id,
+      limit: req.params.limit
     };
     ArchiveDao.getAllNewsByCate(request)
       .then(function (Archives) {
