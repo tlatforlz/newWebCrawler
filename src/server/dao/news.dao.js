@@ -43,7 +43,15 @@ function getSearchAll(request) {
       $text: {
         $search: request.key
       },
-      active: true
+      active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
+    }).sort({
+      'createDate': 'desc'
     })
     .exec().then(function (newss) {
       if (newss.length === 0) {
@@ -63,7 +71,15 @@ function getSearch(request) {
       $text: {
         $search: request.key
       },
-      active: true
+      active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
+    }).sort({
+      'createDate': 'desc'
     })
     .limit(15 + parseInt(request.limit))
     .exec().then(function (newss) {
@@ -85,6 +101,15 @@ function getSearch(request) {
 function getNewsHot(request) {
   return News.find({
       active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
+    })
+    .sort({
+      'createDate': 'desc'
     })
     .limit(15 + parseInt(request.limit)).exec()
     .then(function (newss) {
@@ -106,6 +131,14 @@ function getNewsHot(request) {
 function getNewsNew(request) {
   return News.find({
       active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
+    }).sort({
+      'createDate': 'desc'
     })
     .limit(15 + parseInt(request.limit)).exec()
     .then(function (newss) {
@@ -127,6 +160,14 @@ function getNewsNew(request) {
 function getNewsHomePageTopLimit(request) {
   return News.find({
       active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
+    }).sort({
+      'createDate': 'desc'
     })
     .skip(5)
     .limit(15 + parseInt(request.limit)).exec()
@@ -172,7 +213,15 @@ function getNewsFriendly(request) {
 
 function getNewsHomePageIonic() {
   return News.find({
-      active: true
+      active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
+    }).sort({
+      'createDate': 'desc'
     }).limit(1).exec()
     .then(function (newss) {
       if (newss.length === 0) {
@@ -195,6 +244,12 @@ function getNewsHomePageIonic() {
 function getNewsHomePageTop4() {
   return News.find({
       active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
     })
     .skip(1)
     .limit(4).exec()
@@ -219,6 +274,12 @@ function getNewsHomePageTop4() {
 function getNewsHomePageTop() {
   return News.find({
       active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
     })
     .skip(5)
     .limit(15).exec()
@@ -547,7 +608,13 @@ function deActiveNews(request) {
 
 function getNewsHome() {
   return News.find({
-      active: true
+      active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
     }).exec()
     .then(function (newss) {
       if (newss.length === 0) {
@@ -565,7 +632,13 @@ function getNewsHome() {
 //getNewsNearest
 function getNewsNearest() {
   return News.find({
-      active: true
+      active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
     }).exec()
     .then(function (newss) {
       if (newss.length === 0) {
@@ -588,7 +661,13 @@ function getNewsNearest() {
 //getNewsMostPopular
 function getNewsMostPopular() {
   return News.find({
-      active: true
+      active: true,
+      title: {
+        $ne: null
+      },
+      image: {
+        $ne: null
+      }
     }).exec()
     .then(function (newss) {
       if (newss.length === 0) {
@@ -629,7 +708,13 @@ function getNewsArchive(request) {
           }, function (next) {
             return News.find({
                 categoryId: list_archive.listCategory[count],
-                active: true
+                active: true,
+                title: {
+                  $ne: null
+                },
+                image: {
+                  $ne: null
+                }
               })
               .limit(5)
               .exec().then(function (upNews) {
@@ -691,7 +776,13 @@ function getNewsArchivePagination(request) {
           }, function (next) {
             return News.find({
                 categoryId: list_archive.listCategory[count],
-                active: true
+                active: true,
+                title: {
+                  $ne: null
+                },
+                image: {
+                  $ne: null
+                }
               })
               .exec().then(function (upNews) {
                 var index = 0;
@@ -724,7 +815,13 @@ function getNewsSearch(request) {
     $text: {
       $search: request.searchKey
     },
-    active: true
+    active: true,
+    title: {
+      $ne: null
+    },
+    image: {
+      $ne: null
+    }
   }).exec().then(function (newss) {
     console.log(newss);
     var res = pagination.pagination(newss.splice(request.pageSize * (request.pageIndex - 1), request.pageSize), newss.length, request.pageIndex, request.pageSize);
